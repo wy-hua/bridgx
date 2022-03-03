@@ -15,8 +15,8 @@ CREATE TABLE `account`
     `salt` varchar(256) COLLATE utf8mb4_bin NOT NULL DEFAULT '',
     `org_id`         bigint(20) DEFAULT '0',
     `provider`       varchar(64) COLLATE utf8mb4_bin NOT NULL DEFAULT '',
-    `create_at`      timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-    `update_at`      timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+    `create_at`      timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `update_at`      timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     `create_by`      varchar(32) COLLATE utf8mb4_bin NOT NULL DEFAULT '',
     `update_by`      varchar(32) COLLATE utf8mb4_bin NOT NULL DEFAULT '',
     `deleted_at`     timestamp NULL DEFAULT NULL,
@@ -35,15 +35,18 @@ DROP TABLE IF EXISTS `b_security_group`;
 CREATE TABLE `b_security_group`
 (
     `id`                  bigint(20) NOT NULL AUTO_INCREMENT,
-    `vpc_id`              varchar(255) NOT NULL,
+    `ak`                  varchar(256) COLLATE utf8mb4_bin NOT NULL DEFAULT '',
+    `provider`            varchar(32) NOT NULL DEFAULT '',
+    `region_id`           varchar(32) NOT NULL DEFAULT '',
+    `vpc_id`              varchar(255) NOT NULL DEFAULT '',
     `security_group_id`   varchar(255) NOT NULL DEFAULT '',
     `name`                varchar(255) NOT NULL DEFAULT '',
     `security_group_type` varchar(255) NOT NULL DEFAULT '',
     `is_del`              tinyint(3) NOT NULL DEFAULT '0',
-    `create_at`           datetime     NOT NULL ON UPDATE CURRENT_TIMESTAMP,
-    `update_at`           datetime     NOT NULL,
+    `create_at`           timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `update_at`           timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
-    UNIQUE KEY `idx_vpc_group_name` (`vpc_id`,`security_group_id`,`name`)
+    UNIQUE KEY `idx_group_ak_provider_region` (`security_group_id`,`ak`,`provider`,`region_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='安全组表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -57,7 +60,7 @@ DROP TABLE IF EXISTS `b_security_group_rule`;
 CREATE TABLE `b_security_group_rule`
 (
     `id`                bigint(20) NOT NULL AUTO_INCREMENT,
-    `vpc_id`            varchar(255) NOT NULL,
+    `vpc_id`            varchar(255) NOT NULL DEFAULT '',
     `security_group_id` varchar(255) NOT NULL DEFAULT '',
     `port_range`        varchar(255) NOT NULL DEFAULT '',
     `protocol`          varchar(255) NOT NULL DEFAULT '',
@@ -66,8 +69,8 @@ CREATE TABLE `b_security_group_rule`
     `cidr_ip`           varchar(255) NOT NULL,
     `prefix_list_id`    varchar(255) NOT NULL,
     `is_del`            tinyint(3) NOT NULL DEFAULT '0',
-    `create_at`         datetime     NOT NULL ON UPDATE CURRENT_TIMESTAMP,
-    `update_at`         datetime     NOT NULL,
+    `create_at`         timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `update_at`         timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     KEY                 `idx_vpc_group_protocol` (`vpc_id`,`security_group_id`,`protocol`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='安全组规则表';
@@ -93,8 +96,8 @@ CREATE TABLE `b_switch`
     `is_default`                 tinyint(3) NOT NULL DEFAULT '0' COMMENT '0 非默认 1 默认',
     `available_ip_address_count` int(100) NOT NULL,
     `is_del`                     tinyint(3) NOT NULL DEFAULT '0',
-    `create_at`                  datetime     NOT NULL ON UPDATE CURRENT_TIMESTAMP,
-    `update_at`                  datetime     NOT NULL,
+    `create_at`                  timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `update_at`                  timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     UNIQUE KEY `idx_vpc_switch` (`vpc_id`,`switch_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='交换机表';
@@ -115,12 +118,11 @@ CREATE TABLE `b_vpc`
     `region_id`  varchar(255) NOT NULL DEFAULT '',
     `name`       varchar(255) NOT NULL,
     `cidr_block` varchar(255) NOT NULL DEFAULT '',
-    `switch_ids` text NOT NULL,
     `provider`   varchar(255) NOT NULL,
     `v_status`   varchar(20)  NOT NULL DEFAULT 'Pending',
     `is_del`     tinyint(3) NOT NULL DEFAULT '0',
-    `create_at`  datetime     NOT NULL ON UPDATE CURRENT_TIMESTAMP,
-    `update_at`  datetime     NOT NULL,
+    `create_at`  timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `update_at`  timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     UNIQUE KEY `idx_ak_region_vpc_id` (`ak`,`region_id`,`vpc_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='vpc 表';
@@ -153,8 +155,8 @@ CREATE TABLE `cluster`
     `storage_config`  varchar(2048) COLLATE utf8mb4_bin         DEFAULT '',
     `charge_config`   varchar(256) COLLATE utf8mb4_bin          DEFAULT '',
     `extend_config`   varchar(4096) COLLATE utf8mb4_bin         DEFAULT '',
-    `create_at`       timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `update_at`       timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `create_at`       timestamp NOT NULL                        DEFAULT CURRENT_TIMESTAMP,
+    `update_at`       timestamp NOT NULL                        DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     `create_by`       varchar(32) COLLATE utf8mb4_bin           DEFAULT '',
     `update_by`       varchar(32) COLLATE utf8mb4_bin           DEFAULT '',
     `deleted_at`      timestamp NULL DEFAULT NULL,
@@ -178,8 +180,8 @@ CREATE TABLE `cluster_tag`
     `cluster_name` varchar(32) COLLATE utf8mb4_bin DEFAULT NULL,
     `tag_key`      varchar(64) COLLATE utf8mb4_bin DEFAULT NULL,
     `tag_value`    varchar(64) COLLATE utf8mb4_bin DEFAULT NULL,
-    `create_at`    timestamp DEFAULT CURRENT_TIMESTAMP,
-    `update_at`    timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `create_at`    timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `update_at`    timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     UNIQUE KEY `cluster_tags_cluster_name_tag_key_uindex` (`cluster_name`,`tag_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
@@ -203,8 +205,8 @@ CREATE TABLE `instance`
     `ip_inner`       varchar(255)         DEFAULT NULL,
     `ip_outer`       varchar(255)         DEFAULT NULL,
     `attrs`          varchar(1024)        DEFAULT NULL,
-    `create_at`      timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `update_at`      timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `create_at`      timestamp NOT NULL   DEFAULT CURRENT_TIMESTAMP,
+    `update_at`      timestamp NOT NULL   DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     `delete_at`      timestamp NULL DEFAULT NULL,
     `running_at`     timestamp NULL DEFAULT NULL,
     `charge_type`    varchar(32) collate utf8mb4_bin NOT NULL DEFAULT 'PostPaid',
@@ -277,8 +279,8 @@ CREATE TABLE `task`
     `err_msg`        text COLLATE utf8mb4_bin,
     `support_cancel` tinyint(1) DEFAULT NULL,
     `finish_time`    timestamp NULL,
-    `create_at`      timestamp DEFAULT CURRENT_TIMESTAMP,
-    `update_at`      timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `create_at`      timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `update_at`      timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     KEY              `task_task_filter_index` (`task_filter`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
@@ -294,8 +296,8 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`
 (
     `id`          bigint(20) NOT NULL AUTO_INCREMENT,
-    `username`    varchar(128) COLLATE utf8mb4_bin NOT NULL,
-    `password`    varchar(128) COLLATE utf8mb4_bin NOT NULL,
+    `username`    varchar(32) COLLATE utf8mb4_bin NOT NULL,
+    `password`    varchar(32) COLLATE utf8mb4_bin NOT NULL,
     `user_type`   tinyint(1) NOT NULL DEFAULT '0',
     `user_status` varchar(16) COLLATE utf8mb4_bin  NOT NULL DEFAULT 'enable',
     `org_id`      bigint(20) NOT NULL DEFAULT '0',

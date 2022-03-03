@@ -197,6 +197,7 @@ type UserInfo struct {
 	Username string `json:"username"`
 	UserType string `json:"user_type"`
 	OrgId    int64  `json:"org_id"`
+	CreateAt string `json:"create_at"`
 }
 
 type UserThumb struct {
@@ -205,11 +206,19 @@ type UserThumb struct {
 	CreateAt   string `json:"create_at"`
 	CreateBy   string `json:"create_by"`
 	UserStatus string `json:"user_status"`
+	UserType   string `json:"user_type"`
 }
 
 type ListUsersResponse struct {
 	UserList []UserThumb `json:"user_list"`
 	Pager    Pager       `json:"pager"`
+}
+
+type OrgInfo struct {
+	Id       int64  `json:"id"`
+	OrgName  string `json:"org_name"`
+	CreateAt string `json:"create_at"`
+	UpdateAt string `json:"update_at"`
 }
 
 type OrgThumb struct {

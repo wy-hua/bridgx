@@ -29,7 +29,7 @@ func TestCreateVPC(t *testing.T) {
 					RegionId:  "cn-qingdao",
 					VpcName:   "vpc测试自动更新",
 					CidrBlock: "",
-					Ak:        "LTAI5t7qCv6L8ZFh3hzSYpSv",
+					AK:        "LTAI5t7qCv6L8ZFh3hzSYpSv",
 				},
 			},
 			wantVpcId: "",
@@ -195,7 +195,7 @@ func TestCreateNetwork(t *testing.T) {
 					SwitchName:        "一键创建的switch",
 					SecurityGroupName: "一键创建的安全组",
 					SecurityGroupType: "normal",
-					Ak:                "LTAI5t7qCv6L8ZFh3hzSYpSv",
+					AK:                "LTAI5t7qCv6L8ZFh3hzSYpSv",
 				},
 			},
 			wantVpcRes: service.CreateNetworkResponse{},
@@ -337,5 +337,24 @@ func TestGetSecurityGroup(t *testing.T) {
 				t.Errorf("GetSecurityGroup() got = %v, want %v", got, tt.want)
 			}
 		})
+	}
+}
+
+func TestSyncNetwork(t *testing.T) {
+	accounts := make([]model.Account, 0)
+	if err := model.QueryAll(map[string]interface{}{}, &accounts, ""); err != nil {
+		t.Log("query account,", err)
+		return
+	}
+
+	for _, account := range accounts {
+		err := service.RefreshAccount(&service.SimpleTask{
+			ProviderName: account.Provider,
+			AccountKey:   account.AccountKey,
+		})
+		if err != nil {
+			t.Log(account.AccountKey, err)
+			continue
+		}
 	}
 }

@@ -4,97 +4,107 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/galaxy-future/BridgX)](https://goreportcard.com/report/github.com/galaxy-future/BridgX) &nbsp;
 [![CodeFactor](https://www.codefactor.io/repository/github/galaxy-future/bridgx/badge)](https://www.codefactor.io/repository/github/galaxy-future/bridgx)
 
-语言(language)
+
+Language
 ----
 
-[English](https://github.com/galaxy-future/bridgx/blob/dev/docs/EN-README.md)
+English | [中文](https://github.com/galaxy-future/bridgx/blob/dev/docs/CH-README.md)
 
-简介
---------
-BridgX是业界领先的基于全链路Serverless技术的云原生基础架构解决方案，目标是让开发者可以以开发单机应用系统的方式，开发跨云分布式应用系统，在不增加操作复杂度的情况下，兼得云计算的可扩展性和弹性伸缩等好处。
-
-它具有如下关键特性:
-
-1、具备1分钟扩容1000台服务器的弹性能力；
-
-2、支持K8s切割；
-
-3、提供完善的API接口；
+Introduction
+-----
+BridgX is the industry's leading cloud-native infrastructure solution based on full-process Serverless technology. The goal is to allow developers to create cross-cloud distributed application systems through building standalone application systems, without having to increase operational complexity, leveraging on both the scalability and elasticity of cloud computing. 
+It has the following key features:
+1. Has the flexibility to expand to 1000 servers within 1 minutes;
+2. Supports K8s partitioning;
+3. Provides a complete set of API ports;
 
 
-联系我们
+Contact Us
 ----
-[微博](https://weibo.com/galaxyfuture) | [知乎](https://www.zhihu.com/org/xing-yi-wei-lai) | [B站](https://space.bilibili.com/2057006251)
-| [微信公众号](https://github.com/galaxy-future/comandx/blob/main/docs/resource/wechat_official_account.md)
-| [企业微信交流群](https://github.com/galaxy-future/comandx/blob/main/docs/resource/wechat.md)
 
 
-上手指南
+[Weibo](https://weibo.com/galaxyfuture) | [Zhihu](https://www.zhihu.com/org/xing-yi-wei-lai) | [Bilibili](https://space.bilibili.com/2057006251)
+| [WeChat Official Account](https://github.com/galaxy-future/comandx/blob/main/docs/resource/wechat_official_account.md)
+| [WeCom Communication Group](https://github.com/galaxy-future/comandx/blob/main/docs/resource/wechat.md)
+
+
+Getting Started Guide
 ----
-#### 1、配置要求  
-为了系统稳定运行，建议系统型号**2核4G内存**；BridgX已经在Linux系统以及macOS系统进行了安装和测试。
+#### 1. Configuration Requirements
+
+For stable operation of the system, the recommended system model is 2 CPU cores and 4G RAM; for Linux and macOS systems, BridgX has already been installed and tested.
 
 
-#### 2、环境依赖
-- 如果已安装 Docker-1.10.0和Docker-Compose-1.6.0以上版本, 请跳过此步骤；如果没有安装，请查看[Docker Install](https://www.docker.com/products/container-runtime) 和 [Docker Compose Install](https://docs.docker.com/compose/install/);
-- 如果已安装Git，请跳过此步骤；如果没有安装，请参照[Git - Downloads](https://git-scm.com/downloads)进行安装.
+
+#### 2. Environmental Dependence
+
+- If you have already installed Docker-1.10.0 and Docker-Compose-1.6.0 or above, please skip this step; otherwise, please check 
+[Docker Install](https://www.docker.com/products/container-runtime) 和 [Docker Compose Install](https://docs.docker.com/compose/install/);
+- If you have already installed Git, please skip this step; otherwise, please refer to 
+[Git - Downloads](https://git-scm.com/downloads) to install it.
 
 
-#### 3、安装部署  
+#### 3. Installation and Deployment
 
-* (1)源码下载
-  - 后端工程：
+
+* (1) Source code download
+  - Back-end project：
   > git clone https://github.com/galaxy-future/bridgx.git
  
-* (2)macOS系统部署
-  - 后端部署,在BridgX目录下运行
+* (2) macOS system deployment
+  - For back-end deployment,, execute in the BridgX directory:
     > make docker-run-mac
+  - While the system is running, enter http://127.0.0.1 in the browser to see the management console interface. The initial user name is "root" and the password is "123456".
 
-* (3)Linux安装部署
-  - 以下步骤请使用 root用户 或有sudo权限的用户 sudo su - 切换到root用户后执行。
-  - 1）针对使用者
-    - 后端部署,在BridgX目录下运行,
+* (3) Linux installation and deployment
+  - For the following steps, please use the "root" user or a user with "sudo" privileges, and run "sudo su-" to switch to the root user and execute it.
+
+  - 1) For users 
+    - For back-end deployment, execute in the BridgX directory:
+
       > make docker-run-linux
  
-  - 2）针对开发者
-    - 由于项目会下载所需的必需基础镜像,建议将下载源码放到空间大于10G以上的目录中。
-    - 后端部署
-      - BridgX依赖mysql和etcd组件，
-           - 如果使用内置的mysql和etcd，则进入BridgX根目录，则使用以下命令：            
-             > docker-compose up -d    //启动BridgX <br>
-             > docker-compose down    //停止BridgX  <br>
-           - 如果已经有了外部的mysql和etcd服务，则可以到 `cd conf` 下修改对应的ip和port配置信息,然后进入BridgX的根目录，使用以下命令:
-             > docker-compose up -d api    //启动api服务 <br>
-             > docker-compose up -d scheduler //启动调度服务 <br>
-             > docker-compose down     //停止BridgX服务
-#### 4、开发者API手册
-通过[开发者API手册](https://github.com/galaxy-future/bridgx/blob/master/docs/developer_api.md)，用户可以快速查看各项开发功能的API接口和调用方法，使开发者能够将BridgX集成到第三方平台上。
+  - 2）For developers
+    - Since the project will download the required basic image, we recommend placing the downloaded source code in a directory with more than 10G available storage space.
 
-#### 5、前端界面操作
-如果需要进行前端操作，请安装[ComandX](https://github.com/galaxy-future/comandx/blob/main/README.md)
+    - Back-end deployment
 
-视频教程
+      - BridgX is dependent on the "mysql" and "etcd" components.
+           - If you are using the built-in "mysql" and "etcd", then enter the BridgX root directory, and use the following command:
+             > docker-compose up -d    //Start BridgX <br>
+             > docker-compose down    //Stop BridgX  <br>
+           - If you already have external "mysql" and "etcd" services, you can go to cd conf to modify the corresponding IP and port configuration information, and then use the following command while in the root directory of BridgX:
+             > docker-compose up -d api    //Start api service <br>
+             > docker-compose up -d scheduler //Start the scheduling service <br>
+             > docker-compose down     //Stop BridgX service
+#### 4.Developer's API Manual
+Through the [Developers' API Manual](https://github.com/galaxy-future/bridgx/blob/dev/docs/en-developer-api.md), users can quickly view the API ports and calling methods of various developer functions, enabling developers to integrate BridgX into third-party platforms.
+
+
+#### 5.Front-end Interface Operation
+If you need to perform front-end operations, please install 
+[ComandX](https://github.com/galaxy-future/comandx/blob/main/docs/EN-README.md).
+
+Video Tutorial
 ------
-[BridgX安装](https://www.bilibili.com/video/BV1n34y167o8/) <br>
-[添加云账户](https://www.bilibili.com/video/BV1Jr4y1S7q4/)  <br>
-[创建集群](https://www.bilibili.com/video/BV1Wb4y1v7jw/)   <br>
-[手动扩缩容](https://www.bilibili.com/video/BV1bm4y197QD/)  <br>
-[K8s集群创建与Pod切割](https://www.bilibili.com/video/BV1FY411p7rE/)<br>
+[ComandX Installation](https://www.bilibili.com/video/BV1n34y167o8/) <br>
+[Adding The Cloud Vendor Account](https://www.bilibili.com/video/BV1Jr4y1S7q4/)  <br>
+[Create Cluster](https://www.bilibili.com/video/BV1Wb4y1v7jw/)   <br>
+[Manual Scaling](https://www.bilibili.com/video/BV1bm4y197QD/)  <br>
+[K8s Cluster Creation and Pod cutting](https://www.bilibili.com/video/BV1FY411p7rE/) <br>
 
 
-技术文章
+Technical Articles
 ------
-[《云原生技术如何每分钟级迁移TB级数据》](https://zhuanlan.zhihu.com/p/442746588)<br>
-[《企业迁移到K8s的最佳实践》](https://zhuanlan.zhihu.com/p/445131885) <br>
-[《来自一线大厂的十大云原生成本优化手段》](https://zhuanlan.zhihu.com/p/448405809)<br>
+[《How does cloud-native technology migrate TB data per minute?》](https://zhuanlan.zhihu.com/p/442746588)<br>
+[《Best practices for enterprise migration to K8s》](https://zhuanlan.zhihu.com/p/445131885) <br>
+[《Top ten methods of cloud-native cost optimization 》](https://zhuanlan.zhihu.com/p/448405809)<br>
 
-
-
-行为准则
+Code of Conduct
 ------
-[贡献者公约](https://github.com/galaxy-future/bridgx/blob/master/CODE_OF_CONDUCT)
+[Contributor Convention](https://github.com/galaxy-future/bridgx/blob/master/CODE_OF_CONDUCT)
 
-授权
+Authorization
 -----
 
-BridgX使用[Apache License 2.0](https://github.com/galaxy-future/bridgx/blob/master/LICENSE)授权协议进行授权
+BridgX uses [Apache License 2.0](https://github.com/galaxy-future/bridgx/blob/master/LICENSE) licensing agreement for authorization

@@ -14,5 +14,5 @@ var (
 	ErrVpcPending                = errors.New("pending")
 	ErrSaveAccountFailed         = errors.New("save account falied")
 	ErrOperatorIsNull            = errors.New("operator shouldn't be null")
-	ErrNewOrOldDataIsNull        = errors.New("new or old data shouldn't be null")
+	ErrNewOrOldDataIsNotTabler   = errors.New("new or old data should be schema.Tabler") // schema.Tabler
 )

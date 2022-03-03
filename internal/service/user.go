@@ -23,23 +23,21 @@ func Login(ctx context.Context, username, password string) *model.User {
 	return nil
 }
 
-func GetUserList(ctx context.Context, orgId int64, pageNum, pageSize int) (ret []model.User, total int64, err error) {
-	queryMap := map[string]interface{}{"org_id": orgId, "user_type": []int{constants.UserTypeCommonUser}}
-
-	total, err = model.Query(queryMap, pageNum, pageSize, &ret, "id DESC", true)
+func GetUserList(ctx context.Context, orgId int64, pageNum, pageSize int) ([]model.User, int64, error) {
+	ret, total, err := model.GetUserList(ctx, orgId, pageNum, pageSize)
 	if err != nil {
 		return ret, 0, err
 	}
 	return ret, total, nil
 }
 
-func CreateUser(ctx context.Context, orgId int64, username, password, createBy string) error {
+func CreateUser(ctx context.Context, orgId int64, username, password, createBy string, userType int8) error {
 	user := &model.User{
 		Username:   username,
 		Password:   utils.Base64Md5(password),
 		OrgId:      orgId,
 		UserStatus: constants.UserStatusEnable,
-		UserType:   constants.UserTypeCommonUser,
+		UserType:   userType,
 		CreateBy:   createBy,
 	}
 	now := time.Now()
@@ -54,6 +52,15 @@ func UpdateUserStatus(ctx context.Context, usernames []string, status string) er
 		return fmt.Errorf("can not update user stauts : %w", err)
 	}
 	return nil
+}
+
+func ExistAdmin(ctx context.Context, usernames []string) (bool, error) {
+	users, err := model.GetUsersByUsernamesAndUserType(ctx, usernames, constants.UserTypeAdmin)
+	if err != nil {
+		return false, err
+	}
+	return len(users) > 0, nil
+
 }
 
 func ModifyAdminPassword(ctx context.Context, userId int64, userName, oldPassword, newPassword string) error {
@@ -94,6 +101,15 @@ func ModifyUsername(ctx context.Context, uid int64, newUsername string) error {
 	user.Username = newUsername
 	user.UpdateAt = &now
 	return model.Save(user)
+}
+
+func ModifyUsertype(ctx context.Context, userIds []int64, userType int8) error {
+	err := model.UpdateUserType(ctx, userIds, map[string]interface{}{"user_type": userType, "update_at": time.Now()})
+	if err != nil {
+		return err
+	}
+	return nil
+
 }
 
 func UserMapByIDs(ctx context.Context, ids []int64) map[int64]string {

@@ -34,8 +34,14 @@ func (f FieldInfo) beautiful() (string, string) {
 }
 
 func jsonDisplay(v reflect.Value) string {
-	if v.Kind() == reflect.Ptr {
+	if isZeroValue(v) {
+		return ""
+	}
+	if k := v.Kind(); k == reflect.Ptr {
 		v = v.Elem()
+	}
+	if isZeroValue(v) {
+		return ""
 	}
 	if v.Type().Name() == "Time" {
 		t, ok := v.Interface().(time.Time)
@@ -58,10 +64,29 @@ func Diff(o, n interface{}) (res DiffResult, err error) {
 		}
 	}()
 	t1, t2 := reflect.TypeOf(o), reflect.TypeOf(n)
-	if t1 != t2 {
+	if t1 != nil && t2 != nil && t1 != t2 {
 		return DiffResult{}, errDifferentTypeCompare
 	}
+	if t1 == t2 && t1 == nil {
+		return DiffResult{}, nil
+	}
+	if t1 == nil {
+		return diffWithOneNil(n, t2, true)
+	}
+	if t2 == nil {
+		return diffWithOneNil(o, t1, false)
+	}
+	return diff(o, n, t1, t2)
+}
+
+func diff(o, n interface{}, t1, t2 reflect.Type) (res DiffResult, err error) {
 	v1, v2 := reflect.ValueOf(o), reflect.ValueOf(n)
+	if t1.Kind() == reflect.Ptr {
+		t1 = t1.Elem()
+		t2 = t2.Elem()
+		v1 = v1.Elem()
+		v2 = v2.Elem()
+	}
 	for i := 0; i < v1.NumField(); i++ {
 		field := t1.Field(i)
 		tagV := field.Tag.Get(columnTag)
@@ -72,12 +97,51 @@ func Diff(o, n interface{}) (res DiffResult, err error) {
 		f2Value := v2.Field(i)
 		if !compare(f1Value, f2Value) {
 			res.Fields = append(res.Fields, FieldInfo{
+				Name:     field.Name,
 				TagValue: tagV,
 				ValueOld: f1Value,
 				ValueNew: f2Value,
 			})
 		}
 	}
+	return res, nil
+}
+
+func diffWithOneNil(notNil interface{}, notNilType reflect.Type, oldIsNil bool) (res DiffResult, err error) {
+	v := reflect.ValueOf(notNil)
+	if v.Kind() == reflect.Ptr {
+		notNilType = notNilType.Elem()
+		v = v.Elem()
+	}
+	for i := 0; i < v.NumField(); i++ {
+		field := notNilType.Field(i)
+		tagV := field.Tag.Get(columnTag)
+		if tagV == ignoreFieldTagValue || !field.IsExported() {
+			continue
+		}
+		fValue := v.Field(i)
+		if fValue.IsZero(){
+			continue
+		}
+
+		if oldIsNil {
+			res.Fields = append(res.Fields, FieldInfo{
+				Name:     field.Name,
+				TagValue: tagV,
+				ValueOld: reflect.Value{},
+				ValueNew: fValue,
+			})
+
+		} else {
+			res.Fields = append(res.Fields, FieldInfo{
+				Name:     field.Name,
+				TagValue: tagV,
+				ValueOld: fValue,
+				ValueNew: reflect.Value{},
+			})
+		}
+	}
+
 	return res, nil
 }
 
@@ -88,7 +152,9 @@ func (r DiffResult) Beautiful() ([]map[string]string, error) {
 	}
 	for _, field := range r.Fields {
 		operation := editOperation
-		if field.ValueOld.IsZero() && !field.ValueNew.IsZero() {
+		if isZeroValue(field.ValueOld) {
+			operation = createOperation
+		} else if field.ValueOld.IsZero() && isZeroValue(field.ValueNew) && !field.ValueNew.IsZero() {
 			operation = createOperation
 		}
 		target := field.TagValue
@@ -138,4 +204,9 @@ func compare(v1, v2 reflect.Value) bool {
 	default:
 		return true
 	}
+}
+
+func isZeroValue(v reflect.Value) bool {
+	zeroValue := reflect.Value{}
+	return v == zeroValue
 }

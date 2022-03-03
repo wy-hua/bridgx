@@ -4,15 +4,16 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/spf13/cast"
-
 	"github.com/galaxy-future/BridgX/cmd/api/helper"
 	"github.com/galaxy-future/BridgX/cmd/api/middleware/authorization"
 	"github.com/galaxy-future/BridgX/cmd/api/request"
 	"github.com/galaxy-future/BridgX/cmd/api/response"
 	"github.com/galaxy-future/BridgX/config"
+	"github.com/galaxy-future/BridgX/internal/constants"
+	"github.com/galaxy-future/BridgX/internal/model"
 	"github.com/galaxy-future/BridgX/internal/service"
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/cast"
 )
 
 func Login(ctx *gin.Context) {
@@ -28,8 +29,12 @@ func Login(ctx *gin.Context) {
 		response.MkResponse(ctx, http.StatusBadRequest, "incorrect username/password", nil)
 		return
 	}
+	if user.UserStatus == constants.UserStatusDisable {
+		response.MkResponse(ctx, http.StatusBadRequest, "your account has been disabled", nil)
+		return
+	}
 	userTokenFactory := authorization.CreateUserTokenFactory()
-	userToken, err := userTokenFactory.GenerateToken(user.Id, user.Username, user.OrgId, config.GlobalConfig.JwtToken.JwtTokenCreatedExpires)
+	userToken, err := userTokenFactory.GenerateToken(user.Id, user.Username, helper.ConvertToReadableStr(user.UserType), user.OrgId, config.GlobalConfig.JwtToken.JwtTokenCreatedExpires)
 	if err == nil {
 		response.MkResponse(ctx, http.StatusOK, response.Success, userToken)
 		return
@@ -80,6 +85,7 @@ func GetUserInfo(ctx *gin.Context) {
 		Username: userInDB.Username,
 		OrgId:    userInDB.OrgId,
 		UserType: helper.ConvertToReadableStr(userInDB.UserType),
+		CreateAt: userInDB.CreateAt.Format("2006-01-02 15:04:05"),
 	}
 	response.MkResponse(ctx, http.StatusOK, response.Success, res)
 	return
@@ -123,12 +129,16 @@ func CreateUser(ctx *gin.Context) {
 		response.MkResponse(ctx, http.StatusBadRequest, response.ParamInvalid, nil)
 		return
 	}
-	if req.UserName == "" || req.Password == "" {
-		response.MkResponse(ctx, http.StatusBadRequest, response.ParamInvalid, nil)
+	dbUser := model.GetUserByName(ctx, req.UserName)
+	if dbUser != nil {
+		response.MkResponse(ctx, http.StatusBadRequest, response.UserExists, nil)
 		return
 	}
-
-	err := service.CreateUser(ctx, user.OrgId, req.UserName, req.Password, user.Name)
+	if user.UserType == constants.UserTypeCommonUserStr || (user.Name != constants.UserNameRoot && req.UserType == constants.UserTypeAdminStr) {
+		response.MkResponse(ctx, http.StatusBadRequest, response.PermissionDenied, nil)
+		return
+	}
+	err := service.CreateUser(ctx, user.OrgId, req.UserName, req.Password, user.Name, helper.ConvertUserTypeToInt(req.UserType))
 	if err != nil {
 		response.MkResponse(ctx, http.StatusInternalServerError, err.Error(), nil)
 		return
@@ -148,6 +158,24 @@ func EnableUser(ctx *gin.Context) {
 	if err := ctx.ShouldBind(&req); err != nil {
 		response.MkResponse(ctx, http.StatusBadRequest, response.ParamInvalid, nil)
 		return
+	}
+
+	if user.UserType == constants.UserTypeCommonUserStr {
+		response.MkResponse(ctx, http.StatusBadRequest, response.PermissionDenied, nil)
+		return
+	}
+
+	if user.Name != constants.UserNameRoot && user.UserType == constants.UserTypeAdminStr {
+		exist, err := service.ExistAdmin(ctx, req.UserNames)
+		if err != nil {
+			response.MkResponse(ctx, http.StatusInternalServerError, err.Error(), nil)
+			return
+		}
+		if exist {
+			response.MkResponse(ctx, http.StatusBadRequest, response.PermissionDenied, nil)
+			return
+		}
+
 	}
 
 	err := service.UpdateUserStatus(ctx, req.UserNames, req.Action)
@@ -203,6 +231,32 @@ func ModifyUsername(ctx *gin.Context) {
 	}
 
 	err := service.ModifyUsername(ctx, user.UserId, req.NewUsername)
+	if err != nil {
+		response.MkResponse(ctx, http.StatusInternalServerError, err.Error(), nil)
+		return
+	}
+	response.MkResponse(ctx, http.StatusOK, response.Success, nil)
+	return
+}
+
+func ModifyUsertype(ctx *gin.Context) {
+	user := helper.GetUserClaims(ctx)
+	if user == nil {
+		response.MkResponse(ctx, http.StatusBadRequest, response.TokenInvalid, nil)
+		return
+	}
+
+	req := request.ModifyUserTypeRequest{}
+	if err := ctx.ShouldBind(&req); err != nil {
+		response.MkResponse(ctx, http.StatusBadRequest, response.ParamInvalid, nil)
+		return
+	}
+	if user.Name != constants.UserNameRoot {
+		response.MkResponse(ctx, http.StatusBadRequest, response.PermissionDenied, nil)
+		return
+	}
+
+	err := service.ModifyUsertype(ctx, req.UserIds, helper.ConvertUserTypeToInt(req.UserType))
 	if err != nil {
 		response.MkResponse(ctx, http.StatusInternalServerError, err.Error(), nil)
 		return

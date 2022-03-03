@@ -36,8 +36,8 @@ func RecordOperationLog(ctx context.Context, oplog OperationLog) error {
 	if err != nil {
 		return err
 	}
-	if oplog.Old == nil || oplog.New == nil || oplog.New.TableName() == "" || oplog.Old.TableName() == "" {
-		return errs.ErrNewOrOldDataIsNull
+	if oplog.Old != nil && oplog.Old.TableName() == "" || oplog.New != nil && oplog.New.TableName() == "" {
+		return errs.ErrNewOrOldDataIsNotTabler
 	}
 	res, err := cmp.Diff(oplog.Old, oplog.New)
 	if err != nil {

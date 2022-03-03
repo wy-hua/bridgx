@@ -4,6 +4,14 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/galaxy-future/BridgX)](https://goreportcard.com/report/github.com/galaxy-future/BridgX) &nbsp;
 [![CodeFactor](https://www.codefactor.io/repository/github/galaxy-future/bridgx/badge)](https://www.codefactor.io/repository/github/galaxy-future/bridgx)
 
+
+Language
+----
+
+English | [中文](https://github.com/galaxy-future/bridgx/blob/dev/docs/CH-README.md)
+
+Introduction
+-----
 BridgX is the industry's leading cloud-native infrastructure solution based on full-process Serverless technology. The goal is to allow developers to create cross-cloud distributed application systems through building standalone application systems, without having to increase operational complexity, leveraging on both the scalability and elasticity of cloud computing. 
 It has the following key features:
 1. Has the flexibility to expand to 1000 servers within 1 minutes;

@@ -77,14 +77,15 @@ func Init() *gin.Engine {
 		}
 		vpcPath := v1Api.Group("vpc/")
 		{
+			vpcPath.GET("info/:id", handler.GetVpcById)
 			vpcPath.POST("create", handler.CreateVpc)
 			vpcPath.GET("describe", handler.DescribeVpc)
 		}
 		subnetPath := v1Api.Group("subnet/")
 		{
+			subnetPath.GET("info/:id", handler.GetSwitchById)
 			subnetPath.POST("create", handler.CreateSwitch)
 			subnetPath.GET("describe", handler.DescribeSwitch)
-
 		}
 		groupPath := v1Api.Group("security_group/")
 		{
@@ -92,10 +93,13 @@ func Init() *gin.Engine {
 			groupPath.GET("describe", handler.DescribeSecurityGroup)
 			groupPath.POST("rule/add", handler.AddSecurityGroupRule)
 			groupPath.POST("create_with_rule", handler.CreateSecurityGroupWithRules)
+			groupPath.GET(":id/rules", handler.GetSecurityGroupWithRules)
 		}
 		networkPath := v1Api.Group("network_config/")
 		{
 			networkPath.POST("create", handler.CreateNetworkConfig)
+			networkPath.POST("sync", handler.SyncNetworkConfig)
+			networkPath.GET("template", handler.GetNetCfgTemplate)
 		}
 		regionPath := v1Api.Group("region/")
 		{
@@ -130,10 +134,11 @@ func Init() *gin.Engine {
 		userPath := v1Api.Group("user/")
 		{
 			userPath.GET("info", handler.GetUserInfo)
-			userPath.POST("create_ram_user", handler.CreateUser)
+			userPath.POST("create_user", handler.CreateUser)
 			userPath.POST("modify_password", handler.ModifyAdminPassword)
 			userPath.POST("modify_username", handler.ModifyUsername)
-			userPath.POST("enable_ram_user", handler.EnableUser)
+			userPath.POST("modify_user_type", handler.ModifyUsertype)
+			userPath.POST("enable_user", handler.EnableUser)
 			userPath.GET("list", handler.ListUsers)
 		}
 		orgPath := v1Api.Group("org/")

@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/galaxy-future/BridgX/internal/constants"
+
 	"github.com/galaxy-future/BridgX/internal/cache"
 	"github.com/galaxy-future/BridgX/internal/clients"
 	"github.com/galaxy-future/BridgX/internal/logs"
@@ -25,7 +27,7 @@ func (u *User) TableName() string {
 
 func GetUserByName(ctx context.Context, username string) *User {
 	user := User{}
-	err := clients.ReadDBCli.WithContext(ctx).Where(&User{Username: username}).Find(&user).Error
+	err := clients.ReadDBCli.WithContext(ctx).Where(&User{Username: username}).First(&user).Error
 	if err != nil {
 		logErr("get user from readDB", err)
 		return nil
@@ -36,6 +38,23 @@ func GetUserByName(ctx context.Context, username string) *User {
 func UpdateUserStatus(ctx context.Context, model interface{}, usernames []string, updates map[string]interface{}) error {
 	if err := clients.WriteDBCli.WithContext(ctx).Model(model).Where("username IN (?)", usernames).Updates(updates).Error; err != nil {
 		logErr("update data list to write db", err)
+		return err
+	}
+	return nil
+}
+
+func GetUsersByUsernamesAndUserType(ctx context.Context, usernames []string, userType int8) ([]User, error) {
+	res := make([]User, 0)
+	if err := clients.WriteDBCli.WithContext(ctx).Where("username IN (?) AND user_type = ?", usernames, userType).Find(&res).Error; err != nil {
+		logErr("get user from readDB: ", err)
+		return nil, err
+	}
+	return res, nil
+}
+
+func UpdateUserType(ctx context.Context, ids []int64, updates map[string]interface{}) error {
+	if err := clients.WriteDBCli.WithContext(ctx).Model(User{}).Where("id IN (?)", ids).Updates(updates).Error; err != nil {
+		logErr("update data list to write db: ", err)
 		return err
 	}
 	return nil
@@ -90,4 +109,14 @@ func GetUsersByIDs(ctx context.Context, ids []int64) []User {
 		return nil
 	}
 	return users
+}
+
+func GetUserList(ctx context.Context, orgId int64, pageNum, pageSize int) ([]User, int64, error) {
+	res := make([]User, 0)
+	query := clients.ReadDBCli.WithContext(ctx).Where("org_id = ? AND username != ?", orgId, constants.UserNameRoot)
+	count, err := QueryWhere(query, pageNum, pageSize, &res, "id Desc", true)
+	if err != nil {
+		return nil, 0, err
+	}
+	return res, count, nil
 }

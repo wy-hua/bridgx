@@ -108,8 +108,13 @@ func TestDiff(t *testing.T) {
 		{
 			name: "same empty struct",
 			args: args{
-				old: user{},
-				new: user{},
+				new: nil,
+				old: user{
+					Name:     "",
+					Age:      1,
+					Birthday: &t1,
+					M:        nil,
+				},
 			},
 			wantDiff: []map[string]string{},
 			wantErr:  false,
