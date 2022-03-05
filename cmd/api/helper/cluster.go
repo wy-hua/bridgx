@@ -1,6 +1,7 @@
 package helper
 
 import (
+	"github.com/galaxy-future/BridgX/internal/types"
 	"time"
 
 	"github.com/galaxy-future/BridgX/cmd/api/response"
@@ -20,6 +21,8 @@ func ConvertToClusterThumbList(clusters []model.Cluster, countMap map[string]int
 		if len(tags) > 0 {
 			usage = tags[constants.DefaultClusterUsageKey]
 		}
+		var extendConfig = &types.ExtendConfig{}
+		_ = jsoniter.UnmarshalFromString(cluster.ExtendConfig, extendConfig)
 		c := response.ClusterThumb{
 			ClusterId:     cast.ToString(cluster.Id),
 			ClusterName:   cluster.ClusterName,
@@ -29,6 +32,7 @@ func ConvertToClusterThumbList(clusters []model.Cluster, countMap map[string]int
 			Provider:      cluster.Provider,
 			Account:       cluster.AccountKey,
 			Usage:         usage,
+			ExtendConfig:  extendConfig,
 			CreateAt:      cluster.CreateAt.String(),
 			CreateBy:      cluster.CreateBy,
 			UpdateAt:      cluster.UpdateAt.String(),
