@@ -41,6 +41,7 @@ require (
 	github.com/alibabacloud-go/openapi-util v0.0.8 // indirect
 	github.com/alibabacloud-go/tea-utils v1.3.9 // indirect
 	github.com/aliyun/credentials-go v1.1.2 // indirect
+	github.com/baidubce/bce-sdk-go v0.9.108 // indirect
 	github.com/coreos/go-semver v0.3.0 // indirect
 	github.com/coreos/go-systemd/v22 v22.3.2 // indirect
 	github.com/go-logr/logr v1.2.0 // indirect

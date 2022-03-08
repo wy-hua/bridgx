@@ -16,6 +16,10 @@ type Params struct {
 	Password     string
 	Tags         []Tag
 	DryRun       bool
+
+	//百度云
+	CpuCount int
+	MemoryGb int
 }
 
 type Tag struct {
@@ -112,6 +116,7 @@ type CreateSecurityGroupRequest struct {
 	SecurityGroupName string
 	VpcId             string
 	SecurityGroupType string
+	Rules             []AddSecurityGroupRuleRequest
 }
 
 type CreateSecurityGroupResponse struct {
@@ -129,6 +134,7 @@ type AddSecurityGroupRuleRequest struct {
 	GroupId         string
 	CidrIp          string
 	PrefixListId    string
+	Direction       string //ingress egress
 }
 
 type DescribeSecurityGroupsRequest struct {
@@ -179,6 +185,7 @@ type GetRegionsResponse struct {
 type Region struct {
 	RegionId  string
 	LocalName string
+	EndPoint  string
 }
 
 type GetZonesRequest struct {
