@@ -9,6 +9,7 @@ import (
 	"github.com/baidubce/bce-sdk-go/services/vpc"
 	cloud "github.com/galaxy-future/BridgX/pkg/cloud"
 	"strconv"
+	"strings"
 )
 
 var EndPoints map[string]string
@@ -68,7 +69,13 @@ func (b BaiduCloud) BatchCreate(m cloud.Params, num int) (instanceIds []string, 
 
 	request := &api.CreateInstanceArgs{
 		ImageId: m.ImageId,
-		//Billing:               api.Billing{},
+		Billing: api.Billing{
+			PaymentTiming: api.PaymentTimingType(m.Charge.ChargeType), //https://cloud.baidu.com/doc/BCC/s/6jwvyo0q2#billing
+			Reservation: &api.Reservation{ //TODO: need confirm
+				ReservationLength:   m.Charge.Period,
+				ReservationTimeUnit: m.Charge.PeriodUnit,
+			},
+		},
 		InstanceType:        api.InstanceType(m.InstanceType), //https://cloud.baidu.com/doc/BCC/s/6jwvyo0q2#instancetype
 		CpuCount:            m.CpuCount,
 		MemoryCapacityInGB:  m.MemoryGb,
@@ -158,23 +165,41 @@ func (b BaiduCloud) GetInstances(ids []string) (instances []cloud.Instance, err 
 }
 
 func (b BaiduCloud) GetInstancesByTags(region string, tags []cloud.Tag) (instances []cloud.Instance, err error) {
-	panic("implement me")
+	return nil, nil
 }
 
 func (b BaiduCloud) GetInstancesByCluster(regionId, clusterName string) (instances []cloud.Instance, err error) {
-	panic("implement me")
+	return nil, nil
 }
 
 func (b BaiduCloud) BatchDelete(ids []string, regionId string) error {
-	panic("implement me")
+	for _, id := range ids {
+		err := b.bccClient.DeleteInstance(id)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func (b BaiduCloud) StartInstances(ids []string) error {
-	panic("implement me")
+	for _, id := range ids {
+		err := b.bccClient.StartInstance(id)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func (b BaiduCloud) StopInstances(ids []string) error {
-	panic("implement me")
+	for _, id := range ids {
+		err := b.bccClient.StopInstance(id, false)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func (b BaiduCloud) CreateVPC(req cloud.CreateVpcRequest) (cloud.CreateVpcResponse, error) {
@@ -440,21 +465,149 @@ func (b BaiduCloud) DescribeInstanceTypes(req cloud.DescribeInstanceTypesRequest
 }
 
 func (b BaiduCloud) DescribeImages(req cloud.DescribeImagesRequest) (cloud.DescribeImagesResponse, error) {
-	panic("implement me")
+	request := &api.ListImageArgs{
+		Marker:    "",
+		MaxKeys:   1000,
+		ImageType: "",
+		ImageName: "",
+	}
+
+	r, err := b.bccClient.ListImage(request)
+	if err != nil {
+		return cloud.DescribeImagesResponse{}, err
+	} else {
+		var images []cloud.Image
+		for _, item := range r.Images {
+			images = append(images, cloud.Image{
+				Platform:  item.OsArch,
+				OsType:    item.OsType,
+				OsName:    item.OsName,
+				Size:      0,
+				ImageId:   item.Id,
+				ImageName: item.Name,
+			})
+		}
+		return cloud.DescribeImagesResponse{
+			Images: images,
+		}, nil
+	}
 }
 
 func (b BaiduCloud) DescribeVpcs(req cloud.DescribeVpcsRequest) (cloud.DescribeVpcsResponse, error) {
-	panic("implement me")
+	request := &vpc.ListVPCArgs{
+		Marker:    "",
+		MaxKeys:   1000,
+		IsDefault: "",
+	}
+	r, err := b.vpcClient.ListVPC(request)
+	if err != nil {
+		return cloud.DescribeVpcsResponse{}, err
+	} else {
+		var vpcs []cloud.VPC
+		for _, item := range r.VPCs {
+			vpcs = append(vpcs, cloud.VPC{
+				VpcId:     item.VPCID,
+				VpcName:   item.Name,
+				CidrBlock: item.Cidr,
+				RegionId:  "",
+				Status:    "",
+				CreateAt:  "",
+			})
+		}
+		return cloud.DescribeVpcsResponse{
+			Vpcs: vpcs,
+		}, nil
+	}
 }
 
 func (b BaiduCloud) DescribeSwitches(req cloud.DescribeSwitchesRequest) (cloud.DescribeSwitchesResponse, error) {
-	panic("implement me")
+	request := &vpc.ListSubnetArgs{
+		Marker:     "",
+		MaxKeys:    1000,
+		VpcId:      req.VpcId,
+		ZoneName:   "",
+		SubnetType: "",
+	}
+
+	r, err := b.vpcClient.ListSubnets(request)
+	if err != nil {
+		return cloud.DescribeSwitchesResponse{}, err
+	} else {
+		var switchs []cloud.Switch
+		for _, item := range r.Subnets {
+			switchs = append(switchs, cloud.Switch{
+				VpcId:                   item.VPCId,
+				SwitchId:                item.SubnetId,
+				Name:                    item.Name,
+				IsDefault:               0,
+				AvailableIpAddressCount: item.AvailableIp,
+				VStatus:                 "",
+				CreateAt:                "",
+				ZoneId:                  item.ZoneName,
+				CidrBlock:               item.Cidr,
+				GatewayIp:               "",
+			})
+		}
+		return cloud.DescribeSwitchesResponse{Switches: switchs}, nil
+	}
 }
 
 func (b BaiduCloud) DescribeGroupRules(req cloud.DescribeGroupRulesRequest) (cloud.DescribeGroupRulesResponse, error) {
-	panic("implement me")
+	request := &api.ListSecurityGroupArgs{
+		Marker:     "",
+		MaxKeys:    1000,
+		InstanceId: "",
+		VpcId:      "",
+	}
+
+	r, err := b.bccClient.ListSecurityGroup(request)
+	if err != nil {
+		return cloud.DescribeGroupRulesResponse{}, nil
+	} else {
+		for _, item := range r.SecurityGroups {
+			if item.Id == req.SecurityGroupId {
+				var rules []cloud.SecurityGroupRule
+				for _, rule := range item.Rules {
+					portResult := strings.Split(rule.PortRange, "-")
+					portFrom, err := strconv.Atoi(portResult[0])
+					if err != nil {
+						return cloud.DescribeGroupRulesResponse{}, err
+					}
+					portTo, err := strconv.Atoi(portResult[1])
+					if err != nil {
+						return cloud.DescribeGroupRulesResponse{}, err
+					}
+
+					var cidr string
+					if rule.Direction == "egress" {
+						cidr = rule.DestIp
+					} else {
+						cidr = rule.SourceIp
+					}
+
+					rules = append(rules, cloud.SecurityGroupRule{
+						VpcId:           item.VpcId,
+						SecurityGroupId: item.Id,
+						PortFrom:        portFrom,
+						PortTo:          portTo,
+						Protocol:        rule.Protocol,
+						Direction:       rule.Direction,
+						GroupId:         "",
+						CidrIp:          cidr,
+						PrefixListId:    "",
+						CreateAt:        "",
+					})
+				}
+				return cloud.DescribeGroupRulesResponse{
+					Rules: rules,
+				}, nil
+			}
+		}
+	}
+
+	return cloud.DescribeGroupRulesResponse{}, nil
 }
 
 func (b BaiduCloud) GetOrders(req cloud.GetOrdersRequest) (cloud.GetOrdersResponse, error) {
-	panic("implement me")
+	return cloud.GetOrdersResponse{}, nil
 }
