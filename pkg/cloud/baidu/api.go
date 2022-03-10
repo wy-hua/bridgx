@@ -31,7 +31,7 @@ type BaiduCloud struct {
 }
 
 func New(AK, SK, regionId string) (*BaiduCloud, error) {
-	ep, ok := EndPoints[regionId]
+	ep, ok := EndPoints[strings.ToLower(regionId)]
 	if !ok {
 		return nil, errors.New("regionId error:" + regionId)
 	}
@@ -94,8 +94,8 @@ func (b BaiduCloud) BatchCreate(m cloud.Params, num int) (instanceIds []string, 
 		AutoSeqSuffix:        false,
 		AdminPass:            m.Password,
 		ZoneName:             m.Zone,
-		SubnetId:             "",
-		SecurityGroupId:      "",
+		SubnetId:             m.Network.SubnetId,
+		SecurityGroupId:      m.Network.SecurityGroup,
 		GpuCard:              "",
 		FpgaCard:             "",
 		CardCount:            "",
@@ -277,7 +277,7 @@ func (b BaiduCloud) GetSwitch(req cloud.GetSwitchRequest) (cloud.GetSwitchRespon
 				AvailableIpAddressCount: r.Subnet.AvailableIp,
 				VStatus:                 "",
 				CreateAt:                "",
-				ZoneId:                  "",
+				ZoneId:                  r.Subnet.ZoneName,
 				CidrBlock:               r.Subnet.Cidr,
 				GatewayIp:               "",
 			},
@@ -350,7 +350,7 @@ func (b BaiduCloud) AddEgressSecurityGroupRule(req cloud.AddSecurityGroupRuleReq
 			DestGroupId:     "",
 			SecurityGroupId: "",
 			Remark:          "",
-			Direction:       "",
+			Direction:       req.Direction,
 		},
 	}
 
@@ -443,12 +443,12 @@ func (b BaiduCloud) DescribeAvailableResource(req cloud.DescribeAvailableResourc
 			for _, flavor := range item.BccResources.FlavorGroups {
 				for _, bbcFlavor := range flavor.Flavors {
 					instanceTypes[flavor.GroupId] = append(instanceTypes[flavor.GroupId], cloud.InstanceType{
-						ChargeType:  "",
+						ChargeType:  bbcFlavor.ProductType,
 						IsGpu:       false,
 						Core:        bbcFlavor.CpuCount,
 						Memory:      bbcFlavor.MemoryCapacityInGB,
-						Family:      bbcFlavor.CpuModel,
-						InsTypeName: "",
+						Family:      "",
+						InsTypeName: bbcFlavor.Spec,
 						Status:      "",
 					})
 				}
@@ -461,7 +461,53 @@ func (b BaiduCloud) DescribeAvailableResource(req cloud.DescribeAvailableResourc
 }
 
 func (b BaiduCloud) DescribeInstanceTypes(req cloud.DescribeInstanceTypesRequest) (cloud.DescribeInstanceTypesResponse, error) {
-	return cloud.DescribeInstanceTypesResponse{}, nil
+	contains := func(arr []string, s string) bool {
+		for _, item := range arr {
+			if item == s {
+				return true
+			}
+		}
+		return false
+	}
+
+	r, err := b.bccClient.ListFlavorSpec(&api.ListFlavorSpecArgs{})
+	if err != nil {
+		return cloud.DescribeInstanceTypesResponse{}, err
+	} else {
+		var instanceTypes []cloud.InstanceType
+		for _, item := range r.ZoneResources {
+			for _, flavor := range item.BccResources.FlavorGroups {
+				for _, bbcFlavor := range flavor.Flavors {
+					if len(req.TypeName) != 0 {
+						if contains(req.TypeName, bbcFlavor.Spec) {
+							instanceTypes = append(instanceTypes, cloud.InstanceType{
+								ChargeType:  bbcFlavor.ProductType,
+								IsGpu:       false,
+								Core:        bbcFlavor.CpuCount,
+								Memory:      bbcFlavor.MemoryCapacityInGB,
+								Family:      "",
+								InsTypeName: bbcFlavor.Spec,
+								Status:      "",
+							})
+						}
+					} else {
+						instanceTypes = append(instanceTypes, cloud.InstanceType{
+							ChargeType:  bbcFlavor.ProductType,
+							IsGpu:       false,
+							Core:        bbcFlavor.CpuCount,
+							Memory:      bbcFlavor.MemoryCapacityInGB,
+							Family:      "",
+							InsTypeName: bbcFlavor.Spec,
+							Status:      "",
+						})
+					}
+				}
+			}
+		}
+		return cloud.DescribeInstanceTypesResponse{
+			Infos: instanceTypes,
+		}, nil
+	}
 }
 
 func (b BaiduCloud) DescribeImages(req cloud.DescribeImagesRequest) (cloud.DescribeImagesResponse, error) {
