@@ -405,13 +405,20 @@ CREATE TABLE `kubernetes_install_steps` (
 drop table if exists `operation_log`;
 CREATE TABLE `operation_log` (
     `id` bigint(20) NOT NULL AUTO_INCREMENT,
-    `operation` varchar(256) NOT NULL DEFAULT '' COMMENT '操作',
-    `object_name` varchar(128) NOT NULL DEFAULT '' COMMENT '备操作的对象名,一般为表名',
-    `operator` bigint(20) NOT NULL DEFAULT '0' COMMENT '操作人的 id',
-    `diff` varchar(4096) DEFAULT NULL,
-    `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-    `update_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (`id`)
+    `category` tinyint NOT NULL,
+    `action` varchar(32) NOT NULL,
+    `object` varchar(32) NOT NULL,
+    `object_value` varchar(128) NOT NULL DEFAULT '',
+    `detail` TEXT,
+    `operator` varchar(128) NOT NULL,
+    `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `update_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    index `idx_category` (`category`),
+    index `idx_object` (`object`),
+    index `idx_object_value` (`object_value`),
+    index `idx_operator` (`operator`),
+    index `idx_create_at` (`create_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='操作日志';
 
 -- init super admin info

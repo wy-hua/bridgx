@@ -9,75 +9,141 @@ import (
 	"github.com/galaxy-future/BridgX/internal/model"
 	"github.com/galaxy-future/BridgX/pkg/cmp"
 	jsoniter "github.com/json-iterator/go"
-	"gorm.io/gorm/schema"
 )
 
-type Operation string
+type Category uint8
 
 const (
-	OperationCreate Operation = "CREATE"
-	OperationUpdate Operation = "UPDATE"
-	OperationDelete Operation = "DELETE"
+	categoryBegin Category = iota
+	ExpandAndReduce
+	ClusterManage
+	AppCenter
+	categoryEnd
 )
 
-type OperationLog struct {
-	Operation Operation
-	Operator  int64
-
-	Old schema.Tabler
-	New schema.Tabler
+func (t Category) IsValid() bool {
+	return t > categoryBegin && t < categoryEnd
 }
 
-func RecordOperationLog(ctx context.Context, oplog OperationLog) error {
-	if oplog.Operator == 0 {
-		return errs.ErrOperatorIsNull
+type Action string
+
+const (
+	ActionCreate  Action = "CREATE"
+	ActionDelete  Action = "DELETE"
+	ActionUpdate  Action = "UPDATE"
+	ActionPublish Action = "PUBLISH"
+	ActionExpand  Action = "EXPAND"
+	ActionReduce  Action = "REDUCE"
+)
+
+var actionMap = map[Action]bool{
+	ActionCreate:  true,
+	ActionDelete:  true,
+	ActionUpdate:  true,
+	ActionPublish: true,
+	ActionExpand:  true,
+	ActionReduce:  true,
+}
+
+func (t Action) IsValid() bool {
+	return actionMap[t]
+}
+
+type Object string
+
+const (
+	CloudCluster Object = "CLOUD_CLUSTER"
+)
+
+var objectMap = map[Object]bool{
+	CloudCluster: true,
+}
+
+func (t Object) IsValid() bool {
+	return objectMap[t]
+}
+
+type OperationLog struct {
+	Category    Category    `json:"category"`
+	Action      Action      `json:"action"`
+	Object      Object      `json:"object"`
+	ObjectValue string      `json:"object_value"`
+	Operator    string      `json:"operator"`
+	Detail      interface{} `json:"detail"`
+	Old         interface{} `json:"old_value"`
+}
+
+func RecordOperationLog(ctx context.Context, oplog OperationLog) (err error) {
+	if !oplog.Category.IsValid() || !oplog.Action.IsValid() || !oplog.Object.IsValid() || oplog.Operator == "" {
+		return errs.ErrParam
 	}
-	user, err := GetUserById(ctx, oplog.Operator)
-	if err != nil {
-		return err
+
+	detail := ""
+	if oplog.Detail != nil {
+		var diff cmp.DiffResult
+		switch oplog.Action {
+		case ActionCreate:
+			if diff, err = cmp.Diff(nil, oplog.Detail); err != nil {
+				return err
+			}
+		case ActionUpdate:
+			if oplog.Old == nil {
+				return errs.ErrParam
+			}
+			if diff, err = cmp.Diff(oplog.Old, oplog.Detail); err != nil {
+				return err
+			}
+		default:
+			if detail, err = jsoniter.MarshalToString(oplog.Detail); err != nil {
+				return err
+			}
+		}
+
+		if len(diff.Fields) > 0 {
+			if detail, err = jsoniter.MarshalToString(diff.Fields); err != nil {
+				return err
+			}
+		}
 	}
-	if oplog.Old != nil && oplog.Old.TableName() == "" || oplog.New != nil && oplog.New.TableName() == "" {
-		return errs.ErrNewOrOldDataIsNotTabler
-	}
-	res, err := cmp.Diff(oplog.Old, oplog.New)
-	if err != nil {
-		return err
-	}
-	diff, err := res.Beautiful()
-	if err != nil {
-		return err
-	}
-	diffStr, err := jsoniter.MarshalToString(diff)
-	if err != nil {
-		return err
-	}
-	now := time.Now()
+
 	return clients.WriteDBCli.Create(&model.OperationLog{
-		Base: model.Base{
-			CreateAt: &now,
-			UpdateAt: &now,
-		},
-		Operation:  string(oplog.Operation),
-		ObjectName: oplog.New.TableName(),
-		Operator:   oplog.Operator,
-		Diff:       diffStr,
-		UserName:   user.Username,
+		Category:    uint8(oplog.Category),
+		Action:      string(oplog.Action),
+		Object:      string(oplog.Object),
+		ObjectValue: oplog.ObjectValue,
+		Operator:    oplog.Operator,
+		Detail:      detail,
 	}).Error
 }
 
-func ExtractLogs(ctx context.Context, conds model.ExtractCondition) ([]model.OperationLog, int64, error) {
-	logs, count, err := model.ExtractLogs(ctx, conds)
+type ExtractCondition struct {
+	Operators  []string  `json:"operators" form:"operators"`
+	Actions    []string  `json:"actions" form:"actions"`
+	TimeStart  time.Time `json:"time_start" form:"time_start"`
+	TimeEnd    time.Time `json:"time_end" form:"time_end"`
+	PageNumber int       `json:"page_number" form:"page_number"`
+	PageSize   int       `json:"page_size" form:"page_size"`
+}
+
+func ExtractLogs(ctx context.Context, conds ExtractCondition) ([]model.OperationLog, int64, error) {
+	query := clients.ReadDBCli.WithContext(ctx).Model(OperationLog{})
+	if len(conds.Operators) > 0 {
+		query.Where("operator IN (?)", conds.Operators)
+	}
+	if len(conds.Actions) > 0 {
+		query.Where("action IN (?)", conds.Actions)
+	}
+	if !conds.TimeStart.IsZero() {
+		query.Where("create_at >= ?", conds.TimeStart)
+	}
+	if !conds.TimeEnd.IsZero() {
+		query.Where("create_at < ?", conds.TimeEnd)
+	}
+
+	var logs []model.OperationLog
+	count, err := model.QueryWhere(query, conds.PageNumber, conds.PageSize, &logs, "", true)
 	if err != nil {
 		return nil, 0, err
 	}
-	operators := make([]int64, 0, len(logs))
-	for _, l := range logs {
-		operators = append(operators, l.Operator)
-	}
-	userMap := UserMapByIDs(ctx, operators)
-	for i, l := range logs {
-		logs[i].UserName = userMap[l.Operator]
-	}
-
 	return logs, count, nil
 }

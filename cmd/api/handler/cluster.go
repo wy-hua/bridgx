@@ -609,6 +609,21 @@ func ExpandCluster(ctx *gin.Context) {
 		response.MkResponse(ctx, http.StatusInternalServerError, err.Error(), nil)
 		return
 	}
+
+	detail := map[string]interface{}{
+		"count":   req.Count,
+		"task_id": taskId,
+	}
+	if err = service.RecordOperationLog(ctx, service.OperationLog{
+		Category:    service.ExpandAndReduce,
+		Action:      service.ActionExpand,
+		Object:      service.CloudCluster,
+		ObjectValue: req.ClusterName,
+		Operator:    user.Name,
+		Detail:      detail,
+	}); err != nil {
+		logs.Logger.Warnf("RecordOperationLog failed, %v", err)
+	}
 	response.MkResponse(ctx, http.StatusOK, response.Success, taskId)
 	return
 }
@@ -629,6 +644,21 @@ func ShrinkCluster(ctx *gin.Context) {
 	if err != nil {
 		response.MkResponse(ctx, http.StatusInternalServerError, err.Error(), nil)
 		return
+	}
+
+	detail := map[string]interface{}{
+		"count":   req.Count,
+		"task_id": taskId,
+	}
+	if err = service.RecordOperationLog(ctx, service.OperationLog{
+		Category:    service.ExpandAndReduce,
+		Action:      service.ActionReduce,
+		Object:      service.CloudCluster,
+		ObjectValue: req.ClusterName,
+		Operator:    user.Name,
+		Detail:      detail,
+	}); err != nil {
+		logs.Logger.Warnf("RecordOperationLog failed, %v", err)
 	}
 	response.MkResponse(ctx, http.StatusOK, response.Success, taskId)
 	return

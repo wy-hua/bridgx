@@ -23,16 +23,17 @@ func TestRecordOperationLog(t *testing.T) {
 			args: args{
 				ctx: nil,
 				oplog: service.OperationLog{
-					Operation: "edit cluster",
-					Operator:  2,
-					Old: model.Account{
-						Base:        model.Base{},
-						AccountName: "1",
+					Category:    service.ClusterManage,
+					Action:      service.ActionUpdate,
+					Object:      service.CloudCluster,
+					ObjectValue: "gf.bridgx.online",
+					Operator:    "root",
+					Detail: model.Cluster{
+						AccountKey: "key",
 					},
-					New: model.Account{
-						Base:        model.Base{},
-						AccountName: "2",
-						UpdateBy:    "dasdad",
+					Old: model.Cluster{
+						ExpectCount: 1,
+						ClusterName: "name",
 					},
 				},
 			},

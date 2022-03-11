@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/galaxy-future/BridgX/pkg/utils"
-	"github.com/google/go-cmp/cmp"
 )
 
 type user struct {
@@ -102,7 +101,7 @@ func TestDiff(t *testing.T) {
 	tests := []struct {
 		name     string
 		args     args
-		wantDiff []map[string]string
+		wantDiff DiffResult
 		wantErr  bool
 	}{
 		{
@@ -116,7 +115,7 @@ func TestDiff(t *testing.T) {
 					M:        nil,
 				},
 			},
-			wantDiff: []map[string]string{},
+			wantDiff: DiffResult{},
 			wantErr:  false,
 		},
 		{
@@ -133,8 +132,10 @@ func TestDiff(t *testing.T) {
 					Birthday: &t1,
 				},
 			},
-			wantDiff: []map[string]string{
-				{"operation": "edit", "target": "age", "old": "21", "new": "20"},
+			wantDiff: DiffResult{
+				[]FieldInfo{
+					{Key: "age", ValueOld: "21", ValueNew: "20"},
+				},
 			},
 			wantErr: false,
 		},
@@ -152,9 +153,11 @@ func TestDiff(t *testing.T) {
 					Birthday: &t2,
 				},
 			},
-			wantDiff: []map[string]string{
-				{"operation": "edit", "target": "age", "old": "21", "new": "20"},
-				{"target": "birthday", "old": utils.FormatTime(t1), "new": utils.FormatTime(t2), "operation": "edit"},
+			wantDiff: DiffResult{
+				[]FieldInfo{
+					{Key: "age", ValueOld: "21", ValueNew: "20"},
+					{Key: "birthday", ValueOld: utils.FormatTime(t1), ValueNew: utils.FormatTime(t2)},
+				},
 			},
 			wantErr: false,
 		},
@@ -166,14 +169,9 @@ func TestDiff(t *testing.T) {
 				t.Errorf("Diff() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			display, err := gotRes.Beautiful()
-			if err != nil {
-				t.Errorf("Beautiful() error = %v", err)
-				return
-			}
-			if !reflect.DeepEqual(display, tt.wantDiff) {
-				fmt.Println(cmp.Diff(display, tt.wantDiff))
-				t.Errorf("Diff() display = %v, want %v", display, tt.wantDiff)
+			if !reflect.DeepEqual(gotRes, tt.wantDiff) {
+				fmt.Println(Diff(gotRes, tt.wantDiff))
+				t.Errorf("Diff() res = %v, want %v", gotRes, tt.wantDiff)
 			}
 		})
 	}

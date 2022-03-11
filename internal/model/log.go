@@ -1,52 +1,40 @@
 package model
 
 import (
-	"context"
 	"time"
 
-	"github.com/galaxy-future/BridgX/internal/clients"
+	"gorm.io/gorm"
 )
 
 type OperationLog struct {
 	Base
-	Operation  string `gorm:"column:operation"`   // edit/create/delete
-	ObjectName string `gorm:"column:object_name"` // target model's table name
-	Operator   int64  `gorm:"column:operator"`
-	Diff       string `gorm:"column:diff"`
-
-	UserName string `gorm:"-"`
+	Category    uint8
+	Action      string
+	Object      string
+	ObjectValue string
+	Operator    string
+	Detail      string
 }
 
-func (OperationLog) TableName() string {
+func (t OperationLog) TableName() string {
 	return "operation_log"
 }
 
-type ExtractCondition struct {
-	Operators  []int64
-	Operations []string
-	TimeStart  time.Time
-	TimeEnd    time.Time
-	PageNumber int
-	PageSize   int
+func (t *OperationLog) BeforeCreate(*gorm.DB) (err error) {
+	now := time.Now()
+	t.CreateAt = &now
+	t.UpdateAt = &now
+	return
 }
 
-func ExtractLogs(ctx context.Context, conds ExtractCondition) (logs []OperationLog, count int64, err error) {
-	query := clients.ReadDBCli.WithContext(ctx).Model(OperationLog{})
-	if len(conds.Operators) > 0 {
-		query.Where("operator IN (?)", conds.Operators)
-	}
-	if len(conds.Operations) > 0 {
-		query.Where("operation IN (?)", conds.Operations)
-	}
-	if !conds.TimeStart.IsZero() {
-		query.Where("create_at >= ?", conds.TimeStart)
-	}
-	if !conds.TimeEnd.IsZero() {
-		query.Where("create_at < ?", conds.TimeEnd)
-	}
-	count, err = QueryWhere(query, conds.PageNumber, conds.PageSize, &logs, "id Desc", true)
-	if err != nil {
-		return nil, 0, err
-	}
-	return logs, count, nil
+func (t *OperationLog) BeforeSave(*gorm.DB) (err error) {
+	now := time.Now()
+	t.UpdateAt = &now
+	return
+}
+
+func (t *OperationLog) BeforeUpdate(*gorm.DB) (err error) {
+	now := time.Now()
+	t.UpdateAt = &now
+	return
 }

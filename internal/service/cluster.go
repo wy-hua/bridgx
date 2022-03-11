@@ -44,14 +44,16 @@ func CreateClusterWithTagsAndInstances(ctx context.Context, cluster *model.Clust
 	if err != nil {
 		return err
 	}
-	err = RecordOperationLog(ctx, OperationLog{
-		Operation: OperationCreate,
-		Operator:  uid,
-		Old:       nil,
-		New:       cluster,
-	})
-	if err != nil {
-		logs.Logger.Errorf("RecordOperationLog failed.Err:[%s]", err.Error())
+
+	if err = RecordOperationLog(ctx, OperationLog{
+		Category:    ClusterManage,
+		Action:      ActionCreate,
+		Object:      CloudCluster,
+		ObjectValue: cluster.ClusterName,
+		Operator:    username,
+		Detail:      cluster,
+	}); err != nil {
+		logs.Logger.Warnf("RecordOperationLog failed, %v", err)
 	}
 	return nil
 }

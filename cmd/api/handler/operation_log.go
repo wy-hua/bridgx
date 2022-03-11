@@ -12,25 +12,33 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type ExtractLogRequest struct {
-	Operators  []int64  `json:"operators" form:"operators"`
-	Operations []string `json:"operations" form:"operations"`
-	TimeStart  string   `json:"time_start" form:"time_start"`
-	TimeEnd    string   `json:"time_end" form:"time_end"`
-	PageNumber int      `json:"page_number" form:"page_number"`
-	PageSize   int      `json:"page_size" form:"page_size"`
+func CreateLog(ctx *gin.Context) {
+	req := service.OperationLog{}
+	err := ctx.BindJSON(&req)
+	if err != nil {
+		response.MkResponse(ctx, http.StatusBadRequest, err.Error(), nil)
+		return
+	}
+
+	err = service.RecordOperationLog(ctx, req)
+	if err != nil {
+		response.MkResponse(ctx, http.StatusInternalServerError, err.Error(), nil)
+		return
+	}
+	response.MkResponse(ctx, http.StatusOK, response.Success, nil)
+	return
 }
+
 type ExtractLogsResponse struct {
 	Logs  []Log
 	Pager types.Pager
 }
 type Log struct {
-	ID              int64  `json:"id"`
-	Operator        int64  `json:"operator"`
-	UserName        string `json:"user_name"`
-	Operation       string `json:"operation"`
-	OperationDetail string `json:"operation_detail"`
-	ExecTime        string `json:"exec_time"`
+	ID       int64  `json:"id"`
+	Operator string `json:"operator"`
+	Action   string `json:"action"`
+	Detail   string `json:"detail"`
+	ExecTime string `json:"exec_time"`
 }
 
 func ExtractLog(ctx *gin.Context) {
@@ -40,22 +48,14 @@ func ExtractLog(ctx *gin.Context) {
 		response.MkResponse(ctx, http.StatusForbidden, response.PermissionDenied, nil)
 		return
 	}
-	req := ExtractLogRequest{}
+	req := service.ExtractCondition{}
 	err := ctx.BindQuery(&req)
 	if err != nil {
 		response.MkResponse(ctx, http.StatusBadRequest, err.Error(), nil)
 		return
 	}
 
-	logs, total, err := service.ExtractLogs(ctx, model.ExtractCondition{
-		Operators:  req.Operators,
-		Operations: req.Operations,
-		TimeStart:  utils.ParseTime(req.TimeStart),
-		TimeEnd:    utils.ParseTime(req.TimeEnd),
-		PageNumber: req.PageNumber,
-		PageSize:   req.PageSize,
-	})
-
+	logs, total, err := service.ExtractLogs(ctx, req)
 	if err != nil {
 		response.MkResponse(ctx, http.StatusInternalServerError, err.Error(), nil)
 		return
@@ -78,12 +78,11 @@ func modelLog2Res(logs []model.OperationLog, total, page, size int) ExtractLogsR
 			execTime = utils.FormatTime(*log.CreateAt)
 		}
 		res.Logs = append(res.Logs, Log{
-			ID:              log.Id,
-			Operator:        log.Operator,
-			UserName:        log.UserName,
-			Operation:       log.Operation + " " + log.ObjectName, // TODO: translation
-			OperationDetail: log.Diff,
-			ExecTime:        execTime,
+			ID:       log.Id,
+			Operator: log.Operator,
+			Action:   log.Action,
+			Detail:   log.Detail,
+			ExecTime: execTime,
 		})
 	}
 	return res

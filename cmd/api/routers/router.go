@@ -154,6 +154,7 @@ func Init() *gin.Engine {
 		}
 		logPath := v1Api.Group("log/")
 		{
+			logPath.POST("create", handler.CreateLog)
 			logPath.GET("extract", handler.ExtractLog)
 		}
 
