@@ -94,6 +94,28 @@ func UpdateByInstanceId(instance Instance) error {
 	return nil
 }
 
+func SaveByInstanceId(instance Instance) error {
+	instanceIds := make([]string, 0)
+	if err := clients.ReadDBCli.Model(&Instance{}).
+		Select("instance_id").
+		Where("instance_id = ?", instance.InstanceId).
+		Scan(&instanceIds).Error; err != nil {
+		return err
+	}
+	if len(instanceIds) > 0 {
+		if err := UpdateByInstanceId(instance); err != nil {
+			return err
+		}
+	} else {
+		now := time.Now()
+		instance.CreateAt = &now
+		if err := clients.WriteDBCli.Save(&instance).Error; err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 func BatchUpdateByInstanceIds(instanceIds []string, instance Instance) error {
 	if err := clients.WriteDBCli.Where("instance_id IN (?)", instanceIds).Updates(instance).Error; err != nil {
 		logErr("UpdateByInstanceId from write db", err)

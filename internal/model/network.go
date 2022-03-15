@@ -13,7 +13,7 @@ import (
 
 type Network struct {
 	Base
-	AK                      string `gorm:"ak"`
+	AK                      string `gorm:"column:ak"`
 	RegionId                string
 	VpcId                   string
 	SubNetId                string
@@ -28,7 +28,7 @@ func (Network) TableName() string {
 
 type Vpc struct {
 	Base
-	AK        string `gorm:"ak"`
+	AK        string `gorm:"column:ak"`
 	RegionId  string
 	VpcId     string
 	Name      string
@@ -62,7 +62,7 @@ func (Switch) TableName() string {
 
 type SecurityGroup struct {
 	Base
-	AK                string `gorm:"ak"`
+	AK                string `gorm:"column:ak"`
 	Provider          string
 	RegionId          string
 	VpcId             string
@@ -138,7 +138,7 @@ func FindVpcsWithPage(ctx context.Context, cond FindVpcConditions) (result []Vpc
 		cond.PageSize = constants.DefaultPageSize
 	}
 	offset := (cond.PageNumber - 1) * cond.PageSize
-	err = query.Find(&result).Limit(int(cond.PageSize)).Offset(int(offset)).Error
+	err = query.Order("create_at DESC,id").Limit(int(cond.PageSize)).Offset(int(offset)).Find(&result).Error
 	if err != nil {
 		logs.Logger.Errorf("FindVpcsWithPage failed.err: [%v]", err)
 		return nil, 0, err

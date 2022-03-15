@@ -127,16 +127,10 @@ func getCount(task *model.Task, taskInfo model.TaskInfo, taskResult *model.TaskR
 				suspending++
 			case constants.Pending:
 				running++
-			case constants.Timeout:
-				fail++
 			case constants.Starting:
 				running++
 			case constants.Running:
 				success++
-			case constants.Deleted:
-				fail++
-			case constants.Deleting:
-				fail++
 			}
 		}
 	} else {

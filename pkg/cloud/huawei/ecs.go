@@ -10,6 +10,7 @@ import (
 	"github.com/galaxy-future/BridgX/internal/logs"
 	"github.com/galaxy-future/BridgX/pkg/cloud"
 	"github.com/galaxy-future/BridgX/pkg/utils"
+	"github.com/huaweicloud/huaweicloud-sdk-go-v3/core/sdkerr"
 	"github.com/huaweicloud/huaweicloud-sdk-go-v3/services/ecs/v2/model"
 	"github.com/spf13/cast"
 )
@@ -247,6 +248,11 @@ func (p *HuaweiCloud) BatchDelete(ids []string, regionId string) error {
 		}
 		response, err := p.ecsClient.DeleteServers(request)
 		if err != nil {
+			if realErr, ok := err.(*sdkerr.ServiceResponseError); ok {
+				if realErr.ErrorCode == "Ecs.0614" {
+					continue
+				}
+			}
 			return err
 		}
 		if response.HttpStatusCode != http.StatusOK {

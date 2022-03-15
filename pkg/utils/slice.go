@@ -20,13 +20,13 @@ func StringSliceDiff(s1, s2 []string) []string {
 		return s1
 	}
 
-	tmpMap := make(map[string]int, len(s1)+len(s2))
+	tmpMap := make(map[string]int8, len(s1)+len(s2))
 	diff := make([]string, 0, len(s1))
 	for _, v := range s1 {
-		tmpMap[v] += 1
+		tmpMap[v] |= 1
 	}
 	for _, v := range s2 {
-		tmpMap[v] += 2
+		tmpMap[v] |= 2
 	}
 	for k, v := range tmpMap {
 		if v == 1 {

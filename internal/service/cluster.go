@@ -286,13 +286,19 @@ func ExpandCluster(c *types.ClusterInfo, num int, taskId int64) ([]string, []str
 	}
 
 	//查询扩容的Instance的IP并保存
-	expandIPs, availableIds, err := queryAndSaveExpandIPs(c, taskId, len(expandInstanceIds))
+	expandIPs, availableIds, err := queryAndSaveExpandIPs(c, taskId, len(expandInstanceIds), num)
 	if err != nil {
 		logs.Logger.Errorf("[ExpandCluster] queryAndSaveExpandIPs error. cluster name: %s, error: %v", c.Name, err)
 		return availableIds, expandInstanceIds, err
 	}
+
+	idDiff := utils.StringSliceDiff(availableIds, expandInstanceIds)
+	if len(idDiff) > 0 {
+		expandInstanceIds = append(expandInstanceIds, idDiff...)
+	}
+
 	//发布扩容信息到配置中心
-	_ = publishExpandConfig(c.Name, expandInstanceIds, expandIPs)
+	_ = publishExpandConfig(c.Name, availableIds, expandIPs)
 	return availableIds, expandInstanceIds, expandErr
 }
 
@@ -314,6 +320,9 @@ func ShrinkClusterBySpecificIps(c *types.ClusterInfo, deletingIPs string, count 
 	}
 	now := time.Now()
 	err = model.BatchUpdateByInstanceIds(toBeDeletedIds, model.Instance{
+		Base: model.Base{
+			UpdateAt: &now,
+		},
 		ShrinkTaskId: taskId,
 		Status:       constants.Deleted,
 		DeleteAt:     &now,
@@ -344,6 +353,9 @@ func ShrinkCluster(c *types.ClusterInfo, num int, taskId int64) (err error) {
 	}
 	now := time.Now()
 	err = model.BatchUpdateByInstanceIds(toBeDeletedInstanceIds, model.Instance{
+		Base: model.Base{
+			UpdateAt: &now,
+		},
 		ShrinkTaskId: taskId,
 		Status:       constants.Deleted,
 		DeleteAt:     &now,
@@ -431,7 +443,7 @@ func getDelayFactor(n int) int {
 	}
 }
 
-func queryAndSaveExpandIPs(c *types.ClusterInfo, taskId int64, idNum int) ([]string, []string, error) {
+func queryAndSaveExpandIPs(c *types.ClusterInfo, taskId int64, idNum, wantedNum int) ([]string, []string, error) {
 	var err error
 	needPublicIp := false
 	if c.NetworkConfig != nil && c.NetworkConfig.InternetMaxBandwidthOut > 0 {
@@ -471,7 +483,12 @@ func queryAndSaveExpandIPs(c *types.ClusterInfo, taskId int64, idNum int) ([]str
 			if instance.CostWay == cloud.InstanceChargeTypePrePaid {
 				expireAt = instance.ExpireAt
 			}
-			return model.UpdateByInstanceId(model.Instance{
+			return model.SaveByInstanceId(model.Instance{
+				Base: model.Base{
+					UpdateAt: &now,
+				},
+				TaskId:      taskId,
+				ChargeType:  instance.CostWay,
 				InstanceId:  instance.Id,
 				IpInner:     instance.IpInner,
 				IpOuter:     instance.IpOuter,
@@ -489,6 +506,10 @@ func queryAndSaveExpandIPs(c *types.ClusterInfo, taskId int64, idNum int) ([]str
 
 		expandIps = append(expandIps, instance.IpInner)
 		expandIds = append(expandIds, instance.Id)
+		wantedNum -= 1
+		if wantedNum == 0 {
+			break
+		}
 	}
 	return expandIps, expandIds, nil
 }

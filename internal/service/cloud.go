@@ -52,7 +52,8 @@ func ExpandInDeed(c *types.ClusterInfo, num int, taskId int64) ([]string, error)
 }
 
 func RepairCluster(c *types.ClusterInfo, taskId int64, availableIds []string, allIds []string) int {
-	successNum := len(availableIds)
+	availableNum := len(availableIds)
+	cloudIds := make([]string, 0, availableNum)
 	tags := []cloud.Tag{{
 		Key:   cloud.TaskId,
 		Value: strconv.FormatInt(taskId, 10),
@@ -60,44 +61,45 @@ func RepairCluster(c *types.ClusterInfo, taskId int64, availableIds []string, al
 	cloudInstances, err := GetInstanceByTag(c, tags)
 	if err != nil {
 		logs.Logger.Errorf("[RepairCluster] GetInstanceByTag failed %v", err)
-		return successNum
-	}
-
-	cloudInsNum := len(cloudInstances)
-	logs.Logger.Infof("[RepairCluster] GetInstanceByTag length %d, available num %d, all num %d", cloudInsNum, len(availableIds), len(allIds))
-	cloudIds := make([]string, 0, cloudInsNum)
-	for _, instance := range cloudInstances {
-		cloudIds = append(cloudIds, instance.Id)
+	} else {
+		logs.Logger.Infof("[RepairCluster] GetInstanceByTag length %d, available num %d, all num %d", len(cloudInstances), availableNum, len(allIds))
+		for _, instance := range cloudInstances {
+			cloudIds = append(cloudIds, instance.Id)
+		}
 	}
 	onlyCouldIds, onlyMemoryIds := cloudDiff(cloudIds, availableIds)
-	logs.Logger.Infof("[RepairCluster] taskId: %d, ClusterName: %s, Shrink InstanceIds num: %v", taskId, c.Name, len(onlyCouldIds))
-	shrink := func(attempt uint) error {
-		return Shrink(c, onlyCouldIds)
-	}
-	err = retry.Retry(shrink, strategy.Limit(3), strategy.Backoff(backoff.BinaryExponential(10*time.Millisecond)))
-	if err != nil {
-		logs.Logger.Errorf("[RepairCluster] taskId: %d, ClusterName: %s, Shrink InstanceIds error: %s", taskId, c.Name, err.Error())
+	if len(onlyCouldIds) > 0 {
+		logs.Logger.Infof("[RepairCluster] taskId: %d, ClusterName: %s, Shrink InstanceIds num: %v", taskId, c.Name, len(onlyCouldIds))
+		shrink := func(attempt uint) error {
+			return Shrink(c, onlyCouldIds)
+		}
+		err = retry.Retry(shrink, strategy.Limit(3), strategy.Backoff(backoff.BinaryExponential(10*time.Millisecond)))
+		if err != nil {
+			logs.Logger.Errorf("[RepairCluster] taskId: %d, ClusterName: %s, Shrink InstanceIds error: %s", taskId, c.Name, err.Error())
+		}
 	}
 
 	deleteIds, _ := cloudDiff(allIds, availableIds)
 	deleteIds = append(deleteIds, onlyMemoryIds...)
-	logs.Logger.Infof("[RepairCluster] taskId: %d, ClusterName: %s, delete InstanceIds num: %v", taskId, c.Name, len(deleteIds))
-	update := func(attempt uint) error {
-		if len(deleteIds) == 0 {
-			return nil
+	if len(deleteIds) > 0 {
+		logs.Logger.Infof("[RepairCluster] taskId: %d, ClusterName: %s, delete InstanceIds num: %v", taskId, c.Name, len(deleteIds))
+		update := func(attempt uint) error {
+			now := time.Now()
+			return model.BatchUpdateByInstanceIds(deleteIds, model.Instance{
+				Base: model.Base{
+					UpdateAt: &now,
+				},
+				DeleteAt: &now,
+				Status:   constants.Deleted,
+			})
 		}
-		now := time.Now()
-		return model.BatchUpdateByInstanceIds(deleteIds, model.Instance{
-			DeleteAt: &now,
-			Status:   constants.Deleted,
-		})
-	}
-	err = retry.Retry(update, strategy.Limit(3), strategy.Backoff(backoff.BinaryExponential(10*time.Millisecond)))
-	if err != nil {
-		logs.Logger.Errorf("[RepairCluster] taskId: %d, ClusterName: %s, delete InstanceIds error: %s", taskId, c.Name, err.Error())
+		err = retry.Retry(update, strategy.Limit(3), strategy.Backoff(backoff.BinaryExponential(10*time.Millisecond)))
+		if err != nil {
+			logs.Logger.Errorf("[RepairCluster] taskId: %d, ClusterName: %s, delete InstanceIds error: %s", taskId, c.Name, err.Error())
+		}
 	}
 
-	return successNum - len(onlyMemoryIds)
+	return availableNum - len(onlyMemoryIds)
 }
 
 func cloudDiff(cloudIds, memoryIds []string) (onlyCouldIds, onlyMemoryIds []string) {
@@ -109,10 +111,10 @@ func cloudDiff(cloudIds, memoryIds []string) (onlyCouldIds, onlyMemoryIds []stri
 	}
 	tmpMap := make(map[string]int, 0)
 	for _, id := range cloudIds {
-		tmpMap[id] += 1
+		tmpMap[id] |= 1
 	}
 	for _, id := range memoryIds {
-		tmpMap[id] += 2
+		tmpMap[id] |= 2
 	}
 	for k, v := range tmpMap {
 		if v == 1 {

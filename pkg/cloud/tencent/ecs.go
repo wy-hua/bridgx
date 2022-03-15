@@ -7,6 +7,7 @@ import (
 	"github.com/galaxy-future/BridgX/pkg/cloud"
 	"github.com/galaxy-future/BridgX/pkg/utils"
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
+	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/errors"
 	cvm "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/cvm/v20170312"
 )
 
@@ -134,9 +135,22 @@ func (p *TencentCloud) BatchDelete(ids []string, regionId string) error {
 	batchIds := utils.StringSliceSplit(ids, _maxNumEcsPerOperation)
 	for _, onceIds := range batchIds {
 		request := cvm.NewTerminateInstancesRequest()
-		request.InstanceIds = common.StringPtrs(onceIds)
-		_, err := p.cvmClient.TerminateInstances(request)
-		if err != nil {
+		for {
+			request.InstanceIds = common.StringPtrs(onceIds)
+			_, err := p.cvmClient.TerminateInstances(request)
+			if err == nil {
+				break
+			}
+			if realErr, ok := err.(*errors.TencentCloudSDKError); ok {
+				if realErr.GetCode() == "InvalidInstanceId.NotFound" {
+					invalidIds := getInvalidIds(realErr.GetMessage())
+					onceIds = utils.StringSliceDiff(onceIds, invalidIds)
+					if len(onceIds) > 0 {
+						continue
+					}
+					break
+				}
+			}
 			return err
 		}
 	}
@@ -330,4 +344,19 @@ func cvmInsType2CloudInsType(cvmInsType []*cvm.InstanceTypeQuotaItem) []cloud.In
 		})
 	}
 	return insType
+}
+
+func getInvalidIds(msg string) []string {
+	invalidIds := make([]string, 0)
+	msg = msg[strings.Index(msg, "['")+2 : strings.Index(msg, "']")]
+	for {
+		end := strings.Index(msg, "'")
+		if end == -1 {
+			invalidIds = append(invalidIds, msg)
+			break
+		}
+		invalidIds = append(invalidIds, msg[:end])
+		msg = msg[end+4:]
+	}
+	return invalidIds
 }

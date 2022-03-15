@@ -139,20 +139,36 @@ func (p *AlibabaCloud) GetInstances(ids []string) (instances []cloud.Instance, e
 	return
 }
 
+// BatchDelete 出现InvalidInstanceId.NotFound错误后，request不能复用，每次循环需重新创建
 func (p *AlibabaCloud) BatchDelete(ids []string, regionId string) (err error) {
-	request := ecs.CreateDeleteInstancesRequest()
-	request.Scheme = "https"
-	request.RegionId = regionId
-	request.Force = requests.NewBoolean(true)
 	batchIds := utils.StringSliceSplit(ids, 50)
 	var response *ecs.DeleteInstancesResponse
 	for _, onceIds := range batchIds {
-		request.InstanceId = &onceIds
-		response, err = p.client.DeleteInstances(request)
-		if err != nil {
+		for {
+			request := ecs.CreateDeleteInstancesRequest()
+			request.Scheme = "https"
+			request.RegionId = regionId
+			request.Force = requests.NewBoolean(true)
+			request.InstanceId = &onceIds
+			response, err = p.client.DeleteInstances(request)
+			if err == nil {
+				logs.Logger.Infof("[BatchDelete] requestId: %s", response.RequestId)
+				break
+			}
+			if realErr, ok := err.(*sdkErr.ServerError); ok {
+				if realErr.ErrorCode() == "InvalidInstanceIds.NotFound" {
+					break
+				} else if realErr.ErrorCode() == "InvalidInstanceId.NotFound" {
+					invalidIds := getInvalidIds(realErr.Message())
+					onceIds = utils.StringSliceDiff(onceIds, invalidIds)
+					if len(onceIds) > 0 {
+						continue
+					}
+					break
+				}
+			}
 			return err
 		}
-		logs.Logger.Infof("[BatchDelete] requestId: %s", response.RequestId)
 	}
 	return nil
 }
@@ -903,4 +919,19 @@ func portRange2Int(portRange string) (from, to int) {
 		to = cast.ToInt(portRange[idx+1:])
 	}
 	return
+}
+
+func getInvalidIds(msg string) []string {
+	invalidIds := make([]string, 0)
+	msg = msg[strings.Index(msg, "(")+1 : strings.Index(msg, ")")]
+	for {
+		end := strings.Index(msg, ";")
+		if end == -1 {
+			invalidIds = append(invalidIds, msg)
+			break
+		}
+		invalidIds = append(invalidIds, msg[:end])
+		msg = msg[end+1:]
+	}
+	return invalidIds
 }

@@ -134,7 +134,7 @@ func TestCtlIns(t *testing.T) {
 	}
 
 	time.Sleep(time.Duration(30) * time.Second)
-	err = client.BatchDelete(ids, "")
+	err = client.BatchDelete(ids, _region)
 	if err != nil {
 		t.Log(err.Error())
 	}

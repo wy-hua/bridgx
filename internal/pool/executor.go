@@ -37,16 +37,14 @@ func doExpand(task *model.Task) {
 		taskFailed(task, err)
 		return
 	}
-	availableIds, allIds, err := service.ExpandCluster(clusterInfo, taskInfo.Count, task.Id)
-	if len(availableIds) == taskInfo.Count {
-		taskSuccess(task, taskInfo.Count)
+	availableIds, allIds, expandErr := service.ExpandCluster(clusterInfo, taskInfo.Count, task.Id)
+	successNum := service.RepairCluster(clusterInfo, task.Id, availableIds, allIds)
+	if successNum == taskInfo.Count {
+		taskSuccess(task, successNum)
+	} else if successNum == 0 {
+		taskFailed(task, expandErr)
 	} else {
-		successNum := service.RepairCluster(clusterInfo, task.Id, availableIds, allIds)
-		if successNum == 0 {
-			taskFailed(task, err)
-		} else {
-			taskPartialSuccess(task, successNum, err)
-		}
+		taskPartialSuccess(task, successNum, expandErr)
 	}
 }
 
