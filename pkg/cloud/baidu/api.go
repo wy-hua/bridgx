@@ -514,7 +514,7 @@ func (b BaiduCloud) DescribeImages(req cloud.DescribeImagesRequest) (cloud.Descr
 	request := &api.ListImageArgs{
 		Marker:    "",
 		MaxKeys:   1000,
-		ImageType: "",
+		ImageType: req.ImageType,
 		ImageName: "",
 	}
 
