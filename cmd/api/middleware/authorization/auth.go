@@ -4,10 +4,10 @@ import (
 	"net/http"
 	"strings"
 
-	gf_cluster "github.com/galaxy-future/BridgX/pkg/gf-cluster"
-
 	"github.com/galaxy-future/BridgX/cmd/api/response"
 	"github.com/galaxy-future/BridgX/config"
+	"github.com/galaxy-future/BridgX/internal/constants"
+	gf_cluster "github.com/galaxy-future/BridgX/pkg/gf-cluster"
 	"github.com/gin-gonic/gin"
 )
 
@@ -31,6 +31,7 @@ func CheckTokenAuth() gin.HandlerFunc {
 				if customToken, err := CreateUserTokenFactory().ParseToken(token[1]); err == nil {
 					key := config.GlobalConfig.JwtToken.BindContextKeyName
 					ctx.Set(key, customToken)
+					ctx.Set(constants.CtxUserNameKey, customToken.Name)
 				}
 				ctx.Next()
 			} else {

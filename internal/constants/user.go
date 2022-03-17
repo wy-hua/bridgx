@@ -10,4 +10,5 @@ const (
 
 	UserStatusEnable  = "enable"
 	UserStatusDisable = "disable"
+	CtxUserNameKey    = "USER_NAME"
 )
