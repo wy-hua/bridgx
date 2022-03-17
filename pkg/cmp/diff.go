@@ -17,7 +17,6 @@ const (
 
 var (
 	errDifferentTypeCompare = errors.New("different types cannot be compared")
-	errInvalidType          = errors.New("only support struct")
 )
 
 type DiffResult struct {
@@ -92,20 +91,25 @@ func diff(t reflect.Type, v1, v2 reflect.Value) (res DiffResult, err error) {
 			if tag == "" {
 				continue
 			}
-			f1Value := v1.Field(i)
-			f2Value := v2.Field(i)
-			if compare(f1Value, f2Value) {
+			value1 := v1.Field(i)
+			value2 := v2.Field(i)
+			if compare(value1, value2) {
 				continue
 			}
 
-			res.Fields = append(res.Fields, FieldInfo{
-				Key:      tag,
-				ValueOld: toString(f1Value),
-				ValueNew: toString(f2Value),
-			})
+			res.Fields = append(res.Fields, packFieldInfo(tag, toString(value1), toString(value2)))
 		}
 	} else if v1.Kind() == reflect.Map {
+		keys1 := v1.MapKeys()
+		for _, key := range keys1 {
+			value1 := v1.MapIndex(key)
+			value2 := v2.MapIndex(key)
+			if compare(value1, value2) {
+				continue
+			}
 
+			res.Fields = append(res.Fields, packFieldInfo(key.String(), toString(value1), toString(value2)))
+		}
 	}
 	return res, nil
 }
@@ -121,32 +125,60 @@ func diffWithOneNil(t reflect.Type, v reflect.Value, oldIsNil bool) (res DiffRes
 			if tag == "" {
 				continue
 			}
-			fValue := v.Field(i)
-			if fValue.IsZero() {
+			value := v.Field(i)
+			if value.IsZero() {
 				continue
 			}
 
-			fieldInfo := FieldInfo{
-				Key: tag,
-			}
 			if oldIsNil {
-				fieldInfo.ValueNew = toString(fValue)
+				res.Fields = append(res.Fields, packFieldInfo(tag, "", toString(value)))
 			} else {
-				fieldInfo.ValueOld = toString(fValue)
+				res.Fields = append(res.Fields, packFieldInfo(tag, toString(value), ""))
 			}
-			res.Fields = append(res.Fields, fieldInfo)
 		}
 	} else if v.Kind() == reflect.Map {
+		iter := v.MapRange()
+		for iter.Next() {
+			key := iter.Key()
+			value := iter.Value()
+			if value.IsZero() {
+				continue
+			}
 
+			if oldIsNil {
+				res.Fields = append(res.Fields, packFieldInfo(key.String(), "", toString(value)))
+			} else {
+				res.Fields = append(res.Fields, packFieldInfo(key.String(), toString(value), ""))
+			}
+		}
 	}
 	return res, nil
 }
 
+func packFieldInfo(key, old, new string) FieldInfo {
+	fieldInfo := FieldInfo{
+		Key:      key,
+		ValueOld: old,
+		ValueNew: new,
+	}
+	return fieldInfo
+}
+
+//kind为reflect.Interface时，相同的值reflect.DeepEqual也认为不相等
 func compare(v1, v2 reflect.Value) bool {
 	k1, k2 := v1.Kind(), v2.Kind()
+	if k1 == reflect.Interface {
+		v1 = v1.Elem()
+		k1 = v1.Kind()
+	}
+	if k2 == reflect.Interface {
+		v2 = v2.Elem()
+		k2 = v2.Kind()
+	}
 	if k1 != k2 {
 		return false
 	}
+
 	switch k1 {
 	case reflect.Bool:
 		return v1.Bool() == v2.Bool()

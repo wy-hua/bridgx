@@ -247,7 +247,7 @@ func CreateCluster(ctx *gin.Context) {
 		}
 		tags = append(tags, tag)
 	}
-	err = service.CreateClusterWithTagsAndInstances(ctx, m, tags, nil, user.Name, user.UserId)
+	err = service.CreateClusterWithTagsAndInstances(ctx, m, tags, nil, user.Name)
 	if err != nil {
 		response.MkResponse(ctx, http.StatusInternalServerError, err.Error(), nil)
 		return
@@ -278,7 +278,7 @@ func CreateCustomPublic(ctx *gin.Context) {
 		response.MkResponse(ctx, http.StatusBadRequest, err.Error(), nil)
 		return
 	}
-	err = service.CreateClusterWithTagsAndInstances(ctx, cluster, unusedTag(cluster.ClusterName), instances, user.Name, user.UserId)
+	err = service.CreateClusterWithTagsAndInstances(ctx, cluster, unusedTag(cluster.ClusterName), instances, user.Name)
 	if err != nil {
 		response.MkResponse(ctx, http.StatusInternalServerError, err.Error(), nil)
 		return
@@ -309,7 +309,7 @@ func CreateCustomPrivate(ctx *gin.Context) {
 		response.MkResponse(ctx, http.StatusBadRequest, err.Error(), nil)
 		return
 	}
-	err = service.CreateClusterWithTagsAndInstances(ctx, cluster, unusedTag(cluster.ClusterName), instances, user.Name, user.UserId)
+	err = service.CreateClusterWithTagsAndInstances(ctx, cluster, unusedTag(cluster.ClusterName), instances, user.Name)
 	if err != nil {
 		response.MkResponse(ctx, http.StatusInternalServerError, err.Error(), nil)
 		return

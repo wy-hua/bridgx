@@ -17,7 +17,10 @@ const (
 	categoryBegin Category = iota
 	ExpandAndReduce
 	ClusterManage
+	K8sManage
 	AppCenter
+	CloudAccountManage
+	AccountManage
 	categoryEnd
 )
 
@@ -29,11 +32,11 @@ type Action string
 
 const (
 	ActionCreate  Action = "CREATE"
-	ActionDelete  Action = "DELETE"
-	ActionUpdate  Action = "UPDATE"
-	ActionPublish Action = "PUBLISH"
-	ActionExpand  Action = "EXPAND"
-	ActionReduce  Action = "REDUCE"
+	ActionDelete         = "DELETE"
+	ActionUpdate         = "UPDATE"
+	ActionPublish        = "PUBLISH"
+	ActionExpand         = "EXPAND"
+	ActionReduce         = "REDUCE"
 )
 
 var actionMap = map[Action]bool{
@@ -53,10 +56,16 @@ type Object string
 
 const (
 	CloudCluster Object = "CLOUD_CLUSTER"
+	K8sCluster          = "K8S_CLUSTER"
+	ComputingRes        = "COMPUTING_RESOURCE"
+	RunningEnv          = "RUNNING_ENV"
 )
 
 var objectMap = map[Object]bool{
 	CloudCluster: true,
+	K8sCluster:   true,
+	ComputingRes: true,
+	RunningEnv:   true,
 }
 
 func (t Object) IsValid() bool {

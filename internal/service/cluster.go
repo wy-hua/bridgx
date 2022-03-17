@@ -27,7 +27,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func CreateClusterWithTagsAndInstances(ctx context.Context, cluster *model.Cluster, tags []*model.ClusterTag, instances []model.Instance, username string, uid int64) error {
+func CreateClusterWithTagsAndInstances(ctx context.Context, cluster *model.Cluster, tags []*model.ClusterTag, instances []model.Instance, username string) error {
 	now := time.Now()
 	cluster.CreateAt = &now
 	cluster.UpdateAt = &now
@@ -43,17 +43,6 @@ func CreateClusterWithTagsAndInstances(ctx context.Context, cluster *model.Clust
 	err := model.CreateClusterWithTagsAndInstances(ctx, cluster, tags, instances)
 	if err != nil {
 		return err
-	}
-
-	if err = RecordOperationLog(ctx, OperationLog{
-		Category:    ClusterManage,
-		Action:      ActionCreate,
-		Object:      CloudCluster,
-		ObjectValue: cluster.ClusterName,
-		Operator:    username,
-		Detail:      cluster,
-	}); err != nil {
-		logs.Logger.Warnf("RecordOperationLog failed, %v", err)
 	}
 	return nil
 }
