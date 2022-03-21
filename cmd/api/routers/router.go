@@ -123,6 +123,14 @@ func Init() *gin.Engine {
 			instancePath.GET("usage_statistics", handler.GetInstanceUsageStatistics)
 			instancePath.POST("sync_expire_time", handler.SyncInstanceExpireTime)
 		}
+		eipPath := v1Api.Group("eip/")
+		{
+			eipPath.POST("create", handler.CreateEip)
+			eipPath.GET("describe", handler.DescribeEip)
+			eipPath.POST("bind", handler.BindEip)
+			eipPath.POST("unbind", handler.UnBindEip)
+			eipPath.POST("convert_to_eip", handler.ConvertPublicIp2Eip)
+		}
 		taskPath := v1Api.Group("task/")
 		{
 			taskPath.GET("num", handler.GetTaskCount)

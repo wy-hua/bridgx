@@ -88,6 +88,7 @@ type InstanceDetail struct {
 	InstanceType  string         `json:"instance_type"`
 	IpInner       string         `json:"ip_inner"`
 	IpOuter       string         `json:"ip_outer"`
+	EipId         string         `json:"eip_id"`
 	CreateAt      string         `json:"create_at"`
 	StorageConfig *StorageConfig `json:"storage_config"`
 	NetworkConfig *NetworkConfig `json:"network_config"`
@@ -120,6 +121,7 @@ type InstanceThumb struct {
 	InstanceId         string `json:"instance_id"`
 	IpInner            string `json:"ip_inner"`
 	IpOuter            string `json:"ip_outer"`
+	EipId              string `json:"eip_id"`
 	Provider           string `json:"provider"`
 	ClusterType        string `json:"cluster_type"`
 	CreateAt           string `json:"create_at"`

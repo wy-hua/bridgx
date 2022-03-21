@@ -41,6 +41,12 @@ var _bandwidthChargeMode = map[string]string{
 	cloud.BandwidthPayByFix:     "BANDWIDTH_PREPAID",
 }
 
+var _eipChargeType = map[string]string{
+	cloud.BandwidthPayByTraffic: "TRAFFIC_POSTPAID_BY_HOUR",
+	cloud.BandwidthPayByFix:     "BANDWIDTH_POSTPAID_BY_HOUR",
+	cloud.BandwidthPrePaid:      "BANDWIDTH_PREPAID_BY_MONTH",
+}
+
 var _protocol = map[string]string{
 	cloud.ProtocolIcmp:   "ICMP",
 	cloud.ProtocolIcmpV6: "ICMPV6",
