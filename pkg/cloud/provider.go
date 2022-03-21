@@ -25,6 +25,13 @@ type Provider interface {
 	DescribeVpcs(req DescribeVpcsRequest) (DescribeVpcsResponse, error)
 	DescribeSwitches(req DescribeSwitchesRequest) (DescribeSwitchesResponse, error)
 	DescribeGroupRules(req DescribeGroupRulesRequest) (DescribeGroupRulesResponse, error)
+	AllocateEip(req AllocateEipRequest) (ids []string, err error)
+	GetEips(ids []string, regionId string) (map[string]Eip, error)
+	ReleaseEip(ids []string) (err error)
+	AssociateEip(id, instanceId string) error
+	DisassociateEip(id string) error
+	DescribeEip(req DescribeEipRequest) (DescribeEipResponse, error)
+	ConvertPublicIpToEip(req ConvertPublicIpToEipRequest) error
 	GetOrders(req GetOrdersRequest) (GetOrdersResponse, error)
 	CreateKeyPair(req CreateKeyPairRequest) (CreateKeyPairResponse, error)
 	ImportKeyPair(req ImportKeyPairRequest) (ImportKeyPairResponse, error)
