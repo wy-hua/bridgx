@@ -33,6 +33,12 @@ func ExpandInDeed(c *types.ClusterInfo, num int, taskId int64) ([]string, error)
 			Key:   cloud.ClusterName,
 			Value: c.Name,
 		}}
+	for _, tag := range c.InstanceTags {
+		tags = append(tags, cloud.Tag{
+			Key:   tag.Key,
+			Value: tag.Value,
+		})
+	}
 	expandInstanceIds := make([]string, 0, num)
 	needExpandNum := num
 	var err error
@@ -132,7 +138,14 @@ func CheckClusterParam(clusterInfo *types.ClusterInfo) error {
 	if err != nil {
 		return err
 	}
-	params, err := generateParams(clusterInfo, nil)
+	var tags = make([]cloud.Tag, 0, len(clusterInfo.InstanceTags))
+	for _, tag := range clusterInfo.InstanceTags {
+		tags = append(tags, cloud.Tag{
+			Key:   tag.Key,
+			Value: tag.Value,
+		})
+	}
+	params, err := generateParams(clusterInfo, tags)
 	params.DryRun = true
 	_, err = provider.BatchCreate(params, 1)
 	if err != nil {
@@ -211,7 +224,17 @@ func generateParams(clusterInfo *types.ClusterInfo, tags []cloud.Tag) (params cl
 		InternetIpType:          clusterInfo.NetworkConfig.InternetIpType,
 	}
 	params.InstanceType = clusterInfo.InstanceType
-	params.Password = clusterInfo.Password
+	if clusterInfo.AuthType == constants.AuthTypePassword {
+		params.Password = clusterInfo.Password
+	} else {
+		keyPair, err := GetKeyPair(nil, clusterInfo.KeyId)
+		if err != nil {
+			return cloud.Params{}, err
+		}
+		params.KeyPairId = keyPair.KeyPairId
+		params.KeyPairName = keyPair.KeyPairName
+	}
+
 	params.Provider = clusterInfo.Provider
 	params.Region = clusterInfo.RegionId
 	params.Zone = clusterInfo.ZoneId

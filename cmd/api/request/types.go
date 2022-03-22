@@ -215,3 +215,26 @@ type CustomPrivateCloudClusterRequest struct {
 type CheckInstanceConnectableRequest struct {
 	InstanceList []model.CustomClusterInstance `json:"instance_list"`
 }
+
+type CreateKeyPairRequest struct {
+	AK          string `json:"account_key" binding:"required"`
+	Provider    string `json:"provider" binding:"required"`
+	RegionId    string `json:"region_id" binding:"required"`
+	KeyPairName string `json:"key_pair_name" binding:"required"`
+}
+
+type ImportKeyPairRequest struct {
+	AK          string `json:"account_key" binding:"required"`
+	Provider    string `json:"provider" binding:"required"`
+	RegionId    string `json:"region_id" binding:"required"`
+	KeyPairName string `json:"key_pair_name" binding:"required"`
+	PrivateKey  string `json:"private_key" binding:"required"`
+	PublicKey   string `json:"public_key" binding:"required"`
+}
+
+type ListKeyPairRequest struct {
+	Provider   string `form:"provider" binding:"required"`
+	RegionId   string `form:"region_id" binding:"required"`
+	PageNumber int    `form:"page_number" binding:"required,min=1"`
+	PageSize   int    `form:"page_size" binding:"required,min=1"`
+}

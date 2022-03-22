@@ -475,3 +475,11 @@ func getFlavorStatus(flavor *model.FlavorExtraSpec, zoneId string) string {
 		return _insTypeStat[statStr[zoneIdx+1:end]]
 	}
 }
+
+func (p *HuaweiCloud) CreateKeyPair(req cloud.CreateKeyPairRequest) (cloud.CreateKeyPairResponse, error) {
+	return cloud.CreateKeyPairResponse{}, nil
+}
+
+func (p *HuaweiCloud) ImportKeyPair(req cloud.ImportKeyPairRequest) (cloud.ImportKeyPairResponse, error) {
+	return cloud.ImportKeyPairResponse{}, nil
+}

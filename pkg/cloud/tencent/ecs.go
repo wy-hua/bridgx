@@ -51,9 +51,13 @@ func (p *TencentCloud) BatchCreate(m cloud.Params, num int) ([]string, error) {
 		}
 	}
 	request.InstanceCount = common.Int64Ptr(int64(num))
-	request.LoginSettings = &cvm.LoginSettings{
-		Password: common.StringPtr(m.Password),
+	loginSettings := &cvm.LoginSettings{}
+	if m.Password != "" {
+		loginSettings.Password = common.StringPtr(m.Password)
+	} else {
+		loginSettings.KeyIds = common.StringPtrs([]string{m.KeyPairId})
 	}
+	request.LoginSettings = loginSettings
 	if len(m.Tags) > 0 {
 		request.TagSpecification = []*cvm.TagSpecification{
 			{
@@ -359,4 +363,32 @@ func getInvalidIds(msg string) []string {
 		msg = msg[end+4:]
 	}
 	return invalidIds
+}
+
+func (p *TencentCloud) CreateKeyPair(req cloud.CreateKeyPairRequest) (cloud.CreateKeyPairResponse, error) {
+	request := cvm.NewCreateKeyPairRequest()
+	request.ProjectId = common.Int64Ptr(0)
+	request.KeyName = common.StringPtr(req.KeyPairName)
+	response, err := p.cvmClient.CreateKeyPair(request)
+	if err != nil {
+		return cloud.CreateKeyPairResponse{}, err
+	}
+	return cloud.CreateKeyPairResponse{
+		KeyPairId:   utils.StringValue(response.Response.KeyPair.KeyId),
+		KeyPairName: utils.StringValue(response.Response.KeyPair.KeyName),
+		PrivateKey:  utils.StringValue(response.Response.KeyPair.PrivateKey),
+		PublicKey:   utils.StringValue(response.Response.KeyPair.PublicKey),
+	}, nil
+}
+
+func (p *TencentCloud) ImportKeyPair(req cloud.ImportKeyPairRequest) (cloud.ImportKeyPairResponse, error) {
+	request := cvm.NewImportKeyPairRequest()
+	request.ProjectId = common.Int64Ptr(0)
+	request.KeyName = common.StringPtr(req.KeyPairName)
+	request.PublicKey = common.StringPtr(req.PublicKey)
+	response, err := p.cvmClient.ImportKeyPair(request)
+	if err != nil {
+		return cloud.ImportKeyPairResponse{}, err
+	}
+	return cloud.ImportKeyPairResponse{KeyPairId: utils.StringValue(response.Response.KeyId)}, nil
 }

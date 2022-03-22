@@ -14,6 +14,8 @@ type Params struct {
 	Disks        *Disks
 	Charge       *Charge
 	Password     string
+	KeyPairId    string
+	KeyPairName  string
 	Tags         []Tag
 	DryRun       bool
 }
@@ -305,4 +307,27 @@ type Order struct {
 	Currency       string
 	Cost           float32
 	Extend         map[string]interface{}
+}
+
+type CreateKeyPairRequest struct {
+	RegionId    string
+	KeyPairName string
+}
+
+type CreateKeyPairResponse struct {
+	KeyPairId   string
+	KeyPairName string
+	PrivateKey  string
+	PublicKey   string
+}
+
+type ImportKeyPairRequest struct {
+	RegionId    string
+	KeyPairName string
+	PublicKey   string
+}
+
+type ImportKeyPairResponse struct {
+	KeyPairId   string
+	KeyPairName string
 }

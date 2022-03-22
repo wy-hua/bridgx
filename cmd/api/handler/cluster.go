@@ -444,6 +444,7 @@ func convertToClusterModel(clusterInput *types.ClusterInfo) (*model.Cluster, err
 	if clusterInput.ChargeConfig == nil {
 		return nil, errors.New("missing charge config")
 	}
+	it, _ := jsoniter.MarshalToString(clusterInput.InstanceTags)
 	nc, _ := jsoniter.MarshalToString(clusterInput.NetworkConfig)
 	sc, _ := jsoniter.MarshalToString(clusterInput.StorageConfig)
 	cc, _ := jsoniter.MarshalToString(clusterInput.ChargeConfig)
@@ -455,10 +456,13 @@ func convertToClusterModel(clusterInput *types.ClusterInfo) (*model.Cluster, err
 		ZoneId:       clusterInput.ZoneId,
 		InstanceType: clusterInput.InstanceType,
 		Image:        clusterInput.Image,
+		AuthType:     clusterInput.AuthType,
 		Password:     clusterInput.Password,
+		KeyId:        clusterInput.KeyId,
 		Provider:     clusterInput.Provider,
 		AccountKey:   clusterInput.AccountKey,
 
+		InstanceTags:  it,
 		ImageConfig:   ic,
 		NetworkConfig: nc,
 		StorageConfig: sc,
