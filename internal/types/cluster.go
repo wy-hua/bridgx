@@ -15,11 +15,14 @@ type ClusterInfo struct {
 	InstanceType string `json:"instance_type" binding:"required"`
 	Image        string `json:"image"`
 	Provider     string `json:"provider" binding:"required,mustIn=cloud"`
+	AuthType     string `json:"auth_type" binding:"required"`
 	Username     string `json:"username"`
 	Password     string `json:"password" binding:"required,min=8,max=30,charTypeGT3"`
+	KeyId        int64  `json:"key_id"`
 	AccountKey   string `json:"account_key" binding:"required"` //阿里云ak
 
 	//Advanced Config
+	InstanceTags  []InstanceTag  `json:"instance_tags"`
 	ImageConfig   *ImageConfig   `json:"image_config"`
 	NetworkConfig *NetworkConfig `json:"network_config"`
 	StorageConfig *StorageConfig `json:"storage_config"`
@@ -28,6 +31,11 @@ type ClusterInfo struct {
 
 	//Custom Config
 	Tags map[string]string `json:"tags"`
+}
+
+type InstanceTag struct {
+	Key   string `json:"key"`
+	Value string `json:"value"`
 }
 
 type ImageConfig struct {

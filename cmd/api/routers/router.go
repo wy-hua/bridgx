@@ -156,6 +156,13 @@ func Init() *gin.Engine {
 		{
 			logPath.GET("extract", handler.ExtractLog)
 		}
+		keyPairPath := v1Api.Group("key_pair/")
+		{
+			keyPairPath.POST("create", handler.CreateKeyPair)
+			keyPairPath.POST("import", handler.ImportKeyPair)
+			keyPairPath.GET("info/:id", handler.GetKeyPair)
+			keyPairPath.GET("list", handler.ListKeyPairs)
+		}
 
 		gfCluster := v1Api.Group("galaxy_cloud")
 		gf_cluster.RegisterHandler(gfCluster)

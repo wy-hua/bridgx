@@ -34,3 +34,8 @@ const (
 	GPU = "GPU"
 	CPU = "CPU"
 )
+
+const (
+	AuthTypePassword = "password"
+	AuthTypeKeyPair  = "key_pair"
+)

@@ -212,6 +212,7 @@ func ConvertToClusterInfo(m *model.Cluster, tags []model.ClusterTag) (*types.Clu
 	networkConfig := &types.NetworkConfig{}
 	storageConfig := &types.StorageConfig{}
 	chargeConfig := &types.ChargeConfig{}
+	var instanceTags = make([]types.InstanceTag, 0)
 	if m.ImageConfig != "" {
 		err := jsoniter.UnmarshalFromString(m.ImageConfig, imageConfig)
 		if err != nil {
@@ -247,7 +248,12 @@ func ConvertToClusterInfo(m *model.Cluster, tags []model.ClusterTag) (*types.Clu
 	for _, clusterTag := range tags {
 		mt[clusterTag.TagKey] = clusterTag.TagValue
 	}
-
+	if m.InstanceTags != "" {
+		err := jsoniter.UnmarshalFromString(m.InstanceTags, &instanceTags)
+		if err != nil {
+			return nil, err
+		}
+	}
 	clusterInfo := &types.ClusterInfo{
 		Id:            m.Id,
 		Name:          m.ClusterName,
@@ -259,8 +265,11 @@ func ConvertToClusterInfo(m *model.Cluster, tags []model.ClusterTag) (*types.Clu
 		Image:         m.Image,
 		Provider:      m.Provider,
 		Username:      constants.DefaultUsername,
+		AuthType:      m.AuthType,
 		Password:      m.Password,
+		KeyId:         m.KeyId,
 		AccountKey:    m.AccountKey,
+		InstanceTags:  instanceTags,
 		ImageConfig:   imageConfig,
 		NetworkConfig: networkConfig,
 		StorageConfig: storageConfig,

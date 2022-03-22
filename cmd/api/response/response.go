@@ -271,3 +271,23 @@ type CustomClusterInstance struct {
 	LoginName     string `json:"login_name"`
 	LoginPassword string `json:"login_password"`
 }
+
+type KeyPairInfo struct {
+	KeyId       int64  `json:"key_id"`
+	KeyPairId   string `json:"key_pair_id"`
+	KeyPairName string `json:"key_pair_name"`
+	PrivateKey  string `json:"private_key"`
+	PublicKey   string `json:"public_key"`
+	KeyType     string `json:"key_type"`
+}
+
+type KeyPairListResponse struct {
+	KeyPairList []KeyPair `json:"key_pair_list"`
+	Pager       Pager     `json:"pager"`
+}
+
+type KeyPair struct {
+	KeyId       int64  `json:"key_id"`
+	KeyPairId   string `json:"key_pair_id"`
+	KeyPairName string `json:"key_pair_name"`
+}

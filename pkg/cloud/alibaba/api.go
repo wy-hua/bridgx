@@ -77,7 +77,7 @@ func (p *AlibabaCloud) BatchCreate(m cloud.Params, num int) (instanceIds []strin
 		request.InternetMaxBandwidthOut = requests.NewInteger(m.Network.InternetMaxBandwidthOut)
 	}
 	request.Password = m.Password
-
+	request.KeyPairName = m.KeyPairName
 	request.SystemDiskCategory = m.Disks.SystemDisk.Category
 	request.SystemDiskSize = strconv.Itoa(m.Disks.SystemDisk.Size)
 	dataDisks := make([]ecs.RunInstancesDataDisk, 0)
@@ -938,4 +938,33 @@ func getInvalidIds(msg string) []string {
 		msg = msg[end+1:]
 	}
 	return invalidIds
+}
+
+func (p *AlibabaCloud) CreateKeyPair(req cloud.CreateKeyPairRequest) (cloud.CreateKeyPairResponse, error) {
+	request := &ecsClient.CreateKeyPairRequest{
+		RegionId:    tea.String(req.RegionId),
+		KeyPairName: tea.String(req.KeyPairName),
+	}
+	response, err := p.ecsClient.CreateKeyPair(request)
+	if err != nil {
+		return cloud.CreateKeyPairResponse{}, err
+	}
+	return cloud.CreateKeyPairResponse{
+		KeyPairId:   tea.StringValue(response.Body.KeyPairId),
+		KeyPairName: tea.StringValue(response.Body.KeyPairName),
+		PrivateKey:  tea.StringValue(response.Body.PrivateKeyBody),
+	}, nil
+}
+
+func (p *AlibabaCloud) ImportKeyPair(req cloud.ImportKeyPairRequest) (cloud.ImportKeyPairResponse, error) {
+	request := &ecsClient.ImportKeyPairRequest{
+		RegionId:      tea.String(req.RegionId),
+		KeyPairName:   tea.String(req.KeyPairName),
+		PublicKeyBody: tea.String(req.PublicKey),
+	}
+	response, err := p.ecsClient.ImportKeyPair(request)
+	if err != nil {
+		return cloud.ImportKeyPairResponse{}, err
+	}
+	return cloud.ImportKeyPairResponse{KeyPairName: tea.StringValue(response.Body.KeyPairName)}, nil
 }

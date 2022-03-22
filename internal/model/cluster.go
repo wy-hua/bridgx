@@ -28,9 +28,12 @@ type Cluster struct {
 
 	Image    string
 	Provider string
+	AuthType string //password、key_pair
 	Password string
+	KeyId    int64
 
 	//Advanced Config
+	InstanceTags  string
 	ImageConfig   string
 	NetworkConfig string
 	StorageConfig string
