@@ -53,11 +53,13 @@ func Init() *gin.Engine {
 		{
 			clusterPath.GET("id/:id", handler.GetClusterById)
 			clusterPath.GET("name/:name", handler.GetClusterByName)
+			clusterPath.GET("auth/:name", handler.GetClusterAuthByName)
 			clusterPath.POST("create", handler.CreateCluster)
 			clusterPath.POST("create_custom_public", handler.CreateCustomPublic)
 			clusterPath.POST("create_custom_private", handler.CreateCustomPrivate)
 			clusterPath.POST("edit", handler.EditCluster)
 			clusterPath.DELETE("delete/:ids", handler.DeleteClusters)
+
 			clusterPath.GET("num", handler.GetClusterCount)
 			clusterPath.GET("instance_stat", handler.GetInstanceStat)
 			clusterPath.GET("describe_all", handler.ListClusters)

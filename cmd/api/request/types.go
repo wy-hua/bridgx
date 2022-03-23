@@ -216,6 +216,11 @@ type CheckInstanceConnectableRequest struct {
 	InstanceList []model.CustomClusterInstance `json:"instance_list"`
 }
 
+type ClusterAuthRequest struct {
+	ClusterId int64  `form:"cluster_id" binding:"required"`
+	Password  string `form:"password" binding:"required"`
+}
+
 type CreateKeyPairRequest struct {
 	AK          string `json:"account_key" binding:"required"`
 	Provider    string `json:"provider" binding:"required"`

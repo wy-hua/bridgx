@@ -212,6 +212,43 @@ func GetClusterByName(ctx *gin.Context) {
 	return
 }
 
+func GetClusterAuthByName(ctx *gin.Context) {
+	req := request.ClusterAuthRequest{}
+	if err := ctx.ShouldBindQuery(&req); err != nil {
+		response.MkResponse(ctx, http.StatusBadRequest, response.ParamInvalid, nil)
+		return
+	}
+	user := service.Login(ctx, helper.GetUserClaims(ctx).Name, req.Password)
+	if user == nil {
+		response.MkResponse(ctx, http.StatusBadRequest, "incorrect username/password", nil)
+		return
+	}
+	if user.UserStatus == constants.UserStatusDisable {
+		response.MkResponse(ctx, http.StatusBadRequest, "your account has been disabled", nil)
+		return
+	}
+	cluster, err := service.GetClusterById(ctx, req.ClusterId)
+	if err != nil {
+		response.MkResponse(ctx, http.StatusInternalServerError, err.Error(), nil)
+		return
+	}
+	clusterAuth := response.ClusterAuthResponse{
+		AuthType: cluster.AuthType,
+		Password: cluster.Password,
+	}
+	if cluster.AuthType == constants.AuthTypeKeyPair {
+		keyPair, err := service.GetKeyPair(ctx, cluster.KeyId)
+		if err != nil {
+			response.MkResponse(ctx, http.StatusInternalServerError, err.Error(), nil)
+			return
+		}
+		clusterAuth.PrivateKey = keyPair.PrivateKey
+	}
+	resp := map[string]interface{}{"auth_info": clusterAuth}
+	response.MkResponse(ctx, http.StatusOK, response.Success, resp)
+	return
+}
+
 func CreateCluster(ctx *gin.Context) {
 	user := helper.GetUserClaims(ctx)
 	if user == nil {
