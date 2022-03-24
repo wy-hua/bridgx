@@ -36,6 +36,7 @@ type Instance struct {
 	Status       constants.Status
 	IpInner      string
 	IpOuter      string
+	EipId        string
 	InstanceId   string
 	ClusterName  string
 	TaskId       int64 //扩容任务ID
@@ -236,14 +237,6 @@ func ScanInstanceType(ctx context.Context) (ins []InstanceType, err error) {
 		Where("i_status = ?", InstanceTypeStatusActivated).
 		Find(&ins).Error
 	return ins, err
-}
-
-func GetInstanceTypeByName(ctx context.Context, instanceTypeName string) (*InstanceType, error) {
-	ins := InstanceType{}
-	err := clients.ReadDBCli.WithContext(ctx).Table(InstanceType{}.TableName()).
-		Where("type_name = ?", instanceTypeName).
-		First(&ins).Error
-	return &ins, err
 }
 
 type InstanceSearchCond struct {

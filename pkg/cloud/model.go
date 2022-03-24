@@ -283,6 +283,37 @@ type DescribeGroupRulesResponse struct {
 	Rules []SecurityGroupRule
 }
 
+type AllocateEipRequest struct {
+	RegionId                string
+	Name                    string
+	InternetServiceProvider string
+	Bandwidth               int
+	Charge                  *Charge
+	Num                     int
+}
+
+type DescribeEipRequest struct {
+	RegionId   string
+	InstanceId string
+	PageNum    int
+	PageSize   int
+}
+type DescribeEipResponse struct {
+	List       []Eip `json:"list"`
+	TotalCount int   `json:"total_count"`
+}
+type Eip struct {
+	Id         string `json:"id"`
+	Name       string `json:"name"`
+	Ip         string `json:"ip"`
+	InstanceId string `json:"instance_id,omitempty"`
+}
+
+type ConvertPublicIpToEipRequest struct {
+	RegionId   string
+	InstanceId string
+}
+
 type GetOrdersRequest struct {
 	StartTime time.Time
 	EndTime   time.Time

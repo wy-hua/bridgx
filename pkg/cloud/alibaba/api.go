@@ -824,7 +824,7 @@ func (p *AlibabaCloud) GetOrders(req cloud.GetOrdersRequest) (cloud.GetOrdersRes
 			} else {
 				usageEndTime, _ = time.Parse("2006-01-02T15:04:05Z", subOrder.UsageEndTime)
 			}
-			if _orderChargeType[subOrder.SubscriptionType] == cloud.OrderPostPaid && usageEndTime.Sub(usageStartTime).Hours() > 24*365*20 {
+			if _orderChargeType[subOrder.SubscriptionType] == cloud.PostPaid && usageEndTime.Sub(usageStartTime).Hours() > 24*365*20 {
 				usageEndTime, _ = time.Parse("2006-01-02 15:04:05", "2038-01-01 00:00:00")
 			}
 

@@ -303,6 +303,7 @@ func TestCreateVpc(t *testing.T) {
 
 	var resStr string
 	vpc, err := client.CreateVPC(cloud.CreateVpcRequest{
+		RegionId:  _region,
 		VpcName:   "vpc1",
 		CidrBlock: "10.8.0.0/16",
 	})
@@ -388,6 +389,97 @@ func TestShowVpc(t *testing.T) {
 	}
 	resStr, _ = jsoniter.MarshalToString(res)
 	t.Log(resStr)
+}
+
+func TestAllocateEip(t *testing.T) {
+	client, err := getCloudClient()
+	if err != nil {
+		t.Log(err)
+		return
+	}
+
+	res, err := client.AllocateEip(cloud.AllocateEipRequest{
+		RegionId:                _region,
+		Name:                    "",
+		InternetServiceProvider: "BGP",
+		Bandwidth:               1,
+		Charge: &cloud.Charge{
+			ChargeType: cloud.BandwidthPayByTraffic,
+		},
+		Num: 1,
+	})
+	if err != nil {
+		t.Log(err.Error())
+		return
+	}
+	resStr, _ := jsoniter.MarshalToString(res)
+	t.Log(resStr)
+}
+
+func TestDescribeEip(t *testing.T) {
+	client, err := getCloudClient()
+	if err != nil {
+		t.Log(err)
+		return
+	}
+
+	var res interface{}
+	var resStr string
+	res, err = client.DescribeEip(cloud.DescribeEipRequest{
+		RegionId:   _region,
+		InstanceId: "",
+	})
+	if err != nil {
+		t.Log(err.Error())
+		return
+	}
+	resStr, _ = jsoniter.MarshalToString(res)
+	t.Log(resStr)
+
+	res, err = client.GetEips([]string{""}, _region)
+	if err != nil {
+		t.Log(err.Error())
+		return
+	}
+	resStr, _ = jsoniter.MarshalToString(res)
+	t.Log(resStr)
+}
+
+func TestCtlEip(t *testing.T) {
+	client, err := getCloudClient()
+	if err != nil {
+		t.Log(err)
+		return
+	}
+
+	id := ""
+	instanceId := ""
+	err = client.ConvertPublicIpToEip(cloud.ConvertPublicIpToEipRequest{
+		RegionId:   _region,
+		InstanceId: instanceId,
+	})
+	if err != nil {
+		t.Log(err.Error())
+		return
+	}
+
+	err = client.AssociateEip(id, instanceId)
+	if err != nil {
+		t.Log(err.Error())
+		return
+	}
+
+	err = client.DisassociateEip(id)
+	if err != nil {
+		t.Log(err.Error())
+		return
+	}
+
+	err = client.ReleaseEip([]string{id})
+	if err != nil {
+		t.Log(err.Error())
+		return
+	}
 }
 
 func TestQueryOrders(t *testing.T) {
