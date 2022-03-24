@@ -53,7 +53,7 @@ func Init() *gin.Engine {
 		{
 			clusterPath.GET("id/:id", handler.GetClusterById)
 			clusterPath.GET("name/:name", handler.GetClusterByName)
-			clusterPath.GET("auth/:name", handler.GetClusterAuthByName)
+			clusterPath.GET("auth", handler.GetClusterAuthByName)
 			clusterPath.POST("create", handler.CreateCluster)
 			clusterPath.POST("create_custom_public", handler.CreateCustomPublic)
 			clusterPath.POST("create_custom_private", handler.CreateCustomPrivate)
