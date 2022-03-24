@@ -124,7 +124,7 @@ func (p *Eip) UnBindEip(ctx context.Context) error {
 		return err
 	}
 	if err = model.UpdateWhere(&model.Instance{}, map[string]interface{}{"instance_id": p.InstanceId},
-		map[string]interface{}{"eip": "", "ip_outer": ""}); err != nil {
+		map[string]interface{}{"eip_id": "", "ip_outer": ""}); err != nil {
 		logs.Logger.Errorf("Update Instance failed, %v", err)
 		return err
 	}
