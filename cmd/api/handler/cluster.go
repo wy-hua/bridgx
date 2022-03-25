@@ -242,6 +242,7 @@ func GetClusterAuthByName(ctx *gin.Context) {
 			response.MkResponse(ctx, http.StatusInternalServerError, err.Error(), nil)
 			return
 		}
+		clusterAuth.KeyPairName = keyPair.KeyPairName
 		clusterAuth.PrivateKey = keyPair.PrivateKey
 	}
 	resp := map[string]interface{}{"auth_info": clusterAuth}
