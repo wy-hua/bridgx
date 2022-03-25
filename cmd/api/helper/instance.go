@@ -24,6 +24,19 @@ func ConvertToInstanceThumbList(ctx context.Context, instances []model.Instance,
 		if !ok {
 			continue
 		}
+		if instance.EipId == service.EipIdUnknown {
+			go func(c model.Cluster, i model.Instance) {
+				eipObj := service.Eip{
+					CloudAccount: service.CloudAccount{
+						Provider: c.Provider,
+						RegionId: c.RegionId,
+						AK:       c.AccountKey,
+					},
+					InstanceId: i.InstanceId,
+				}
+				_, _ = eipObj.DescribeEip(ctx, 0, 0)
+			}(cluster, instance)
+		}
 		startupTime := 0
 		if instance.RunningAt != nil {
 			startupTime = int(instance.RunningAt.Sub(*instance.CreateAt).Seconds())
