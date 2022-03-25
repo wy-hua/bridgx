@@ -34,7 +34,7 @@ func ConvertToInstanceThumbList(ctx context.Context, instances []model.Instance,
 					},
 					InstanceId: i.InstanceId,
 				}
-				_, _ = eipObj.DescribeEip(ctx, 0, 0)
+				_ = eipObj.UpdateEipId(ctx)
 			}(cluster, instance)
 		}
 		startupTime := 0

@@ -435,14 +435,6 @@ func TestDescribeEip(t *testing.T) {
 	}
 	resStr, _ = jsoniter.MarshalToString(res)
 	t.Log(resStr)
-
-	res, err = client.GetEips([]string{""}, _region)
-	if err != nil {
-		t.Log(err.Error())
-		return
-	}
-	resStr, _ = jsoniter.MarshalToString(res)
-	t.Log(resStr)
 }
 
 func TestCtlEip(t *testing.T) {
@@ -462,6 +454,14 @@ func TestCtlEip(t *testing.T) {
 		t.Log(err.Error())
 		return
 	}
+
+	res, err := client.GetEips([]string{id}, _region)
+	if err != nil {
+		t.Log(err.Error())
+		return
+	}
+	resStr, _ := jsoniter.MarshalToString(res)
+	t.Log(resStr)
 
 	err = client.AssociateEip(id, instanceId)
 	if err != nil {

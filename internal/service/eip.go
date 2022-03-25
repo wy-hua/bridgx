@@ -66,25 +66,6 @@ func (p *Eip) DescribeEip(ctx context.Context, pageNumber, pageSize int) (cloud.
 		logs.Logger.Errorf("DescribeEip failed, %v", err)
 		return cloud.DescribeEipResponse{}, err
 	}
-
-	if p.InstanceId != "" {
-		go func(instanceId string, eipList []cloud.Eip) {
-			instance, err := GetInstance(ctx, instanceId)
-			if err != nil {
-				logs.Logger.Errorf("GetInstance failed, %v", err)
-				return
-			}
-			if instance.EipId != EipIdUnknown || len(eipList) == 0 {
-				return
-			}
-			instance.IpOuter = eipList[0].Ip
-			instance.EipId = eipList[0].Id
-			if err = model.Save(&instance); err != nil {
-				logs.Logger.Errorf("model.Save failed, %v", err)
-				return
-			}
-		}(p.InstanceId, rsp.List)
-	}
 	return rsp, nil
 }
 
@@ -207,6 +188,45 @@ func (p *Eip) ConvertPublicIp2Eip(ctx context.Context) error {
 
 	if len(rsp.List) == 0 {
 		instance.EipId = EipIdUnknown
+	} else {
+		eip := rsp.List[0]
+		instance.IpOuter = eip.Ip
+		instance.EipId = eip.Id
+	}
+	if err = model.Save(&instance); err != nil {
+		logs.Logger.Errorf("model.Save failed, %v", err)
+		return err
+	}
+	return nil
+}
+
+func (p *Eip) UpdateEipId(ctx context.Context) error {
+	instance, err := GetInstance(ctx, p.InstanceId)
+	if err != nil {
+		logs.Logger.Errorf("GetInstance failed, %v", err)
+		return err
+	}
+
+	cloudCli, err := getProvider(p.Provider, p.AK, p.RegionId)
+	if err != nil {
+		logs.Logger.Errorf("getProvider failed, %v", err)
+		return err
+	}
+	rsp, err := cloudCli.DescribeEip(cloud.DescribeEipRequest{
+		RegionId:   p.RegionId,
+		InstanceId: p.InstanceId,
+	})
+	if err != nil {
+		logs.Logger.Errorf("DescribeEip failed, %v", err)
+		return err
+	}
+	if instance.EipId == EipIdUnknown && len(rsp.List) == 0 {
+		return nil
+	}
+
+	if len(rsp.List) == 0 {
+		instance.IpOuter = ""
+		instance.EipId = ""
 	} else {
 		eip := rsp.List[0]
 		instance.IpOuter = eip.Ip
