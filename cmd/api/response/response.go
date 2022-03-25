@@ -275,9 +275,10 @@ type CustomClusterInstance struct {
 }
 
 type ClusterAuthResponse struct {
-	AuthType   string `json:"auth_type"`
-	Password   string `json:"password"`
-	PrivateKey string `json:"private_key"`
+	AuthType    string `json:"auth_type"`
+	Password    string `json:"password"`
+	KeyPairName string `json:"key_pair_name"`
+	PrivateKey  string `json:"private_key"`
 }
 
 type KeyPairInfo struct {
