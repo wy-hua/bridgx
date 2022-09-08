@@ -229,7 +229,7 @@ func CreateSwitch(ctx context.Context, s Switch) error {
 	return clients.WriteDBCli.WithContext(ctx).Create(&s).Error
 }
 
-func UpdateSwitch(ctx context.Context, availableIpAddressCount, isDefault int, vpcId, switchId, name, sStatus, cidrBlock, gatewayIp string) error {
+func UpdateSwitch(ctx context.Context, availableIpAddressCount, isDefault int, vpcId, switchId, name, sStatus, cidrBlock string) error {
 	now := time.Now()
 	queryMap := map[string]interface{}{
 		"available_ip_address_count": availableIpAddressCount,
@@ -237,7 +237,6 @@ func UpdateSwitch(ctx context.Context, availableIpAddressCount, isDefault int, v
 		"v_status":                   sStatus,
 		"name":                       name,
 		"cidr_block":                 cidrBlock,
-		"gateway_ip":                 gatewayIp,
 		"update_at":                  &now,
 	}
 	return clients.WriteDBCli.WithContext(ctx).

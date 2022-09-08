@@ -35,3 +35,51 @@ func StringSliceDiff(s1, s2 []string) []string {
 	}
 	return diff
 }
+
+//多个切片求交集
+func Intersect(lists [][]string) []string {
+	var inter []string
+	mp := make(map[string]int)
+	l := len(lists)
+
+	// 特判 只传了0个或者1个切片的情况
+	if l == 0 {
+		return make([]string, 0)
+	}
+	if l == 1 {
+		for _, s := range lists[0] {
+			if _, ok := mp[s]; !ok {
+				mp[s] = 1
+				inter = append(inter, s)
+			}
+		}
+		return inter
+	}
+
+	// 一般情况
+	// 先使用第一个切片构建map的键值对
+	for _, s := range lists[0] {
+		if _, ok := mp[s]; !ok {
+			mp[s] = 1
+		}
+	}
+
+	// 除去第一个和最后一个之外的list
+	for _, list := range lists[1 : l-1] {
+		for _, s := range list {
+			if _, ok := mp[s]; ok {
+				// 计数+1
+				mp[s]++
+			}
+		}
+	}
+
+	for _, s := range lists[l-1] {
+		if _, ok := mp[s]; ok {
+			if mp[s] == l-1 {
+				inter = append(inter, s)
+			}
+		}
+	}
+	return inter
+}

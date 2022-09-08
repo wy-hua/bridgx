@@ -8,6 +8,7 @@ require (
 	github.com/alibabacloud-go/tea v1.1.15
 	github.com/alibabacloud-go/vpc-20160428/v2 v2.0.0
 	github.com/allegro/bigcache v1.2.1
+	github.com/baidubce/bce-sdk-go v0.9.133
 	github.com/gin-contrib/pprof v1.3.0
 	github.com/gin-gonic/gin v1.7.6
 	github.com/google/go-cmp v0.5.5

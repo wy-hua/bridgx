@@ -38,7 +38,7 @@ var (
 	}
 
 	mustInMembers = map[string]map[string]struct{}{
-		mustInCloudParam: {"AlibabaCloud": {}, "HuaweiCloud": {}, "TencentCloud": {}},
+		mustInCloudParam: {"AlibabaCloud": {}, "HuaweiCloud": {}, "TencentCloud": {}, "BaiduCloud": {}},
 	}
 	mustInErrMsgCache       = map[string]string{}
 	mustInErrMsgCacheRWLock = sync.RWMutex{}

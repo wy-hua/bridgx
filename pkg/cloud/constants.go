@@ -6,6 +6,7 @@ const (
 	AlibabaCloud = "AlibabaCloud"
 	HuaweiCloud  = "HuaweiCloud"
 	TencentCloud = "TencentCloud"
+	BaiduCloud = "BaiduCloud"
 )
 
 const (
@@ -103,4 +104,8 @@ const (
 	SubnetPending   = "Pending"
 	SubnetAvailable = "Available"
 	SubnetAbnormal  = "Abnormal"
+)
+const (
+	Year  = "Year"
+	Month = "Month"
 )

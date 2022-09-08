@@ -31,6 +31,7 @@ const (
 	DefaultRegion        = "cn-qingdao"
 	DefaultRegionHuaWei  = "cn-north-4"
 	DefaultRegionTencent = "ap-beijing"
+	DefaultRegionBaidu   = "bj"
 )
 
 var H *SimpleTaskHandler
@@ -437,6 +438,7 @@ func cloud2ModelRules(rules []cloud.SecurityGroupRule) []model.SecurityGroupRule
 }
 
 func refreshVpc(t *SimpleTask) error {
+	fmt.Println("refreshing")
 	if t.VpcId == "" {
 		return nil
 	}
@@ -468,7 +470,7 @@ func refreshSwitch(t *SimpleTask) error {
 	return model.UpdateSwitch(context.Background(),
 		vswitch.AvailableIpAddressCount, vswitch.IsDefault,
 		vswitch.VpcId, vswitch.SwitchId, vswitch.Name,
-		vswitch.VStatus, vswitch.CidrBlock, vswitch.GatewayIp)
+		vswitch.VStatus, vswitch.CidrBlock)
 }
 
 const (
@@ -617,7 +619,6 @@ func CreateVPC(ctx context.Context, req CreateVPCRequest) (vpcId string, err err
 	if err != nil {
 		return "", err
 	}
-
 	res, err := p.CreateVPC(cloud.CreateVpcRequest{
 		RegionId:  req.RegionId,
 		VpcName:   req.VpcName,
@@ -1295,6 +1296,8 @@ func getDefaultRegion(provider string) string {
 		regionId = DefaultRegionHuaWei
 	case cloud.TencentCloud:
 		regionId = DefaultRegionTencent
+	case cloud.BaiduCloud:
+		regionId = DefaultRegionBaidu
 	}
 	return regionId
 }

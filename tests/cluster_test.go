@@ -1,9 +1,14 @@
 package tests
 
 import (
+	"bytes"
 	"context"
 	"fmt"
+	"github.com/galaxy-future/BridgX/cmd/api/request"
+	"k8s.io/apimachinery/pkg/util/json"
 	"math/rand"
+	"net/http"
+	"net/http/httptest"
 	"strings"
 	"testing"
 	"time"
@@ -17,6 +22,242 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+const (
+	_cluster = _v1Api + `cluster/`
+	_vpc     = "vpc-iyneigjruzy5"
+)
+
+func TestCreate(t *testing.T) {
+	tests := []types.ClusterInfo{
+		{
+			Id:           1,
+			Name:         "test_cluster",
+			Desc:         "no description",
+			RegionId:     "bj",
+			ZoneId:       "cn-bj-d",
+			ClusterType:  "",
+			InstanceType: "bcc.ic4.c1m1",
+			Image:        "m-OWQC4wwM",
+			Provider:     cloud.BaiduCloud,
+			Username:     "root",
+			Password:     "I1235677!",
+			AccountKey:   AKGenerator(cloud.BaiduCloud),
+			ImageConfig: &types.ImageConfig{
+				Id:       "m-OWQC4wwM",
+				Name:     "7.9 x86_64 (64bit)",
+				Type:     "global",
+				Platform: "Centos",
+				Size:     0,
+			},
+
+			NetworkConfig: &types.NetworkConfig{
+				Vpc:                     "vpc-i21un0x7mmtz",
+				SubnetId:                "sbn-mgiqutgye6ui",
+				SecurityGroup:           "g-xy2ttwa9hqsb",
+				InternetChargeType:      "",
+				InternetMaxBandwidthOut: 10,
+				InternetIpType:          "",
+			},
+			StorageConfig: &types.StorageConfig{
+				MountPoint: "",
+				NAS:        "",
+				Disks: &cloud.Disks{
+					SystemDisk: cloud.DiskConf{
+						Category:         "enhanced_ssd_pl1",
+						Size:             40,
+						PerformanceLevel: "",
+					},
+					DataDisk: nil,
+				},
+			},
+			ChargeConfig: &types.ChargeConfig{ChargeType: "PostPaid"},
+			ExtendConfig: &types.ExtendConfig{
+				Core:    1,
+				Memory:  1,
+				CpuType: "cpu",
+			},
+			Tags: map[string]string{"myTest": "1"},
+		},
+	}
+	for i, tt := range tests {
+		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
+			w := httptest.NewRecorder()
+			json, _ := json.Marshal(tt)
+			req, _ := http.NewRequest("POST", _cluster+`create`, bytes.NewReader(json))
+			req.Header.Set("Authorization", "Bear "+_Token)
+			req.Header.Set("content-type", "application/json")
+			r.ServeHTTP(w, req)
+			fmt.Println(w.Body.String())
+			assert.Equal(t, 200, w.Code)
+			time.Sleep(7 * time.Second)
+		})
+	}
+
+}
+func TestGetClusterByName(t *testing.T) {
+	tests := []string{"test_cluster"}
+	for i, tt := range tests {
+		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
+			w := httptest.NewRecorder()
+			req, _ := http.NewRequest("GET", _cluster+"name/"+tt, nil)
+			req.Header.Set("Authorization", "Bear "+_Token)
+			req.Header.Set("content-type", "application/json")
+			r.ServeHTTP(w, req)
+			fmt.Println(w.Body.String())
+			assert.Equal(t, 200, w.Code)
+		})
+	}
+
+}
+
+func TestExpandCluster(t *testing.T) {
+	tests := []request.ExpandClusterRequest{
+		{
+			TaskName:    "task1",
+			ClusterName: "test_cluster",
+			Count:       2,
+		},
+		{
+			TaskName:    "task2",
+			ClusterName: "test_ali_cluster",
+			Count:       2,
+		},
+	}
+	for i, tt := range tests {
+		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
+			json, _ := json.Marshal(tt)
+			w := httptest.NewRecorder()
+			req, _ := http.NewRequest("POST", _cluster+"expand", bytes.NewReader(json))
+			req.Header.Set("Authorization", "Bear "+_Token)
+			req.Header.Set("content-type", "application/json")
+			r.ServeHTTP(w, req)
+			fmt.Println(w.Body.String())
+			assert.Equal(t, 200, w.Code)
+			time.Sleep(1 * time.Minute)
+		})
+	}
+
+}
+func TestShrinkCluster(t *testing.T) {
+	tests := []request.ShrinkClusterRequest{
+		{
+			TaskName:    "task1",
+			ClusterName: "test_cluster",
+			Count:       2,
+		},
+		{
+			TaskName:    "task2",
+			ClusterName: "test_ali_cluster",
+			Count:       2,
+		},
+	}
+	for i, tt := range tests {
+		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
+			json, _ := json.Marshal(tt)
+			w := httptest.NewRecorder()
+			req, _ := http.NewRequest("POST", _cluster+"shrink", bytes.NewReader(json))
+			req.Header.Set("Authorization", "Bear "+_Token)
+			req.Header.Set("content-type", "application/json")
+			r.ServeHTTP(w, req)
+			fmt.Println(w.Body.String())
+			assert.Equal(t, 200, w.Code)
+			time.Sleep(1 * time.Minute)
+		})
+	}
+
+}
+
+func TestGetClusterTags(t *testing.T) {
+	tests := []struct {
+		clusterName string
+		tagKey      string
+		pageNum     string
+		pageSize    string
+	}{
+		{
+			clusterName: "test_cluster",
+			tagKey:      "myTest",
+			pageNum:     "1",
+			pageSize:    "100",
+		},
+	}
+	for i, tt := range tests {
+		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
+			w := httptest.NewRecorder()
+			req, _ := http.NewRequest("GET", _cluster+fmt.Sprintf("get_tags?cluster_name=%s&tag_key=%s&page_number=%s&page_size=%s", tt.clusterName, tt.tagKey, tt.pageNum, tt.pageSize), nil)
+			req.Header.Set("Authorization", "Bear "+_Token)
+			req.Header.Set("content-type", "application/json")
+			r.ServeHTTP(w, req)
+			fmt.Println(w.Body.String())
+			assert.Equal(t, 200, w.Code)
+			time.Sleep(7 * time.Second)
+		})
+	}
+
+}
+func TestEditCluster(t *testing.T) {
+	tests := []types.ClusterInfo{
+		{
+			Id:           1,
+			Name:         "test_cluster",
+			Desc:         "edit",
+			RegionId:     "bj",
+			ZoneId:       "cn-bj-d",
+			ClusterType:  "",
+			InstanceType: "bcc.ic4.c1m1",
+			Image:        "centos",
+			Provider:     cloud.BaiduCloud,
+			Username:     "root",
+			Password:     "Idfjafh81!",
+			AccountKey:   AKGenerator(cloud.BaiduCloud),
+			ImageConfig: &types.ImageConfig{
+				Id: "m-OWQC4wwM",
+			},
+
+			NetworkConfig: &types.NetworkConfig{
+				Vpc:                     "xx",
+				SubnetId:                "sbn-6pk6bngtzvtg",
+				SecurityGroup:           "g-xy2ttwa9hqsb",
+				InternetChargeType:      "",
+				InternetMaxBandwidthOut: 10,
+				InternetIpType:          "",
+			},
+			StorageConfig: &types.StorageConfig{
+				MountPoint: "",
+				NAS:        "",
+				Disks: &cloud.Disks{
+					SystemDisk: cloud.DiskConf{
+						Category:         "enhanced_ssd_pl1",
+						Size:             40,
+						PerformanceLevel: "",
+					},
+					DataDisk: nil,
+				},
+			},
+			ChargeConfig: &types.ChargeConfig{ChargeType: "PostPaid"},
+			ExtendConfig: &types.ExtendConfig{
+				Core:    1,
+				Memory:  1,
+				CpuType: "cpu",
+			},
+			Tags: map[string]string{"myTest": "1"},
+		},
+	}
+	for i, tt := range tests {
+		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
+			w := httptest.NewRecorder()
+			json, _ := json.Marshal(tt)
+			req, _ := http.NewRequest("POST", _cluster+`edit`, bytes.NewReader(json))
+			req.Header.Set("Authorization", "Bear "+_Token)
+			req.Header.Set("content-type", "application/json")
+			r.ServeHTTP(w, req)
+			fmt.Println(w.Body.String())
+			assert.Equal(t, 200, w.Code)
+			time.Sleep(7 * time.Second)
+		})
+	}
+
+}
 func TestCreateCluster(t *testing.T) {
 	err := service.CreateCluster4Test("TEST_CLUSTER")
 	assert.Nil(t, err, "should be nil", err)

@@ -1,14 +1,110 @@
 package tests
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
+	"fmt"
+	"github.com/galaxy-future/BridgX/cmd/api/request"
+	"github.com/galaxy-future/BridgX/pkg/cloud"
+	"github.com/stretchr/testify/assert"
+	"net/http"
+	"net/http/httptest"
 	"reflect"
 	"testing"
+	"time"
 
 	"github.com/galaxy-future/BridgX/internal/model"
 	"github.com/galaxy-future/BridgX/internal/service"
 )
 
+const (
+	_networkPrefix = _v1Api + "network_config/"
+)
+
+func TestCreateNetworkConfig(t *testing.T) {
+	tests := []request.CreateNetworkRequest{
+		{
+			Provider:          cloud.BaiduCloud,
+			RegionId:          "bj",
+			CidrBlock:         "192.168.0.0/16",
+			VpcName:           "network_config_vpc",
+			ZoneId:            "cn-bj-d",
+			SwitchCidrBlock:   "192.168.0.0/24",
+			GatewayIp:         "192.168.0.1",
+			SwitchName:        "network_config_switch",
+			SecurityGroupName: "network_config_security_group",
+			SecurityGroupType: "",
+			AK:                AKGenerator(cloud.BaiduCloud),
+			Rules: []service.GroupRule{
+				{
+					Protocol:     "tcp",
+					PortFrom:     1024,
+					PortTo:       2048,
+					Direction:    "ingress",
+					GroupId:      "",
+					CidrIp:       "192.168.0.0/24",
+					PrefixListId: "",
+				},
+			},
+		},
+	}
+	for i, tt := range tests {
+		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
+			json, _ := json.Marshal(tt)
+			w := httptest.NewRecorder()
+			req, _ := http.NewRequest("POST", _networkPrefix+"create", bytes.NewReader(json))
+			req.Header.Set("Authorization", "Bear "+_Token)
+			req.Header.Set("content-type", "application/json")
+			r.ServeHTTP(w, req)
+			fmt.Println(w.Body.String())
+			assert.Equal(t, 200, w.Code)
+			time.Sleep(7 * time.Second)
+		})
+	}
+
+}
+func TestSyncNetworkConfig(t *testing.T) {
+	tests := []request.SyncNetworkRequest{
+		{
+			Provider:   cloud.BaiduCloud,
+			RegionId:   "bj",
+			AccountKey: AKGenerator(cloud.BaiduCloud),
+		},
+	}
+
+	for i, tt := range tests {
+		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
+			json, _ := json.Marshal(tt)
+			w := httptest.NewRecorder()
+			req, _ := http.NewRequest("POST", _networkPrefix+"sync", bytes.NewReader(json))
+			req.Header.Set("Authorization", "Bear "+_Token)
+			req.Header.Set("content-type", "application/json")
+			r.ServeHTTP(w, req)
+			fmt.Println(w.Body.String())
+			assert.Equal(t, 200, w.Code)
+			time.Sleep(7 * time.Second)
+		})
+	}
+
+}
+func TestGetNetCfgTemplate(t *testing.T) {
+	var tests = []string{
+		"BaiduCloud",
+	}
+	for i, tt := range tests {
+		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
+			w := httptest.NewRecorder()
+			req, _ := http.NewRequest("GET", _networkPrefix+"template?provider="+tt, nil)
+			req.Header.Set("Authorization", "Bear "+_Token)
+			req.Header.Set("content-type", "application/json")
+			r.ServeHTTP(w, req)
+			fmt.Println(w.Body.String())
+			assert.Equal(t, 200, w.Code)
+		})
+	}
+
+}
 func TestCreateVPC(t *testing.T) {
 	type args struct {
 		ctx context.Context
@@ -195,7 +291,7 @@ func TestCreateNetwork(t *testing.T) {
 					SwitchName:        "一键创建的switch",
 					SecurityGroupName: "一键创建的安全组",
 					SecurityGroupType: "normal",
-					AK:                "LTAI5t7qCv6L8ZFh3hzSYpSv",
+					AK:                "xxx",
 				},
 			},
 			wantVpcRes: service.CreateNetworkResponse{},
