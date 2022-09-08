@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/galaxy-future/BridgX/pkg/cloud/baidu"
 	"runtime/debug"
 	"strconv"
 	"sync"
