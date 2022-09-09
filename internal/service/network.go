@@ -32,6 +32,7 @@ const (
 	DefaultRegionHuaWei  = "cn-north-4"
 	DefaultRegionTencent = "ap-beijing"
 	DefaultRegionBaidu   = "bj"
+	DefaultRegionAws     = ""
 )
 
 var H *SimpleTaskHandler

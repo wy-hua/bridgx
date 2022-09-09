@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/galaxy-future/BridgX/pkg/cloud/aws"
 	"github.com/galaxy-future/BridgX/pkg/cloud/baidu"
 	"runtime/debug"
 	"strconv"
@@ -259,6 +260,8 @@ func getProvider(provider, ak, regionId string) (cloud.Provider, error) {
 		client, err = tencent.New(ak, sk, regionId)
 	case cloud.BaiduCloud:
 		client, err = baidu.New(ak, sk, regionId)
+	case cloud.AwsCloud:
+		client, err = aws.New(ak, sk, regionId)
 	default:
 		return nil, errors.New("invalid provider")
 	}
