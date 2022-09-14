@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/galaxy-future/BridgX/cmd/api/request"
+	"github.com/galaxy-future/BridgX/internal/constants"
 	"k8s.io/apimachinery/pkg/util/json"
 	"math/rand"
 	"net/http"
@@ -12,9 +13,6 @@ import (
 	"strings"
 	"testing"
 	"time"
-
-	"github.com/galaxy-future/BridgX/cmd/api/request"
-	"k8s.io/apimachinery/pkg/util/json"
 
 	"github.com/galaxy-future/BridgX/internal/model"
 	"github.com/galaxy-future/BridgX/internal/service"
@@ -27,6 +25,7 @@ import (
 
 const (
 	_cluster = _v1Api + `cluster/`
+	_keyPair = _v1Api + `key_pair/`
 	_vpc     = "vpc-iyneigjruzy5"
 )
 
@@ -67,7 +66,7 @@ func TestCreate(t *testing.T) {
 				Disks: &cloud.Disks{
 					SystemDisk: cloud.DiskConf{
 						Category:         "enhanced_ssd_pl1",
-						Size:             40,
+						Size:             20,
 						PerformanceLevel: "",
 					},
 					DataDisk: nil,
@@ -80,6 +79,63 @@ func TestCreate(t *testing.T) {
 				CpuType: "cpu",
 			},
 			Tags: map[string]string{"myTest": "1"},
+		},
+		{
+			Id:           2,
+			Name:         "test_import_key",
+			Desc:         "no description",
+			RegionId:     "cn-north-1",
+			ZoneId:       "cnn1-az1",
+			ClusterType:  "",
+			InstanceType: "t2.micro",
+			Image:        "ami-0a5e581c2158fe57d",
+			Provider:     cloud.AwsCloud,
+			Username:     "",
+			Password:     "Ivgg87892789!",
+			AccountKey:   AKGenerator(cloud.AwsCloud),
+			ImageConfig: &types.ImageConfig{
+				Id:       "ami-0a5e581c2158fe57d",
+				Name:     "AWS Deep Learning AMI GPU CUDA 11 (Ubuntu 20.04) 20220317",
+				Type:     "global",
+				Platform: "Linux/UNIX",
+				Size:     0,
+			},
+
+			NetworkConfig: &types.NetworkConfig{
+				Vpc:                     "vpc-0d8c6a0bd621bf4c4",
+				SubnetId:                "subnet-09fe97713f59f89ef",
+				SecurityGroup:           "sg-07cdd57dd38d31672",
+				InternetChargeType:      "",
+				InternetMaxBandwidthOut: 10,
+				InternetIpType:          "",
+			},
+			StorageConfig: &types.StorageConfig{
+				MountPoint: "",
+				NAS:        "",
+				Disks: &cloud.Disks{
+					SystemDisk: cloud.DiskConf{
+						Category:         "gp2",
+						Size:             100,
+						PerformanceLevel: "",
+					},
+					DataDisk: nil,
+				},
+			},
+			ChargeConfig: &types.ChargeConfig{
+				ChargeType: "PostPaid",
+				Period:     1,
+				PeriodUnit: "Month",
+			},
+			ExtendConfig: &types.ExtendConfig{
+				Core:    1,
+				Memory:  1,
+				CpuType: "cpu",
+			},
+			KeyPairId:   "key-xx",
+			KeyId:       "xx",
+			KeyPairName: "import_key_pair",
+			AuthType:    constants.AuthTypeKeyPair,
+			Tags:        map[string]string{"myTest": "1"},
 		},
 	}
 	for i, tt := range tests {
@@ -96,6 +152,89 @@ func TestCreate(t *testing.T) {
 		})
 	}
 
+}
+func TestCreateKeyPair(t *testing.T) {
+	tests := []request.CreateKeyPairRequest{
+		{
+			AK:          AKGenerator(cloud.AwsCloud),
+			Provider:    cloud.AwsCloud,
+			RegionId:    "cn-north-1",
+			KeyPairName: "test_key_pair",
+		},
+	}
+	for i, tt := range tests {
+		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
+			json, _ := json.Marshal(tt)
+			w := httptest.NewRecorder()
+			req, _ := http.NewRequest("POST", _keyPair+"create", bytes.NewReader(json))
+			req.Header.Set("Authorization", "Bear "+_Token)
+			req.Header.Set("content-type", "application/json")
+			r.ServeHTTP(w, req)
+			fmt.Println(w.Body.String())
+			assert.Equal(t, 200, w.Code)
+			time.Sleep(7 * time.Second)
+		})
+	}
+}
+func TestGetClusterAuth(t *testing.T) {
+	tests := []request.ClusterAuthRequest{
+		{
+			ClusterName: "aws_cluster_test",
+		},
+	}
+	for i, tt := range tests {
+		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
+			w := httptest.NewRecorder()
+			req, _ := http.NewRequest("GET", _cluster+"auth?cluster_name="+tt.ClusterName, nil)
+			req.Header.Set("Authorization", "Bear "+_Token)
+			req.Header.Set("content-type", "application/json")
+			r.ServeHTTP(w, req)
+			fmt.Println(w.Body.String())
+			assert.Equal(t, 200, w.Code)
+		})
+	}
+
+}
+func TestImportKeyPair(t *testing.T) {
+	tests := []request.ImportKeyPairRequest{
+		{
+			AK:          AKGenerator(cloud.AwsCloud),
+			Provider:    cloud.AwsCloud,
+			RegionId:    "cn-north-1",
+			KeyPairName: "import_key_pair",
+			PrivateKey: `MIICWwIBAAKBgQDIxdPF2D6kV8S8nAT81awf7Ou2yQyZxrsRN+dzHrVF4vrahqV1
+G43LQuOtoftmk+jNKnRKqLdfZzVehUPEyLMusug7Q+tVtHrii9s3QieNWda+onbJ
+MND4bnwdviSABgbBMWnYA8uY0WgFA0kuBrLr/vQtSjuh0n5W3LZiGU/zbQIDAQAB
+AoGAEsz7pMY4L3mMkcDmcqqroJ22APrYtDm44MbkZJJWlUHJDdeX/NxkrckIuwS1
+Hwjwvu2f0DH2YfevNrex/eZxaN6TE4HMY5A195aX0fiXolimBSkqi9XCjC7HQ+so
+3qTsQ4ztcOYWz+egB3skB8Lbc5LTKA230aDQDUC/g+j0gT0CQQDuKrD/T9y2GwlJ
+oIS621Ykdnljhjkvoezt/z4QFwx5QpaHSUdkyIJOssS0xdJh/azdQR7xvfWemVjR
+rDQAEqujAkEA185Y95DHWX9vSAKxgpm5IuxQJGZ4gRBDIpIJFZiTj5aVnTxtw+sub
+ujt7qK2I/cz2yabsGoJJ2yPaWBh146SrVrwJAOaTPjhvQOas1hkJ5nZg0s0KRgcI4
+eXThmYDrjo1lkXvSXxAXXYdCMrYF8hLnJpx1WF/Ik438gtRusODS/SmHrQJABRnG
+douAergNXElcArc5bf7h4gpd/Mbyn0WOW2lQy39GUtNWN0dKtfsj8Bex7jXC+38r
+g3Di6AAP8Bcb6lft1wJAL9Uxltujufr/YDhR5UY5D0Wk9QnPaXSQs9Xn6nK1mrbM
++R3y7M4zmclByeR/xGtaL1COKAN5fin4SxhpbHpXFw==
+`,
+			PublicKey: `MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDIxdPF2D6kV8S8nAT81awf7Ou2
+yQyZxrsRN+dzHrVF4vrahqV1G43LQuOtoft5165nRKqLdfZzVehUPEyLMusug7
+Q+tVtHrii9s3QieNWda+onbJMND4bnwdviSABgbBMWnYA8uY0WgFA0kuBrLr/vQt
+Sjuh0n5W3LZiGU/zbQIDAQAB`,
+		},
+	}
+	for i, tt := range tests {
+		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
+			json, _ := json.Marshal(tt)
+			w := httptest.NewRecorder()
+			req, _ := http.NewRequest("POST", _keyPair+"import", bytes.NewReader(json))
+			req.Header.Set("Authorization", "Bear "+_Token)
+			req.Header.Set("content-type", "application/json")
+			r.ServeHTTP(w, req)
+			fmt.Println(w.Body.String())
+			assert.Equal(t, 200, w.Code)
+			time.Sleep(7 * time.Second)
+		})
+	}
 }
 func TestGetClusterByName(t *testing.T) {
 	tests := []string{"test_cluster"}
@@ -117,12 +256,22 @@ func TestExpandCluster(t *testing.T) {
 	tests := []request.ExpandClusterRequest{
 		{
 			TaskName:    "task1",
-			ClusterName: "test_cluster",
+			ClusterName: "clusterA",
 			Count:       2,
 		},
 		{
 			TaskName:    "task2",
 			ClusterName: "test_ali_cluster",
+			Count:       2,
+		},
+		{
+			TaskName:    "task3",
+			ClusterName: "aws_cluster_test",
+			Count:       2,
+		},
+		{
+			TaskName:    "task4",
+			ClusterName: "test_import_key",
 			Count:       2,
 		},
 	}
@@ -151,6 +300,16 @@ func TestShrinkCluster(t *testing.T) {
 		{
 			TaskName:    "task2",
 			ClusterName: "test_ali_cluster",
+			Count:       2,
+		},
+		{
+			TaskName:    "task3",
+			ClusterName: "aws_cluster_test",
+			Count:       2,
+		},
+		{
+			TaskName:    "task4",
+			ClusterName: "clusterA",
 			Count:       2,
 		},
 	}

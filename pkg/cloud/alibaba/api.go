@@ -939,3 +939,12 @@ func getInvalidIds(msg string) []string {
 	}
 	return invalidIds
 }
+func (p *AlibabaCloud) CreateKeyPair(req cloud.CreateKeyPairRequest) (cloud.CreateKeyPairResponse, error) {
+	return cloud.CreateKeyPairResponse{}, nil
+}
+func (p *AlibabaCloud) ImportKeyPair(req cloud.ImportKeyPairRequest) (cloud.ImportKeyPairResponse, error) {
+	return cloud.ImportKeyPairResponse{}, nil
+}
+func (p *AlibabaCloud) DescribeKeyPairs(req cloud.DescribeKeyPairsRequest) (cloud.DescribeKeyPairsResponse, error) {
+	return cloud.DescribeKeyPairsResponse{}, nil
+}

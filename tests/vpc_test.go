@@ -30,9 +30,16 @@ func TestCreateVPCl(t *testing.T) {
 		{
 			Provider:  cloud.AlibabaCloud,
 			RegionId:  "cn-beijing",
-			VpcName:   "test_vpc",
+			VpcName:   "test_vpc_1",
 			CidrBlock: "192.168.0.0/16",
 			AK:        AKGenerator(cloud.AlibabaCloud),
+		},
+		{
+			Provider:  cloud.AwsCloud,
+			RegionId:  "cn-north-1",
+			VpcName:   "test_vpc",
+			CidrBlock: "10.0.0.0/16",
+			AK:        AKGenerator(cloud.AwsCloud),
 		},
 	}
 
@@ -46,7 +53,7 @@ func TestCreateVPCl(t *testing.T) {
 			r.ServeHTTP(w, req)
 			fmt.Println(w.Body.String())
 			assert.Equal(t, 200, w.Code)
-			time.Sleep(7 * time.Second)
+			time.Sleep(1 * time.Minute)
 		})
 	}
 
@@ -65,6 +72,20 @@ func TestDescribeVPC(t *testing.T) {
 			region_id:   "bj",
 			vpc_name:    "test_vpc",
 			account_key: AKGenerator(cloud.BaiduCloud),
+		},
+		{
+			name:        "aliyun",
+			provider:    cloud.AlibabaCloud,
+			region_id:   "cn-beijing",
+			vpc_name:    "test_vpc_1",
+			account_key: AKGenerator(cloud.AlibabaCloud),
+		},
+		{
+			name:        "aws",
+			provider:    cloud.AwsCloud,
+			region_id:   "cn-north-1",
+			vpc_name:    "test_vpc",
+			account_key: AKGenerator(cloud.AwsCloud),
 		},
 	}
 	for _, tt := range tests {
@@ -88,6 +109,10 @@ func TestGetVpcById(t *testing.T) {
 		{
 			name:  "baidu",
 			vpcId: "vpc-i21un0x7mmtz",
+		},
+		{
+			name:  "aws",
+			vpcId: "vpc-0d8c6a0bd621bf4c4",
 		},
 	}
 	for _, tt := range tests {

@@ -223,3 +223,12 @@ func (p *HuaweiCloud) GetOrders(req cloud.GetOrdersRequest) (cloud.GetOrdersResp
 	orders := make([]cloud.Order, 0, 0)
 	return cloud.GetOrdersResponse{Orders: orders}, nil
 }
+func (p *HuaweiCloud) CreateKeyPair(req cloud.CreateKeyPairRequest) (cloud.CreateKeyPairResponse, error) {
+	return cloud.CreateKeyPairResponse{}, nil
+}
+func (p *HuaweiCloud) ImportKeyPair(req cloud.ImportKeyPairRequest) (cloud.ImportKeyPairResponse, error) {
+	return cloud.ImportKeyPairResponse{}, nil
+}
+func (p *HuaweiCloud) DescribeKeyPairs(req cloud.DescribeKeyPairsRequest) (cloud.DescribeKeyPairsResponse, error) {
+	return cloud.DescribeKeyPairsResponse{}, nil
+}

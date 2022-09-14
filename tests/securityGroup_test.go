@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
-	"strconv"
 	"testing"
 	"time"
 
@@ -29,9 +28,23 @@ func TestSecurityGroupCreate(t *testing.T) {
 			SecurityGroupName: "test_SecurityGroup",
 			SecurityGroupType: "",
 		},
+		{
+			AK:                AKGenerator(cloud.AlibabaCloud),
+			VpcId:             "vpc-2zexksa5gr5bxtufd61oz",
+			RegionId:          "cn-beijing",
+			SecurityGroupName: "test_SecurityGroup",
+			SecurityGroupType: "",
+		},
+		{
+			AK:                AKGenerator(cloud.AwsCloud),
+			VpcId:             "vpc-0d8c6a0bd621bf4c4",
+			RegionId:          "cn-north-1",
+			SecurityGroupName: "test_SecurityGroup",
+			SecurityGroupType: "",
+		},
 	}
-	for i, tt := range tests {
-		t.Run(strconv.Itoa(i), func(t *testing.T) {
+	for _, tt := range tests {
+		t.Run(tt.VpcId, func(t *testing.T) {
 			json, _ := json.Marshal(tt)
 			w := httptest.NewRecorder()
 			req, _ := http.NewRequest("POST", _securotyGroupPrefix+"create", bytes.NewReader(json))
@@ -56,9 +69,14 @@ func TestDescribeSecurityGroup(t *testing.T) {
 			securityGroupName: "g-xy2ttwa9hqsb",
 			accountKey:        AKGenerator(cloud.BaiduCloud),
 		},
+		{
+			vpcId:             "vpc-0d8c6a0bd621bf4c4",
+			securityGroupName: "test_SecurityGroup",
+			accountKey:        AKGenerator(cloud.AwsCloud),
+		},
 	}
-	for i, tt := range tests {
-		t.Run(strconv.Itoa(i), func(t *testing.T) {
+	for _, tt := range tests {
+		t.Run(tt.securityGroupName, func(t *testing.T) {
 			w := httptest.NewRecorder()
 			req, _ := http.NewRequest("GET", _securotyGroupPrefix+fmt.Sprintf("describe?vpc_id=%s&security_group_name=%s&account_key=%s", tt.vpcId, tt.securityGroupName, tt.accountKey), nil)
 			req.Header.Set("Authorization", "Bear "+_Token)
@@ -77,19 +95,55 @@ func TestAddSecurityGroupRuleAPI(t *testing.T) {
 			VpcId:           "vpc-i21un0x7mmtz",
 			RegionId:        "bj",
 			SecurityGroupId: "g-xy2ttwa9hqsb",
-			Rules: []service.GroupRule{{
-				Protocol:     "tcp",
-				PortFrom:     1024,
-				PortTo:       2048,
-				Direction:    "ingress",
-				GroupId:      "g-xy2ttwa9hqsb",
-				CidrIp:       "192.168.1.0/24",
-				PrefixListId: ""},
+			Rules: []service.GroupRule{
+				{
+					Protocol:     "tcp",
+					PortFrom:     1024,
+					PortTo:       2048,
+					Direction:    "ingress",
+					GroupId:      "g-xy2ttwa9hqsb",
+					CidrIp:       "192.168.1.0/24",
+					PrefixListId: "",
+				},
+			},
+		},
+		{
+			AK:              AKGenerator(cloud.AlibabaCloud),
+			VpcId:           "vpc-2zexksa5gr5bxtufd61oz",
+			RegionId:        "cn-beijing",
+			SecurityGroupId: "sg-2ze8na66wsies9tkfd3w",
+			Rules: []service.GroupRule{
+				{
+					Protocol:     "tcp",
+					PortFrom:     22,
+					PortTo:       22,
+					Direction:    "ingress",
+					GroupId:      "sg-2ze8na66wsies9tkfd3w",
+					CidrIp:       "192.168.1.0/24",
+					PrefixListId: "",
+				},
+			},
+		},
+		{
+			AK:              AKGenerator(cloud.AwsCloud),
+			VpcId:           "vpc-0d8c6a0bd621bf4c4",
+			RegionId:        "cn-north-1",
+			SecurityGroupId: "sg-07cdd57dd38d31672",
+			Rules: []service.GroupRule{
+				{
+					Protocol:     "tcp",
+					PortFrom:     1024,
+					PortTo:       2048,
+					Direction:    "ingress",
+					GroupId:      "sg-07cdd57dd38d31672",
+					CidrIp:       "10.0.0.0/24",
+					PrefixListId: "",
+				},
 			},
 		},
 	}
-	for i, tt := range tests {
-		t.Run(strconv.Itoa(i), func(t *testing.T) {
+	for _, tt := range tests {
+		t.Run(tt.SecurityGroupId, func(t *testing.T) {
 			json, _ := json.Marshal(tt)
 			w := httptest.NewRecorder()
 			req, _ := http.NewRequest("POST", _securotyGroupPrefix+"rule/add", bytes.NewReader(json))
@@ -110,9 +164,12 @@ func TestGetSecurityGroupWithRules(t *testing.T) {
 		{
 			securityGroupId: "g-xy2ttwa9hqsb",
 		},
+		{
+			securityGroupId: "sg-07cdd57dd38d31672",
+		},
 	}
-	for i, tt := range tests {
-		t.Run(strconv.Itoa(i), func(t *testing.T) {
+	for _, tt := range tests {
+		t.Run(tt.securityGroupId, func(t *testing.T) {
 			w := httptest.NewRecorder()
 			req, _ := http.NewRequest("GET", _securotyGroupPrefix+tt.securityGroupId+"/rules", nil)
 			req.Header.Set("Authorization", "Bear "+_Token)

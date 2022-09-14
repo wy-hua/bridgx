@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
-	"strconv"
 	"testing"
 	"time"
 
@@ -33,15 +32,24 @@ func TestCreateSubnetAPI(t *testing.T) {
 		{
 			SwitchName: "test_Switch",
 			RegionId:   "cn-beijing",
-			VpcId:      "vpc-2zesovzome8u1pez8celt",
+			VpcId:      "vpc-2zexksa5gr5bxtufd61oz",
 			CidrBlock:  "192.168.1.0/24",
 			GatewayIp:  "192.168.1.1",
 			ZoneId:     "cn-beijing-h",
 			AK:         AKGenerator(cloud.AlibabaCloud),
 		},
+		{
+			SwitchName: "test_Switch",
+			RegionId:   "cn-north-1",
+			VpcId:      "vpc-0d8c6a0bd621bf4c4",
+			CidrBlock:  "10.0.0.0/24",
+			GatewayIp:  "",
+			ZoneId:     "cnn1-az1",
+			AK:         AKGenerator(cloud.AwsCloud),
+		},
 	}
-	for i, tt := range tests {
-		t.Run(strconv.Itoa(i), func(t *testing.T) {
+	for _, tt := range tests {
+		t.Run(tt.SwitchName, func(t *testing.T) {
 			json, _ := json.Marshal(tt)
 			w := httptest.NewRecorder()
 			req, _ := http.NewRequest("POST", _subnetPrefix+"create", bytes.NewReader(json))
@@ -69,6 +77,18 @@ func TestDescribeSubnet(t *testing.T) {
 			subnetName: "test_Switch",
 			zone:       "cn-bj-d",
 		},
+		{
+			name:       "aliyun",
+			vpcId:      "vpc-2zexksa5gr5bxtufd61oz",
+			subnetName: "test_Switch",
+			zone:       "cn-beijing-h",
+		},
+		{
+			name:       "aws",
+			vpcId:      "vpc-0d8c6a0bd621bf4c4",
+			subnetName: "test_Switch",
+			zone:       "cnn1-az1",
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -93,6 +113,11 @@ func TestGetSwitchById(t *testing.T) {
 			name:     "baidu",
 			switchId: "sbn-6pk6bngtzvtg",
 			vpcId:    "vpc-i21un0x7mmtz",
+		},
+		{
+			name:     "aws",
+			switchId: "subnet-09fe97713f59f89ef",
+			vpcId:    "vpc-0d8c6a0bd621bf4c4",
 		},
 	}
 	for _, tt := range tests {

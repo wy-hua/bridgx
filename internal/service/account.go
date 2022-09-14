@@ -8,8 +8,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/galaxy-future/BridgX/pkg/cloud/baidu"
-
 	"github.com/galaxy-future/BridgX/pkg/cloud/tencent"
 
 	"github.com/galaxy-future/BridgX/internal/clients"

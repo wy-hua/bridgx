@@ -16,6 +16,8 @@ type Params struct {
 	Password     string
 	Tags         []Tag
 	DryRun       bool
+	KeyPairId    string
+	KeyPairName  string
 }
 
 type Tag struct {
@@ -305,4 +307,46 @@ type Order struct {
 	Currency       string
 	Cost           float32
 	Extend         map[string]interface{}
+}
+type CreateKeyPairRequest struct {
+	RegionId    string
+	KeyPairName string
+}
+
+type CreateKeyPairResponse struct {
+	KeyPairId   string
+	KeyPairName string
+	PrivateKey  string
+	PublicKey   string
+}
+
+type ImportKeyPairRequest struct {
+	RegionId    string
+	KeyPairName string
+	PublicKey   string
+}
+
+type ImportKeyPairResponse struct {
+	KeyPairId   string
+	KeyPairName string
+}
+
+type DescribeKeyPairsRequest struct {
+	RegionId    string
+	PageNumber  int
+	OlderMarker string
+	PageSize    int
+}
+
+type DescribeKeyPairsResponse struct {
+	TotalCount int
+	KeyPairs   []KeyPair
+	NewMarker  string
+}
+
+type KeyPair struct {
+	KeyPairId   string
+	KeyPairName string
+	PrivateKey  string
+	PublicKey   string
 }

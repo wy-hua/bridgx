@@ -62,6 +62,7 @@ func Init() *gin.Engine {
 			clusterPath.GET("instance_stat", handler.GetInstanceStat)
 			clusterPath.GET("describe_all", handler.ListClusters)
 			clusterPath.GET("custom/detail", handler.CustomClusterDetail)
+			clusterPath.GET("auth", handler.GetClusterAuthByName)
 
 			clusterPath.POST("list_by_tags", handler.ListClustersByTags)
 			clusterPath.GET("get_tags", handler.GetClusterTags)
@@ -147,6 +148,13 @@ func Init() *gin.Engine {
 			orgPath.POST("edit", handler.EditOrg)
 			orgPath.GET("list", handler.ListOrgs)
 			orgPath.GET("id/:id", handler.GetOrgById)
+		}
+		keyPairPath := v1Api.Group("key_pair/")
+		{
+			keyPairPath.POST("create", handler.CreateKeyPair)
+			keyPairPath.POST("import", handler.ImportKeyPair)
+			keyPairPath.GET("info/:id", handler.GetKeyPair)
+			keyPairPath.GET("list", handler.ListKeyPairs)
 		}
 		imagePath := v1Api.Group("image/")
 		{

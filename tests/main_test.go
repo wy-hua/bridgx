@@ -14,17 +14,6 @@ import (
 	"os"
 	"testing"
 
-	"github.com/galaxy-future/BridgX/cmd/api/middleware"
-	"github.com/galaxy-future/BridgX/cmd/api/routers"
-	"github.com/galaxy-future/BridgX/cmd/scheduler/crond"
-	"github.com/galaxy-future/BridgX/cmd/scheduler/monitors"
-	"github.com/galaxy-future/BridgX/cmd/scheduler/types"
-	"github.com/galaxy-future/BridgX/internal/bcc"
-	"github.com/galaxy-future/BridgX/internal/constants"
-	"github.com/galaxy-future/BridgX/internal/service"
-	"github.com/galaxy-future/BridgX/pkg/cloud"
-	"github.com/gin-gonic/gin"
-
 	"github.com/galaxy-future/BridgX/config"
 	"github.com/galaxy-future/BridgX/internal/cache"
 	"github.com/galaxy-future/BridgX/internal/clients"
@@ -35,7 +24,7 @@ var r *gin.Engine
 
 const (
 	_v1Api = "/api/v1/"
-	_Token = "xxx" // JWT token
+	_Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJuYW1lIjoicm9vdCIsInVzZXJfdHlwZSI6IkFETUlOIiwib3JnX2lkIjoxLCJleHAiOjE2NjMxNTMyNzIsIm5iZiI6MTY2MzEyNDQ2Mn0.1wJ4tiV09S_eUCVxog_uK2Xaivo6tUR_PJP9w4lZ5bA" // JWT token
 )
 
 func TestMain(m *testing.M) {
@@ -102,6 +91,8 @@ func AKGenerator(provider string) (ak string) {
 	case cloud.TencentCloud:
 		ak = "xxx"
 	case cloud.BaiduCloud:
+		ak = "xxx"
+	case cloud.AwsCloud:
 		ak = "xxx"
 	}
 	return

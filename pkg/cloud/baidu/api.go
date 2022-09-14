@@ -718,3 +718,12 @@ func (b BaiduCloud) ListbyId(instanceIds []string) (instances []cloud.Instance, 
 	}
 	return instances, nil
 }
+func (b BaiduCloud) CreateKeyPair(req cloud.CreateKeyPairRequest) (cloud.CreateKeyPairResponse, error) {
+	return cloud.CreateKeyPairResponse{}, nil
+}
+func (b BaiduCloud) ImportKeyPair(req cloud.ImportKeyPairRequest) (cloud.ImportKeyPairResponse, error) {
+	return cloud.ImportKeyPairResponse{}, nil
+}
+func (b BaiduCloud) DescribeKeyPairs(req cloud.DescribeKeyPairsRequest) (cloud.DescribeKeyPairsResponse, error) {
+	return cloud.DescribeKeyPairsResponse{}, nil
+}
