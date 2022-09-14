@@ -26,6 +26,9 @@ type Provider interface {
 	DescribeSwitches(req DescribeSwitchesRequest) (DescribeSwitchesResponse, error)
 	DescribeGroupRules(req DescribeGroupRulesRequest) (DescribeGroupRulesResponse, error)
 	GetOrders(req GetOrdersRequest) (GetOrdersResponse, error)
+	CreateKeyPair(req CreateKeyPairRequest) (CreateKeyPairResponse, error)
+	ImportKeyPair(req ImportKeyPairRequest) (ImportKeyPairResponse, error)
+	DescribeKeyPairs(req DescribeKeyPairsRequest) (DescribeKeyPairsResponse, error)
 }
 
 type ProviderDriverFunc func(keyId ...string) (Provider, error)

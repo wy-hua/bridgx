@@ -47,6 +47,12 @@ func TestCreateCloudAccount(t *testing.T) {
 			AccountKey:    AKGenerator(cloud.BaiduCloud),
 			AccountSecret: "xxx",
 		},
+		{
+			AccountName:   "test_user",
+			Provider:      cloud.AwsCloud,
+			AccountKey:    AKGenerator(cloud.AwsCloud),
+			AccountSecret: "xxx",
+		},
 	}
 	for i, tt := range tests {
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
@@ -71,6 +77,10 @@ func TestList(t *testing.T) {
 		{
 			provider:    cloud.BaiduCloud,
 			accountName: "test_account",
+		},
+		{
+			provider:    cloud.AwsCloud,
+			accountName: "test_user",
 		},
 	}
 	for i, tt := range tests {

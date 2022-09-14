@@ -2,10 +2,6 @@ package handler
 
 import (
 	"errors"
-	"net/http"
-	"strings"
-	"time"
-
 	"github.com/galaxy-future/BridgX/cmd/api/helper"
 	"github.com/galaxy-future/BridgX/cmd/api/middleware/validation"
 	"github.com/galaxy-future/BridgX/cmd/api/request"
@@ -19,6 +15,10 @@ import (
 	"github.com/gin-gonic/gin"
 	jsoniter "github.com/json-iterator/go"
 	"github.com/spf13/cast"
+	"net/http"
+	"strconv"
+	"strings"
+	"time"
 )
 
 func GetClusterById(ctx *gin.Context) {
@@ -223,6 +223,15 @@ func CreateCluster(ctx *gin.Context) {
 	if err != nil {
 		response.MkResponse(ctx, http.StatusBadRequest, validation.Translate2Chinese(err), nil)
 		return
+	}
+	if clusterInput.AuthType == constants.AuthTypeKeyPair && clusterInput.KeyId == "" && clusterInput.PrivateKey != "" {
+		keyPair, err := service.CreateKeyPairByPrivateKey(ctx, clusterInput.Provider, clusterInput.RegionId,
+			clusterInput.KeyPairId, clusterInput.KeyPairName, clusterInput.PrivateKey)
+		if err != nil {
+			response.MkResponse(ctx, http.StatusBadRequest, err.Error(), nil)
+			return
+		}
+		clusterInput.KeyId = keyPair.GetIdStr()
 	}
 	err = service.CheckClusterParam(&clusterInput)
 	if err != nil {
@@ -448,17 +457,18 @@ func convertToClusterModel(clusterInput *types.ClusterInfo) (*model.Cluster, err
 	sc, _ := jsoniter.MarshalToString(clusterInput.StorageConfig)
 	cc, _ := jsoniter.MarshalToString(clusterInput.ChargeConfig)
 	m := model.Cluster{
-		ClusterName:  clusterInput.Name,
-		ClusterDesc:  clusterInput.Desc,
-		ClusterType:  constants.ClusterTypeStandard,
-		RegionId:     clusterInput.RegionId,
-		ZoneId:       clusterInput.ZoneId,
-		InstanceType: clusterInput.InstanceType,
-		Image:        clusterInput.Image,
-		Password:     clusterInput.Password,
-		Provider:     clusterInput.Provider,
-		AccountKey:   clusterInput.AccountKey,
-
+		ClusterName:   clusterInput.Name,
+		ClusterDesc:   clusterInput.Desc,
+		ClusterType:   constants.ClusterTypeStandard,
+		RegionId:      clusterInput.RegionId,
+		ZoneId:        clusterInput.ZoneId,
+		InstanceType:  clusterInput.InstanceType,
+		Image:         clusterInput.Image,
+		Password:      clusterInput.Password,
+		Provider:      clusterInput.Provider,
+		AccountKey:    clusterInput.AccountKey,
+		KeyId:         clusterInput.KeyId,
+		AuthType:      clusterInput.AuthType,
 		ImageConfig:   ic,
 		NetworkConfig: nc,
 		StorageConfig: sc,
@@ -664,5 +674,41 @@ func CheckInstanceConnectable(ctx *gin.Context) {
 	}
 	res := service.CheckInstanceConnectable(req.InstanceList)
 	response.MkResponse(ctx, http.StatusOK, response.Success, res)
+	return
+}
+func GetClusterAuthByName(ctx *gin.Context) {
+	user := helper.GetUserClaims(ctx)
+	if user == nil {
+		response.MkResponse(ctx, http.StatusBadRequest, response.PermissionDenied, nil)
+		return
+	}
+	req := request.ClusterAuthRequest{}
+	if err := ctx.ShouldBindQuery(&req); err != nil {
+		response.MkResponse(ctx, http.StatusBadRequest, response.ParamInvalid, nil)
+		return
+	}
+
+	clusterAuth := response.ClusterAuthResponse{}
+	cluster, err := service.GetClusterByName(ctx, req.ClusterName)
+	if err != nil {
+		response.MkResponse(ctx, http.StatusInternalServerError, err.Error(), nil)
+		return
+	}
+	clusterAuth.AuthType = cluster.AuthType
+	if cluster.AuthType == constants.AuthTypePassword {
+		clusterAuth.Password = cluster.Password
+	} else {
+		t, _ := strconv.ParseInt(cluster.KeyId, 10, 64)
+		keyPair, err := service.GetKeyPair(ctx, t)
+		if err != nil {
+			response.MkResponse(ctx, http.StatusInternalServerError, err.Error(), nil)
+			return
+		}
+		clusterAuth.KeyPairName = keyPair.KeyPairName
+		clusterAuth.PrivateKey = keyPair.PrivateKey
+	}
+
+	resp := map[string]interface{}{"auth_info": clusterAuth}
+	response.MkResponse(ctx, http.StatusOK, response.Success, resp)
 	return
 }

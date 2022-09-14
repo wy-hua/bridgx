@@ -18,7 +18,11 @@ type ClusterInfo struct {
 	Username     string `json:"username"`
 	Password     string `json:"password" binding:"required,min=8,max=30,charTypeGT3"`
 	AccountKey   string `json:"account_key" binding:"required"` //阿里云ak
-
+	KeyId        string `json:"key_id"`
+	KeyPairId    string `json:"key_pair_id"`
+	KeyPairName  string `json:"key_pair_name"`
+	PrivateKey   string `json:"private_key"`
+	AuthType     string `json:"auth_type"`
 	//Advanced Config
 	ImageConfig   *ImageConfig   `json:"image_config"`
 	NetworkConfig *NetworkConfig `json:"network_config"`

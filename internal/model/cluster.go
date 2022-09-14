@@ -30,6 +30,8 @@ type Cluster struct {
 	Provider string
 	Password string
 
+	KeyId    string
+	AuthType string
 	//Advanced Config
 	ImageConfig   string
 	NetworkConfig string

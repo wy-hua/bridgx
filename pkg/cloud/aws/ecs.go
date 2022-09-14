@@ -55,6 +55,7 @@ func (p *AwsCloud) BatchCreate(m cloud.Params, num int) ([]string, error) {
 		BlockDeviceMappings: blockDeviceMappings,
 		ImageId:             aws.String(m.ImageId),
 		InstanceType:        aws.String(m.InstanceType),
+		KeyName:             aws.String(m.KeyPairName),
 		MaxCount:            aws.Int64(int64(num)),
 		MinCount:            aws.Int64(int64(num)),
 	}

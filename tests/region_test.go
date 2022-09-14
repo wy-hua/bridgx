@@ -6,7 +6,6 @@ import (
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
-	"strconv"
 	"testing"
 	"time"
 )
@@ -17,6 +16,9 @@ func TestListRegions(t *testing.T) {
 	}{
 		{
 			provider: cloud.BaiduCloud,
+		},
+		{
+			provider: cloud.AwsCloud,
 		},
 	}
 	for i, tt := range tests {
@@ -42,9 +44,13 @@ func TestListZones(t *testing.T) {
 			provider: cloud.BaiduCloud,
 			regionId: "bj",
 		},
+		{
+			provider: cloud.AwsCloud,
+			regionId: "cn-north-1",
+		},
 	}
 	for i, tt := range tests {
-		t.Run(strconv.Itoa(i), func(t *testing.T) {
+		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
 			w := httptest.NewRecorder()
 			req, _ := http.NewRequest("GET", _v1Api+fmt.Sprintf("zone/list?provider=%s&region_id=%s", tt.provider, tt.regionId), nil)
 			req.Header.Set("Authorization", "Bear "+_Token)

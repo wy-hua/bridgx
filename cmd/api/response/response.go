@@ -5,6 +5,12 @@ import (
 	"github.com/galaxy-future/BridgX/internal/types"
 )
 
+type KeyPair struct {
+	KeyId       string `json:"key_id"`
+	KeyPairId   string `json:"key_pair_id"`
+	KeyPairName string `json:"key_pair_name"`
+}
+
 type ClusterCountResponse struct {
 	ClusterNum int64 `json:"cluster_num"`
 }
@@ -164,9 +170,10 @@ type ClusterTagsResponse struct {
 }
 
 type Pager struct {
-	PageNumber int `json:"page_number"`
-	PageSize   int `json:"page_size"`
-	Total      int `json:"total"`
+	NextMarker string `json:"next_marker"`
+	PageNumber int    `json:"page_number"`
+	PageSize   int    `json:"page_size"`
+	Total      int    `json:"total"`
 }
 
 type ListCloudAccountResponse struct {
@@ -260,6 +267,10 @@ type CustomClusterResponse struct {
 	Provider    string `json:"provider"`
 	AccountKey  string `json:"account_key"`
 }
+type KeyPairListResponse struct {
+	KeyPairList []KeyPair `json:"key_pair_list"`
+	Pager       Pager     `json:"pager"`
+}
 
 type CustomInstanceListResponse struct {
 	InstanceList []CustomClusterInstance `json:"instance_list"`
@@ -270,4 +281,19 @@ type CustomClusterInstance struct {
 	InstanceIp    string `json:"instance_ip"`
 	LoginName     string `json:"login_name"`
 	LoginPassword string `json:"login_password"`
+}
+type KeyPairInfo struct {
+	KeyId       string `json:"key_id"`
+	KeyPairId   string `json:"key_pair_id"`
+	KeyPairName string `json:"key_pair_name"`
+	PrivateKey  string `json:"private_key"`
+	PublicKey   string `json:"public_key"`
+	KeyType     string `json:"key_type"`
+}
+type ClusterAuthResponse struct {
+	AuthType    string `json:"auth_type"`
+	Username    string `json:"username"`
+	Password    string `json:"password"`
+	KeyPairName string `json:"key_pair_name"`
+	PrivateKey  string `json:"private_key"`
 }

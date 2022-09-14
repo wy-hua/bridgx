@@ -161,6 +161,8 @@ CREATE TABLE `cluster`
     `update_by`       varchar(32) COLLATE utf8mb4_bin           DEFAULT '',
     `deleted_at`      timestamp NULL DEFAULT NULL,
     `delete_uniq_key` bigint(20) DEFAULT '0',
+    `key_id`          bigint(20) DEFAULT NULL COMMENT '秘钥对ID',
+    `auth_type`       varchar(32) COLLATE utf8mb4_bin NOT NULL DEFAULT 'password' COMMENT '认证类型 password/key_pair',
     PRIMARY KEY (`id`),
     UNIQUE KEY `cluster_cluster_name_uindex` (`cluster_name`, `delete_uniq_key`),
     KEY `cluster_account_key_index` (`account_key`)
@@ -413,6 +415,22 @@ CREATE TABLE `operation_log` (
     `update_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='操作日志';
+
+DROP TABLE IF EXISTS `key_pair`;
+CREATE TABLE `key_pair` (
+                            `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+                            `provider` varchar(64) DEFAULT NULL COMMENT '云厂商',
+                            `region_id` varchar(64) DEFAULT NULL COMMENT '区域ID',
+                            `key_pair_name` varchar(128) NOT NULL COMMENT '秘钥对名称',
+                            `key_pair_id` varchar(64) DEFAULT NULL COMMENT '秘钥对ID',
+                            `public_key` text COMMENT '公钥',
+                            `private_key` text NOT NULL COMMENT '私钥',
+                            `key_type` varchar(32) NOT NULL DEFAULT 'auto' COMMENT '秘钥类型 auto/import',
+                            `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                            `update_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                            PRIMARY KEY (`id`),
+                            UNIQUE KEY `uniq_provider_region_id_key_pair_name` (`provider`,`region_id`,`key_pair_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='集群秘钥对';
 
 -- init super admin info
 INSERT INTO `user`

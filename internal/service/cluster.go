@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"errors"
+	"github.com/spf13/cast"
 	"runtime/debug"
 	"strconv"
 	"strings"
@@ -267,6 +268,8 @@ func ConvertToClusterInfo(m *model.Cluster, tags []model.ClusterTag) (*types.Clu
 		ChargeConfig:  chargeConfig,
 		ExtendConfig:  extendConfig,
 		Tags:          mt,
+		AuthType:      m.AuthType,
+		KeyId:         cast.ToString(m.KeyId),
 	}
 	return clusterInfo, nil
 }

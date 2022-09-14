@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/galaxy-future/BridgX/pkg/cloud/aws"
 	"github.com/galaxy-future/BridgX/pkg/cloud/baidu"
+	"github.com/spf13/cast"
 	"runtime/debug"
 	"strconv"
 	"sync"
@@ -213,7 +214,16 @@ func generateParams(clusterInfo *types.ClusterInfo, tags []cloud.Tag) (params cl
 		InternetIpType:          clusterInfo.NetworkConfig.InternetIpType,
 	}
 	params.InstanceType = clusterInfo.InstanceType
-	params.Password = clusterInfo.Password
+	if clusterInfo.AuthType == constants.AuthTypePassword {
+		params.Password = clusterInfo.Password
+	} else {
+		keyPair, err := GetKeyPair(nil, cast.ToInt64(clusterInfo.KeyId))
+		if err != nil {
+			return cloud.Params{}, err
+		}
+		params.KeyPairId = keyPair.KeyPairId
+		params.KeyPairName = keyPair.KeyPairName
+	}
 	params.Provider = clusterInfo.Provider
 	params.Region = clusterInfo.RegionId
 	params.Zone = clusterInfo.ZoneId

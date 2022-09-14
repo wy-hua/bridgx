@@ -98,3 +98,55 @@ func formatOsType(platfrom, platformDetails string) string {
 func (p *AwsCloud) GetOrders(req cloud.GetOrdersRequest) (cloud.GetOrdersResponse, error) {
 	return cloud.GetOrdersResponse{}, nil
 }
+func (p *AwsCloud) CreateKeyPair(req cloud.CreateKeyPairRequest) (cloud.CreateKeyPairResponse, error) {
+	input := &ec2.CreateKeyPairInput{
+		KeyName: aws.String(req.KeyPairName),
+	}
+	output, err := p.ec2Client.CreateKeyPair(input)
+	if err != nil {
+		logs.Logger.Errorf("CreateKeyPair AwsCloud failed.err:[%v] req:[%v]", err, req)
+		return cloud.CreateKeyPairResponse{}, err
+	}
+	return cloud.CreateKeyPairResponse{
+		KeyPairId:   *output.KeyPairId,
+		KeyPairName: *output.KeyName,
+		PrivateKey:  *output.KeyMaterial,
+	}, nil
+}
+
+func (p *AwsCloud) ImportKeyPair(req cloud.ImportKeyPairRequest) (cloud.ImportKeyPairResponse, error) {
+	input := &ec2.ImportKeyPairInput{
+		KeyName:           aws.String(req.KeyPairName),
+		PublicKeyMaterial: []byte(req.PublicKey),
+	}
+	output, err := p.ec2Client.ImportKeyPair(input)
+	if err != nil {
+		logs.Logger.Errorf("ImportKeyPair AwsCloud failed.err:[%v] req:[%v]", err, req)
+		return cloud.ImportKeyPairResponse{}, err
+	}
+	return cloud.ImportKeyPairResponse{
+		KeyPairId:   *output.KeyPairId,
+		KeyPairName: *output.KeyName,
+	}, nil
+}
+
+func (p *AwsCloud) DescribeKeyPairs(req cloud.DescribeKeyPairsRequest) (cloud.DescribeKeyPairsResponse, error) {
+	input := &ec2.DescribeKeyPairsInput{}
+	output, err := p.ec2Client.DescribeKeyPairs(input)
+	if err != nil {
+		logs.Logger.Errorf("DescribeKeyPairs AwsCloud failed.err:[%v] req:[%v]", err, req)
+		return cloud.DescribeKeyPairsResponse{}, err
+	}
+	if len(output.KeyPairs) == 0 {
+		return cloud.DescribeKeyPairsResponse{}, nil
+	}
+	totalCount := len(output.KeyPairs)
+	keyPairs := make([]cloud.KeyPair, 0, totalCount)
+	for _, pair := range output.KeyPairs {
+		keyPairs = append(keyPairs, cloud.KeyPair{
+			KeyPairId:   aws.StringValue(pair.KeyPairId),
+			KeyPairName: aws.StringValue(pair.KeyName),
+		})
+	}
+	return cloud.DescribeKeyPairsResponse{TotalCount: totalCount, KeyPairs: keyPairs}, nil
+}
