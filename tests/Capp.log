@@ -1,0 +1,479 @@
+2022-09-09 15:38:49.651	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-09 15:38:49.652	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-09 15:47:24.863	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-09 15:47:24.866	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-09 15:47:24.867	ERROR	aws/api.go:41	GetRegions AwsCloud failed. err:[MissingRegion: could not find region configuration]
+2022-09-09 15:50:17.307	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-09 15:50:17.312	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-09 15:50:17.314	ERROR	aws/api.go:41	GetRegions AwsCloud failed. err:[MissingRegion: could not find region configuration]
+2022-09-09 15:52:28.385	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-09 15:52:28.391	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-09 15:52:28.395	INFO	handler/instance.go:228	provider:[AwsCloud], 1
+2022-09-09 15:53:24.379	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-09 15:53:24.397	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-09 15:53:24.403	ERROR	aws/api.go:41	GetRegions AwsCloud failed. err:[MissingRegion: could not find region configuration]
+2022-09-09 15:58:25.436	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-09 15:58:25.438	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-09 16:01:11.893	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-09 16:01:11.894	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-09 16:02:32.207	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-09 16:02:32.213	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-09 16:04:54.548	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-09 16:04:54.551	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-09 16:06:31.389	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-09 16:06:31.390	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-09 16:11:48.362	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-09 16:11:48.363	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-09 16:13:20.737	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-09 16:13:20.738	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-09 16:15:13.990	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-09 16:15:13.991	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-09 16:19:06.108	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-09 16:19:06.111	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-09 16:19:06.112	INFO	handler/network.go:219	req is:{AKIA4WZHXEQAAOVR4R7W vpc-0d8c6a0bd621bf4c4 cn-north-1 test_SecurityGroup } 
+2022-09-09 16:24:30.700	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-09 16:24:30.701	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-09 16:24:30.702	INFO	handler/network.go:263	req is:{AKIA4WZHXEQAAOVR4R7W vpc-0d8c6a0bd621bf4c4 cn-north-1 sg-07cdd57dd38d31672 [{tcp 1024 2048 ingress sg-07cdd57dd38d31672 10.0.0.0/24 }]} 
+2022-09-09 16:25:35.680	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-09 16:25:35.681	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-09 16:26:18.886	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-09 16:26:18.887	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-09 16:28:03.828	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-09 16:28:03.839	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-09 16:28:03.843	INFO	handler/instance.go:228	provider:[AwsCloud], 1
+2022-09-09 16:28:03.847	ERROR	aws/api.go:41	GetRegions AwsCloud failed. err:[MissingRegion: could not find region configuration]
+2022-09-09 16:32:25.945	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-09 16:32:25.947	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-09 16:37:08.679	INFO	handler/instance.go:228	provider:[AwsCloud], 1
+2022-09-09 16:37:23.130	ERROR	aws/api.go:41	GetRegions AwsCloud failed. err:[MissingRegion: could not find region configuration]
+2022-09-09 16:39:35.152	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-09 16:39:35.155	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-09 16:42:39.585	INFO	handler/instance.go:228	provider:[AwsCloud], 1
+2022-09-09 16:44:22.183	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-09 16:44:22.184	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-09 16:44:22.190	INFO	handler/instance.go:228	provider:[AwsCloud], 1
+2022-09-09 16:45:12.060	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-09 16:45:12.061	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-09 16:45:12.064	INFO	handler/instance.go:249	provider:[AwsCloud] regionId[:cn-north-1]
+2022-09-09 18:23:14.032	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-09 18:23:14.033	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-09 18:25:09.169	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-09 18:25:09.170	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-09 18:25:09.867	ERROR	aws/ecs.go:94	BatchCreate AwsCloud failed. err:[InvalidParameterValue: Invalid value '' for keyPairNames. It should not be blank
+	status code: 400, request id: ee434fd7-b7d8-4de2-b8a3-2ee663291dc0] req:[{AwsCloud t2.micro ami-0a5e581c2158fe57d 0xc00019ef60 cnn1-az1 cn-north-1 0xc000157700 0xc0188e9bf0 Ivgg87892789! [] true  }]
+2022-09-09 18:30:13.758	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-09 18:30:13.761	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-09 18:30:26.988	ERROR	aws/ecs.go:94	BatchCreate AwsCloud failed. err:[InvalidParameterValue: Invalid value '' for keyPairNames. It should not be blank
+	status code: 400, request id: 32e7bc0c-0f4f-4e8c-b4a0-b148309953e8] req:[{AwsCloud t2.micro ami-0a5e581c2158fe57d 0xc0007ec780 cnn1-az1 cn-north-1 0xc0006479c0 0xc01988e450 Ivgg87892789! [] true  }]
+2022-09-09 18:30:50.178	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-09 18:30:50.181	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-09 18:31:09.208	ERROR	aws/ecs.go:94	BatchCreate AwsCloud failed. err:[InvalidParameterValue: Invalid value '' for keyPairNames. It should not be blank
+	status code: 400, request id: bf240f15-8705-4004-85e6-f9aa167610e3] req:[{AwsCloud t2.micro ami-0a5e581c2158fe57d 0xc00063cba0 cnn1-az1 cn-north-1 0xc000623f40 0xc017343c50 Ivgg87892789! [] true  }]
+2022-09-09 18:32:00.612	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-09 18:32:00.615	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-09 18:33:33.712	ERROR	model/base.go:189	GetExpireRunningTask from read dbinvalid connection
+2022-09-09 18:33:33.714	ERROR	monitors/task_killer.go:16	failed to get expire running task , err : %vinvalid connection
+2022-09-09 18:37:43.370	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-09 18:37:43.371	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-09 18:37:44.013	ERROR	aws/ecs.go:94	BatchCreate AwsCloud failed. err:[InvalidBlockDeviceMapping: Volume of size 20GB is smaller than  snapshot 'snap-05e94dc408360cde9', expect size >= 100GB
+	status code: 400, request id: 9799e259-b16d-450c-a92e-84cc484f75d0] req:[{AwsCloud t2.micro ami-0a5e581c2158fe57d 0xc0005b8420 cnn1-az1 cn-north-1 0xc00021b080 0xc01956fbf0 Ivgg87892789! [] true key-0d6bff811002987e3 liaokey}]
+2022-09-09 18:38:38.371	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-09 18:38:38.375	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-09 18:38:39.014	ERROR	aws/ecs.go:94	BatchCreate AwsCloud failed. err:[InvalidBlockDeviceMapping: Volume of size 20GB is smaller than  snapshot 'snap-05e94dc408360cde9', expect size >= 100GB
+	status code: 400, request id: 0b2e2727-b40f-4c35-921f-038e612b8744] req:[{AwsCloud t2.micro ami-0a5e581c2158fe57d 0xc00083f020 cnn1-az1 cn-north-1 0xc00016e500 0xc0197ecae0 Ivgg87892789! [] true key-0d6bff811002987e3 liaokey}]
+2022-09-09 18:38:58.463	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-09 18:38:58.466	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-09 18:42:56.468	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-09 18:42:56.469	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-09 18:46:56.093	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-09 18:46:56.098	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-09 18:46:56.875	INFO	model/user.go:88	Get users:[1] from delegate func
+2022-09-09 18:46:56.876	INFO	model/user.go:95	Set user to local cache uid:u_1
+2022-09-13 11:59:14.511	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-13 11:59:14.512	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-13 11:59:36.895	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-13 11:59:36.897	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-13 12:00:31.495	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-13 12:00:31.496	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-13 12:01:53.422	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-13 12:01:53.424	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-13 12:05:35.522	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-13 12:05:35.532	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-13 12:05:35.556	ERROR	model/base.go:189	query data from read dbrecord not found
+2022-09-13 14:06:53.069	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-13 14:06:53.074	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-13 14:07:13.814	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-13 14:07:13.816	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-13 14:07:55.011	ERROR	model/base.go:189	query data from read dbrecord not found
+2022-09-13 14:08:12.278	ERROR	aws/api.go:107	CreateKeyPair AwsCloud failed.err:[InvalidKeyPair.Duplicate: The keypair 'test_key_pair' already exists.
+	status code: 400, request id: 5276b326-b93a-4e8b-8348-c2b76be02c54] req:[{cn-north-1 test_key_pair}]
+2022-09-13 14:08:43.080	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-13 14:08:43.084	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-13 14:08:43.089	ERROR	model/base.go:189	query data from read dbrecord not found
+2022-09-13 14:08:43.222	ERROR	aws/api.go:107	CreateKeyPair AwsCloud failed.err:[InvalidKeyPair.Duplicate: The keypair 'test_key_pair' already exists.
+	status code: 400, request id: ca0f35fb-7555-499b-ae2d-858a61326cc4] req:[{cn-north-1 test_key_pair}]
+2022-09-13 14:12:52.220	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-13 14:12:52.223	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-13 14:12:55.225	ERROR	model/base.go:189	query data from read dbrecord not found
+2022-09-13 14:14:11.467	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-13 14:14:11.468	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-13 14:14:11.471	ERROR	model/base.go:189	query data from read dbrecord not found
+2022-09-13 14:14:11.632	ERROR	aws/api.go:107	CreateKeyPair AwsCloud failed.err:[InvalidKeyPair.Duplicate: The keypair 'test_key_pair' already exists.
+	status code: 400, request id: 2bee3f0b-8270-4dbd-b6de-52c4f1d33d11] req:[{cn-north-1 test_key_pair}]
+2022-09-13 14:15:09.587	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-13 14:15:09.589	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-13 14:15:09.592	ERROR	model/base.go:189	query data from read dbrecord not found
+2022-09-13 14:24:12.728	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-13 14:24:12.730	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-13 14:25:00.632	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-13 14:25:00.633	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-13 14:25:01.404	INFO	model/user.go:88	Get users:[1] from delegate func
+2022-09-13 14:25:01.405	INFO	model/user.go:95	Set user to local cache uid:u_1
+2022-09-13 14:33:04.608	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-13 14:33:04.609	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-13 14:33:04.615	INFO	service/task.go:43	cluster:aws_cluster_test expand task info:{"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":0}
+2022-09-13 14:33:09.007	INFO	pool/executor.go:20	Executing Task:50339004154914990, EXPAND [aws_cluster_test], task info:{"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":0}
+2022-09-13 14:33:09.012	ERROR	model/base.go:189	get data from read dbrecord not found
+2022-09-13 14:33:09.012	ERROR	service/cloud.go:162	[cloud.Expand] recover error. error: runtime error: invalid memory address or nil pointer dereference
+2022-09-13 14:33:09.012	ERROR	service/cloud.go:163	stacktrace from panic: 
+goroutine 55 [running]:
+runtime/debug.Stack()
+	/usr/local/go/src/runtime/debug/stack.go:24 +0x65
+github.com/galaxy-future/BridgX/internal/service.Expand.func1.1()
+	/home/ecd_liaoshengchen_189332/Community/bridgx/internal/service/cloud.go:163 +0xb0
+panic({0x2f86040, 0x64afb90})
+	/usr/local/go/src/runtime/panic.go:1038 +0x215
+github.com/galaxy-future/BridgX/pkg/cloud/aws.(*AwsCloud).BatchCreate(0xc000136370, {{0x0, 0x0}, {0x0, 0x0}, {0x0, 0x0}, 0x0, {0x0, 0x0}, ...}, ...)
+	/home/ecd_liaoshengchen_189332/Community/bridgx/pkg/cloud/aws/ecs.go:24 +0xa0
+github.com/galaxy-future/BridgX/internal/service.Expand.func1(0x2)
+	/home/ecd_liaoshengchen_189332/Community/bridgx/internal/service/cloud.go:169 +0x13e
+created by github.com/galaxy-future/BridgX/internal/service.Expand
+	/home/ecd_liaoshengchen_189332/Community/bridgx/internal/service/cloud.go:158 +0x2b7
+
+2022-09-13 14:33:09.012	ERROR	service/cloud.go:46	[ExpandCLuster] Expand retry error, times: 0, error: panic runtime error: invalid memory address or nil pointer dereference
+2022-09-13 14:33:09.013	ERROR	model/base.go:189	get data from read dbrecord not found
+2022-09-13 14:33:09.013	ERROR	service/cloud.go:162	[cloud.Expand] recover error. error: runtime error: invalid memory address or nil pointer dereference
+2022-09-13 14:33:09.013	ERROR	service/cloud.go:163	stacktrace from panic: 
+goroutine 56 [running]:
+runtime/debug.Stack()
+	/usr/local/go/src/runtime/debug/stack.go:24 +0x65
+github.com/galaxy-future/BridgX/internal/service.Expand.func1.1()
+	/home/ecd_liaoshengchen_189332/Community/bridgx/internal/service/cloud.go:163 +0xb0
+panic({0x2f86040, 0x64afb90})
+	/usr/local/go/src/runtime/panic.go:1038 +0x215
+github.com/galaxy-future/BridgX/pkg/cloud/aws.(*AwsCloud).BatchCreate(0xc000136370, {{0x0, 0x0}, {0x0, 0x0}, {0x0, 0x0}, 0x0, {0x0, 0x0}, ...}, ...)
+	/home/ecd_liaoshengchen_189332/Community/bridgx/pkg/cloud/aws/ecs.go:24 +0xa0
+github.com/galaxy-future/BridgX/internal/service.Expand.func1(0x2)
+	/home/ecd_liaoshengchen_189332/Community/bridgx/internal/service/cloud.go:169 +0x13e
+created by github.com/galaxy-future/BridgX/internal/service.Expand
+	/home/ecd_liaoshengchen_189332/Community/bridgx/internal/service/cloud.go:158 +0x2b7
+
+2022-09-13 14:33:09.013	ERROR	service/cloud.go:46	[ExpandCLuster] Expand retry error, times: 1, error: panic runtime error: invalid memory address or nil pointer dereference
+2022-09-13 14:33:09.013	ERROR	model/base.go:189	get data from read dbrecord not found
+2022-09-13 14:33:09.013	ERROR	service/cloud.go:162	[cloud.Expand] recover error. error: runtime error: invalid memory address or nil pointer dereference
+2022-09-13 14:33:09.013	ERROR	service/cloud.go:163	stacktrace from panic: 
+goroutine 57 [running]:
+runtime/debug.Stack()
+	/usr/local/go/src/runtime/debug/stack.go:24 +0x65
+github.com/galaxy-future/BridgX/internal/service.Expand.func1.1()
+	/home/ecd_liaoshengchen_189332/Community/bridgx/internal/service/cloud.go:163 +0xb0
+panic({0x2f86040, 0x64afb90})
+	/usr/local/go/src/runtime/panic.go:1038 +0x215
+github.com/galaxy-future/BridgX/pkg/cloud/aws.(*AwsCloud).BatchCreate(0xc000136370, {{0x0, 0x0}, {0x0, 0x0}, {0x0, 0x0}, 0x0, {0x0, 0x0}, ...}, ...)
+	/home/ecd_liaoshengchen_189332/Community/bridgx/pkg/cloud/aws/ecs.go:24 +0xa0
+github.com/galaxy-future/BridgX/internal/service.Expand.func1(0x2)
+	/home/ecd_liaoshengchen_189332/Community/bridgx/internal/service/cloud.go:169 +0x13e
+created by github.com/galaxy-future/BridgX/internal/service.Expand
+	/home/ecd_liaoshengchen_189332/Community/bridgx/internal/service/cloud.go:158 +0x2b7
+
+2022-09-13 14:33:09.013	ERROR	service/cloud.go:46	[ExpandCLuster] Expand retry error, times: 2, error: panic runtime error: invalid memory address or nil pointer dereference
+2022-09-13 14:33:09.130	INFO	service/cloud.go:68	[RepairCluster] GetInstanceByTag length 0, available num 0, all num 0
+2022-09-13 14:33:09.132	WARN	pool/executor.go:68	Task FAILED:50339004154914990, EXPAND, {"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"192.168.40.174","task_submit_host":"192.168.40.174","user_id":1,"before_count":0}
+2022-09-13 14:53:07.097	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-13 14:53:07.099	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-13 14:53:19.294	INFO	service/task.go:43	cluster:aws_cluster_test expand task info:{"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":0}
+2022-09-13 14:53:24.006	INFO	pool/executor.go:20	Executing Task:50341042049788078, EXPAND [aws_cluster_test], task info:{"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":0}
+2022-09-13 14:54:53.371	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-13 14:54:53.373	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-13 14:56:12.545	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-13 14:56:12.547	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-13 14:57:09.302	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-13 14:57:09.304	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-13 14:58:07.089	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-13 14:58:07.092	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-13 15:00:21.043	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-13 15:00:21.047	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-13 15:01:24.384	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-13 15:01:24.385	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-13 15:01:24.391	INFO	service/task.go:43	cluster:aws_cluster_test expand task info:{"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":0}
+2022-09-13 15:01:29.006	INFO	pool/executor.go:20	Executing Task:50341855912536238, EXPAND [aws_cluster_test], task info:{"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":0}
+2022-09-13 15:03:21.164	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-13 15:03:21.167	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-13 15:03:21.175	INFO	service/task.go:43	cluster:aws_cluster_test expand task info:{"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":0}
+2022-09-13 15:06:01.962	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-13 15:06:01.964	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-13 15:06:01.971	INFO	service/task.go:43	cluster:aws_cluster_test expand task info:{"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":0}
+2022-09-13 15:06:06.186	INFO	pool/executor.go:20	Executing Task:50342321614497966, EXPAND [aws_cluster_test], task info:{"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":0}
+2022-09-13 15:06:35.823	ERROR	model/base.go:189	GetExpireRunningTask from read dbinvalid connection
+2022-09-13 15:06:35.823	ERROR	monitors/task_killer.go:16	failed to get expire running task , err : %vinvalid connection
+2022-09-13 15:08:22.626	ERROR	model/base.go:189	get data from read dbrecord not found
+2022-09-13 15:09:04.089	ERROR	service/cloud.go:162	[cloud.Expand] recover error. error: runtime error: invalid memory address or nil pointer dereference
+2022-09-13 15:09:04.090	ERROR	service/cloud.go:163	stacktrace from panic: 
+goroutine 58 [running]:
+runtime/debug.Stack()
+	/usr/local/go/src/runtime/debug/stack.go:24 +0x7a
+github.com/galaxy-future/BridgX/internal/service.Expand.func1.1()
+	/home/ecd_liaoshengchen_189332/Community/bridgx/internal/service/cloud.go:163 +0xd4
+panic({0x3fecd00, 0x7248bb0})
+	/usr/local/go/src/runtime/panic.go:1047 +0x262
+github.com/galaxy-future/BridgX/pkg/cloud/aws.(*AwsCloud).BatchCreate(0xc000119b48, {{0x0, 0x0}, {0x0, 0x0}, {0x0, 0x0}, 0x0, {0x0, 0x0}, ...}, ...)
+	/home/ecd_liaoshengchen_189332/Community/bridgx/pkg/cloud/aws/ecs.go:24 +0x11b
+github.com/galaxy-future/BridgX/internal/service.Expand.func1(0x2)
+	/home/ecd_liaoshengchen_189332/Community/bridgx/internal/service/cloud.go:169 +0x177
+created by github.com/galaxy-future/BridgX/internal/service.Expand
+	/home/ecd_liaoshengchen_189332/Community/bridgx/internal/service/cloud.go:158 +0x4f6
+
+2022-09-13 15:31:02.743	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-13 15:31:02.745	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-13 15:32:14.074	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-13 15:32:14.078	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-13 15:32:14.085	INFO	service/task.go:43	cluster:aws_cluster_test expand task info:{"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":0}
+2022-09-13 15:32:19.006	INFO	pool/executor.go:20	Executing Task:50344959177402542, EXPAND [aws_cluster_test], task info:{"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":0}
+2022-09-13 15:32:54.976	ERROR	model/base.go:189	get data from read dbrecord not found
+2022-09-13 15:33:41.128	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-13 15:33:41.130	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-13 15:33:41.137	INFO	service/task.go:43	cluster:aws_cluster_test expand task info:{"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":0}
+2022-09-13 15:33:46.007	INFO	pool/executor.go:20	Executing Task:50345105223067822, EXPAND [aws_cluster_test], task info:{"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":0}
+2022-09-13 15:44:16.429	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-13 15:44:16.430	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-13 15:44:16.436	INFO	service/task.go:43	cluster:aws_cluster_test expand task info:{"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":0}
+2022-09-13 15:44:21.008	INFO	pool/executor.go:20	Executing Task:50346171079600302, EXPAND [aws_cluster_test], task info:{"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":0}
+2022-09-13 15:44:22.601	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-13 15:44:27.648	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-13 15:44:32.699	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-13 15:44:40.752	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-13 15:44:48.807	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-13 15:44:56.894	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-13 15:44:56.895	INFO	service/cluster.go:467	[queryAndSaveExpandIPs] is ready, 2
+2022-09-13 15:44:56.899	INFO	service/cluster.go:540	expand cluster:aws_cluster_test no need publish config
+2022-09-13 15:44:56.949	INFO	service/cloud.go:68	[RepairCluster] GetInstanceByTag length 2, available num 2, all num 2
+2022-09-13 15:44:56.950	WARN	pool/executor.go:68	Task SUCCESS:50346171079600302, EXPAND, {"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"192.168.40.174","task_submit_host":"192.168.40.174","user_id":1,"before_count":0}
+2022-09-13 15:46:46.156	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-13 15:46:46.157	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-13 15:46:46.165	INFO	service/task.go:90	cluster:aws_cluster_test shrink task info:{"cluster_name":"aws_cluster_test","count":2,"ips":"","task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":2}
+2022-09-13 15:46:51.005	INFO	pool/executor.go:84	Executing Task:50346422284855470, SHRINK [aws_cluster_test], task info:{"cluster_name":"aws_cluster_test","count":2,"ips":"","task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":2}
+2022-09-13 15:46:51.008	INFO	pool/executor.go:106	shrink cluster:aws_cluster_test with retry times:1
+2022-09-13 15:46:51.008	INFO	service/cluster.go:342	Shrink aws_cluster_test, with count:2
+2022-09-13 15:46:51.265	INFO	service/cluster.go:580	shrink cluster:aws_cluster_test no need publish config
+2022-09-13 15:46:51.268	WARN	pool/executor.go:68	Task SUCCESS:50346422284855470, SHRINK, {"cluster_name":"aws_cluster_test","count":2,"ips":"","task_exec_host":"192.168.40.174","task_submit_host":"192.168.40.174","user_id":1,"before_count":2}
+2022-09-13 16:24:36.197	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-13 16:24:36.198	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-13 16:24:36.203	INFO	service/task.go:43	cluster:aws_cluster_test expand task info:{"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":0}
+2022-09-13 16:24:41.006	INFO	pool/executor.go:20	Executing Task:50350230779996334, EXPAND [aws_cluster_test], task info:{"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":0}
+2022-09-13 16:24:42.527	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-13 16:24:47.582	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-13 16:24:52.643	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-13 16:25:00.689	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-13 16:25:08.752	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-13 16:25:16.869	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-13 16:25:29.980	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-13 16:25:29.980	INFO	service/cluster.go:467	[queryAndSaveExpandIPs] is ready, 2
+2022-09-13 16:25:29.989	INFO	service/cluster.go:540	expand cluster:aws_cluster_test no need publish config
+2022-09-13 16:25:30.041	INFO	service/cloud.go:68	[RepairCluster] GetInstanceByTag length 2, available num 2, all num 2
+2022-09-13 16:25:30.043	WARN	pool/executor.go:68	Task SUCCESS:50350230779996334, EXPAND, {"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"192.168.40.174","task_submit_host":"192.168.40.174","user_id":1,"before_count":0}
+2022-09-14 11:01:12.094	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-14 11:01:12.095	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-14 11:03:19.553	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-14 11:03:19.554	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-14 11:03:19.564	INFO	service/task.go:43	cluster:aws_cluster_test expand task info:{"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":2}
+2022-09-14 11:06:55.069	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-14 11:06:55.070	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-14 11:06:55.076	INFO	service/task.go:90	cluster:aws_cluster_test shrink task info:{"cluster_name":"aws_cluster_test","count":2,"ips":"","task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":2}
+2022-09-14 11:07:00.007	INFO	pool/executor.go:84	Executing Task:50463206656714926, SHRINK [aws_cluster_test], task info:{"cluster_name":"aws_cluster_test","count":2,"ips":"","task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":2}
+2022-09-14 11:07:00.010	INFO	pool/executor.go:106	shrink cluster:aws_cluster_test with retry times:1
+2022-09-14 11:07:00.010	INFO	service/cluster.go:342	Shrink aws_cluster_test, with count:2
+2022-09-14 11:07:00.138	ERROR	aws/ecs.go:205	BatchDelete AwsCloud failed.err:[InvalidInstanceID.NotFound: The instance IDs 'i-04e02bdfad6abd194, i-0c37ea46d0d3c18c1' do not exist
+	status code: 400, request id: dc4db155-065b-4820-b118-610fa535cc18] req:[[i-04e02bdfad6abd194 i-0c37ea46d0d3c18c1]]
+2022-09-14 11:07:00.138	ERROR	service/cluster.go:354	[ShrinkCluster] Shrink instance error. cluster name: aws_cluster_test, error: InvalidInstanceID.NotFound: The instance IDs 'i-04e02bdfad6abd194, i-0c37ea46d0d3c18c1' do not exist
+	status code: 400, request id: dc4db155-065b-4820-b118-610fa535cc18
+2022-09-14 11:07:02.138	INFO	pool/executor.go:106	shrink cluster:aws_cluster_test with retry times:2
+2022-09-14 11:07:02.138	INFO	service/cluster.go:342	Shrink aws_cluster_test, with count:2
+2022-09-14 11:07:02.209	ERROR	aws/ecs.go:205	BatchDelete AwsCloud failed.err:[InvalidInstanceID.NotFound: The instance IDs 'i-04e02bdfad6abd194, i-0c37ea46d0d3c18c1' do not exist
+	status code: 400, request id: c266c88d-d360-4640-8c16-50469c12f952] req:[[i-04e02bdfad6abd194 i-0c37ea46d0d3c18c1]]
+2022-09-14 11:07:02.209	ERROR	service/cluster.go:354	[ShrinkCluster] Shrink instance error. cluster name: aws_cluster_test, error: InvalidInstanceID.NotFound: The instance IDs 'i-04e02bdfad6abd194, i-0c37ea46d0d3c18c1' do not exist
+	status code: 400, request id: c266c88d-d360-4640-8c16-50469c12f952
+2022-09-14 11:07:06.210	INFO	pool/executor.go:106	shrink cluster:aws_cluster_test with retry times:3
+2022-09-14 11:07:06.210	INFO	service/cluster.go:342	Shrink aws_cluster_test, with count:2
+2022-09-14 11:07:06.282	ERROR	aws/ecs.go:205	BatchDelete AwsCloud failed.err:[InvalidInstanceID.NotFound: The instance IDs 'i-04e02bdfad6abd194, i-0c37ea46d0d3c18c1' do not exist
+	status code: 400, request id: b27b0b33-5dac-4e73-9994-6f9720fdae42] req:[[i-04e02bdfad6abd194 i-0c37ea46d0d3c18c1]]
+2022-09-14 11:07:06.283	ERROR	service/cluster.go:354	[ShrinkCluster] Shrink instance error. cluster name: aws_cluster_test, error: InvalidInstanceID.NotFound: The instance IDs 'i-04e02bdfad6abd194, i-0c37ea46d0d3c18c1' do not exist
+	status code: 400, request id: b27b0b33-5dac-4e73-9994-6f9720fdae42
+2022-09-14 11:07:06.284	WARN	pool/executor.go:68	Task FAILED:50463206656714926, SHRINK, {"cluster_name":"aws_cluster_test","count":2,"ips":"","task_exec_host":"192.168.40.174","task_submit_host":"192.168.40.174","user_id":1,"before_count":2}
+2022-09-14 11:08:28.482	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-14 11:08:28.487	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-14 11:08:28.495	INFO	service/task.go:43	cluster:aws_cluster_test expand task info:{"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":2}
+2022-09-14 11:08:33.009	INFO	pool/executor.go:20	Executing Task:50463363389466798, EXPAND [aws_cluster_test], task info:{"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":2}
+2022-09-14 11:08:34.568	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-14 11:08:39.622	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-14 11:08:44.676	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-14 11:08:52.728	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-14 11:09:00.831	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-14 11:09:08.879	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-14 11:09:08.879	INFO	service/cluster.go:467	[queryAndSaveExpandIPs] is ready, 2
+2022-09-14 11:09:08.886	INFO	service/cluster.go:540	expand cluster:aws_cluster_test no need publish config
+2022-09-14 11:09:08.943	INFO	service/cloud.go:68	[RepairCluster] GetInstanceByTag length 2, available num 2, all num 2
+2022-09-14 11:09:08.945	WARN	pool/executor.go:68	Task SUCCESS:50463363389466798, EXPAND, {"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"192.168.40.174","task_submit_host":"192.168.40.174","user_id":1,"before_count":2}
+2022-09-14 11:17:42.401	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-14 11:17:42.402	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-14 11:18:22.407	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-14 11:18:22.409	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-14 11:28:23.844	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-14 11:28:23.845	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-14 11:28:23.856	ERROR	model/base.go:189	query data from read dbrecord not found
+2022-09-14 11:28:24.044	ERROR	aws/api.go:124	ImportKeyPair AwsCloud failed.err:[InvalidKey.Format: Key is not in valid OpenSSH public key format
+	status code: 400, request id: 346adec8-25e8-492b-bbec-ed13d5417c38] req:[{cn-north-1 import_key_pair AAAAB3NzaC1yc2EAAAADAQABAAABAQCVuCS+3ZqAZGKJsGxve/TG+e8NDQRvhCH0RP7G/lkZFvFsn2MPRZKHJRW6OFGeqMjV3ZsEUa3xO0YEvjQZBB2bGnSW6VatCX7xcZd/opGixGvhIIOeQM3u4W5GRedlAoBQhrTYU6Xk/nX0cn2Cqgn2pVlH8x0l+rE8Ggs7oCGG1vEbea0Ioz8+89WNqi2vDzZcuyidN4xQV10MuaWGxMEHqX7+WcEDZCEtv+s6+MGkun02kztFAxFiECg4eNzf7mVtWFCGCLZOriLV1ykwtlgpGAfd1wlXl5WYJB6E9k8/yTZZ9DmiZDC9G8xjG/IDcBqj2U3278Qxh0eRBmqoSSBt ecd\liaoshengchen_189332@r79ps4fv8wo1t3i}]
+2022-09-14 11:38:36.204	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-14 11:38:36.206	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-14 11:38:36.210	ERROR	model/base.go:189	query data from read dbrecord not found
+2022-09-14 11:40:48.871	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-14 11:40:48.889	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-14 11:40:49.662	INFO	model/user.go:88	Get users:[1] from delegate func
+2022-09-14 11:40:49.663	INFO	model/user.go:95	Set user to local cache uid:u_1
+2022-09-14 11:41:53.935	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-14 11:41:53.936	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-14 11:41:53.941	INFO	service/task.go:43	cluster:aws_cluster_test_key expand task info:{"cluster_name":"aws_cluster_test_key","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":0}
+2022-09-14 11:41:58.007	INFO	pool/executor.go:20	Executing Task:50466727976249518, EXPAND [aws_cluster_test_key], task info:{"cluster_name":"aws_cluster_test_key","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":0}
+2022-09-14 11:41:59.355	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-14 11:42:04.406	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-14 11:42:09.467	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-14 11:42:17.573	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-14 11:42:25.621	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-14 11:42:33.714	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-14 11:42:33.715	INFO	service/cluster.go:467	[queryAndSaveExpandIPs] is ready, 2
+2022-09-14 11:42:33.720	INFO	service/cluster.go:540	expand cluster:aws_cluster_test_key no need publish config
+2022-09-14 11:42:33.768	INFO	service/cloud.go:68	[RepairCluster] GetInstanceByTag length 2, available num 2, all num 2
+2022-09-14 11:42:33.769	WARN	pool/executor.go:68	Task SUCCESS:50466727976249518, EXPAND, {"cluster_name":"aws_cluster_test_key","count":2,"task_exec_host":"192.168.40.174","task_submit_host":"192.168.40.174","user_id":1,"before_count":0}
+2022-09-14 11:47:11.079	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-14 11:47:11.080	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-14 11:47:11.085	INFO	service/task.go:43	cluster:aws_cluster_test_key expand task info:{"cluster_name":"aws_cluster_test_key","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":2}
+2022-09-14 11:47:16.006	INFO	pool/executor.go:20	Executing Task:50467260048877742, EXPAND [aws_cluster_test_key], task info:{"cluster_name":"aws_cluster_test_key","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":2}
+2022-09-14 11:47:16.011	ERROR	model/base.go:189	get data from read dbrecord not found
+2022-09-14 11:47:16.011	ERROR	service/cloud.go:162	[cloud.Expand] recover error. error: runtime error: invalid memory address or nil pointer dereference
+2022-09-14 11:47:16.011	ERROR	service/cloud.go:163	stacktrace from panic: 
+goroutine 58 [running]:
+runtime/debug.Stack()
+	/usr/local/go/src/runtime/debug/stack.go:24 +0x65
+github.com/galaxy-future/BridgX/internal/service.Expand.func1.1()
+	/home/ecd_liaoshengchen_189332/Community/bridgx/internal/service/cloud.go:163 +0xb0
+panic({0x2fa0480, 0x64dec00})
+	/usr/local/go/src/runtime/panic.go:1038 +0x215
+github.com/galaxy-future/BridgX/pkg/cloud/aws.(*AwsCloud).BatchCreate(0xc0003ac5a0, {{0x0, 0x0}, {0x0, 0x0}, {0x0, 0x0}, 0x0, {0x0, 0x0}, ...}, ...)
+	/home/ecd_liaoshengchen_189332/Community/bridgx/pkg/cloud/aws/ecs.go:24 +0xa0
+github.com/galaxy-future/BridgX/internal/service.Expand.func1(0x2)
+	/home/ecd_liaoshengchen_189332/Community/bridgx/internal/service/cloud.go:169 +0x13e
+created by github.com/galaxy-future/BridgX/internal/service.Expand
+	/home/ecd_liaoshengchen_189332/Community/bridgx/internal/service/cloud.go:158 +0x2b7
+
+2022-09-14 11:47:16.011	ERROR	service/cloud.go:46	[ExpandCLuster] Expand retry error, times: 0, error: panic runtime error: invalid memory address or nil pointer dereference
+2022-09-14 11:47:16.012	ERROR	model/base.go:189	get data from read dbrecord not found
+2022-09-14 11:47:16.012	ERROR	service/cloud.go:162	[cloud.Expand] recover error. error: runtime error: invalid memory address or nil pointer dereference
+2022-09-14 11:47:16.012	ERROR	service/cloud.go:163	stacktrace from panic: 
+goroutine 59 [running]:
+runtime/debug.Stack()
+	/usr/local/go/src/runtime/debug/stack.go:24 +0x65
+github.com/galaxy-future/BridgX/internal/service.Expand.func1.1()
+	/home/ecd_liaoshengchen_189332/Community/bridgx/internal/service/cloud.go:163 +0xb0
+panic({0x2fa0480, 0x64dec00})
+	/usr/local/go/src/runtime/panic.go:1038 +0x215
+github.com/galaxy-future/BridgX/pkg/cloud/aws.(*AwsCloud).BatchCreate(0xc0003ac5a0, {{0x0, 0x0}, {0x0, 0x0}, {0x0, 0x0}, 0x0, {0x0, 0x0}, ...}, ...)
+	/home/ecd_liaoshengchen_189332/Community/bridgx/pkg/cloud/aws/ecs.go:24 +0xa0
+github.com/galaxy-future/BridgX/internal/service.Expand.func1(0x2)
+	/home/ecd_liaoshengchen_189332/Community/bridgx/internal/service/cloud.go:169 +0x13e
+created by github.com/galaxy-future/BridgX/internal/service.Expand
+	/home/ecd_liaoshengchen_189332/Community/bridgx/internal/service/cloud.go:158 +0x2b7
+
+2022-09-14 11:47:16.012	ERROR	service/cloud.go:46	[ExpandCLuster] Expand retry error, times: 1, error: panic runtime error: invalid memory address or nil pointer dereference
+2022-09-14 11:47:16.012	ERROR	model/base.go:189	get data from read dbrecord not found
+2022-09-14 11:47:16.012	ERROR	service/cloud.go:162	[cloud.Expand] recover error. error: runtime error: invalid memory address or nil pointer dereference
+2022-09-14 11:47:16.012	ERROR	service/cloud.go:163	stacktrace from panic: 
+goroutine 60 [running]:
+runtime/debug.Stack()
+	/usr/local/go/src/runtime/debug/stack.go:24 +0x65
+github.com/galaxy-future/BridgX/internal/service.Expand.func1.1()
+	/home/ecd_liaoshengchen_189332/Community/bridgx/internal/service/cloud.go:163 +0xb0
+panic({0x2fa0480, 0x64dec00})
+	/usr/local/go/src/runtime/panic.go:1038 +0x215
+github.com/galaxy-future/BridgX/pkg/cloud/aws.(*AwsCloud).BatchCreate(0xc0003ac5a0, {{0x0, 0x0}, {0x0, 0x0}, {0x0, 0x0}, 0x0, {0x0, 0x0}, ...}, ...)
+	/home/ecd_liaoshengchen_189332/Community/bridgx/pkg/cloud/aws/ecs.go:24 +0xa0
+github.com/galaxy-future/BridgX/internal/service.Expand.func1(0x2)
+	/home/ecd_liaoshengchen_189332/Community/bridgx/internal/service/cloud.go:169 +0x13e
+created by github.com/galaxy-future/BridgX/internal/service.Expand
+	/home/ecd_liaoshengchen_189332/Community/bridgx/internal/service/cloud.go:158 +0x2b7
+
+2022-09-14 11:47:16.012	ERROR	service/cloud.go:46	[ExpandCLuster] Expand retry error, times: 2, error: panic runtime error: invalid memory address or nil pointer dereference
+2022-09-14 11:47:16.124	INFO	service/cloud.go:68	[RepairCluster] GetInstanceByTag length 0, available num 0, all num 0
+2022-09-14 11:47:16.125	WARN	pool/executor.go:68	Task FAILED:50467260048877742, EXPAND, {"cluster_name":"aws_cluster_test_key","count":2,"task_exec_host":"192.168.40.174","task_submit_host":"192.168.40.174","user_id":1,"before_count":2}
+2022-09-14 11:49:50.741	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-14 11:49:50.746	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-14 11:50:10.807	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-14 11:50:10.811	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-14 11:50:11.573	INFO	model/user.go:88	Get users:[1] from delegate func
+2022-09-14 11:50:11.575	INFO	model/user.go:95	Set user to local cache uid:u_1
+2022-09-14 11:51:26.435	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-14 11:51:26.451	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-14 11:51:26.457	INFO	service/task.go:43	cluster:test_import_key expand task info:{"cluster_name":"test_import_key","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":0}
+2022-09-14 11:51:31.006	INFO	pool/executor.go:20	Executing Task:50467688488642734, EXPAND [test_import_key], task info:{"cluster_name":"test_import_key","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":0}
+2022-09-14 11:51:32.542	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-14 11:51:37.590	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-14 11:51:42.638	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-14 11:51:50.687	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-14 11:51:58.737	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-14 11:52:06.856	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-14 11:52:06.856	INFO	service/cluster.go:467	[queryAndSaveExpandIPs] is ready, 2
+2022-09-14 11:52:06.861	INFO	service/cluster.go:540	expand cluster:test_import_key no need publish config
+2022-09-14 11:52:06.912	INFO	service/cloud.go:68	[RepairCluster] GetInstanceByTag length 2, available num 2, all num 2
+2022-09-14 11:52:06.914	WARN	pool/executor.go:68	Task SUCCESS:50467688488642734, EXPAND, {"cluster_name":"test_import_key","count":2,"task_exec_host":"192.168.40.174","task_submit_host":"192.168.40.174","user_id":1,"before_count":0}
+2022-09-14 14:28:29.825	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-14 14:28:29.826	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-14 14:52:07.720	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-14 14:52:07.721	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-14 14:54:08.574	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-14 14:54:08.575	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-14 14:57:14.597	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-14 14:57:14.598	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-14 14:57:51.801	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-14 14:57:51.802	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-14 14:59:17.926	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-14 14:59:17.927	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-14 15:10:36.245	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-14 15:10:36.246	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-14 15:16:15.702	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-14 15:16:15.704	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-14 15:18:14.318	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-14 15:18:14.320	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-14 15:30:31.062	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-14 15:30:31.068	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-14 15:30:31.069	INFO	handler/network.go:219	req is:{LTAI5tABJXUYhd1sGCCyRtDF vpc-2zexksa5gr5bxtufd61oz cn-beijing test_SecurityGroup } 
+2022-09-14 15:31:59.408	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-14 15:31:59.410	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-14 15:31:59.411	INFO	handler/network.go:263	req is:{LTAI5tABJXUYhd1sGCCyRtDF vpc-2zexksa5gr5bxtufd61oz cn-beijing sg-2ze8na66wsies9tkfd3w [{tcp 22 22 ingress sg-2ze8na66wsies9tkfd3w 192.168.1.0/24 }]} 
+2022-09-14 16:03:49.237	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-14 16:03:49.242	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-14 16:03:49.249	INFO	service/task.go:43	cluster:clusterA expand task info:{"cluster_name":"clusterA","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":0}
+2022-09-14 16:03:54.005	INFO	pool/executor.go:20	Executing Task:50493093874509998, EXPAND [clusterA], task info:{"cluster_name":"clusterA","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":0}
+2022-09-14 16:03:56.331	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 0, idNum: 2, err: <nil>
+2022-09-14 16:04:01.899	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-14 16:04:07.176	INFO	service/cluster.go:465	[queryAndSaveExpandIPs] insNum: 2, idNum: 2, err: <nil>
+2022-09-14 16:04:07.176	INFO	service/cluster.go:467	[queryAndSaveExpandIPs] is ready, 2
+2022-09-14 16:04:07.180	INFO	service/cluster.go:540	expand cluster:clusterA no need publish config
+2022-09-14 16:04:07.466	INFO	service/cloud.go:68	[RepairCluster] GetInstanceByTag length 2, available num 2, all num 2
+2022-09-14 16:04:07.467	WARN	pool/executor.go:68	Task SUCCESS:50493093874509998, EXPAND, {"cluster_name":"clusterA","count":2,"task_exec_host":"192.168.40.174","task_submit_host":"192.168.40.174","user_id":1,"before_count":0}
+2022-09-14 16:07:33.073	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-14 16:07:33.078	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-14 16:07:33.088	INFO	service/task.go:90	cluster:clusterA shrink task info:{"cluster_name":"clusterA","count":2,"ips":"","task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":2}
+2022-09-14 16:07:38.006	INFO	pool/executor.go:84	Executing Task:50493469415712942, SHRINK [clusterA], task info:{"cluster_name":"clusterA","count":2,"ips":"","task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":2}
+2022-09-14 16:07:38.009	INFO	pool/executor.go:106	shrink cluster:clusterA with retry times:1
+2022-09-14 16:07:38.009	INFO	service/cluster.go:342	Shrink clusterA, with count:2
+2022-09-14 16:07:39.043	INFO	alibaba/api.go:155	[BatchDelete] requestId: 6D5221D5-02AE-53D5-A292-A2AF4C0493DB
+2022-09-14 16:07:39.046	INFO	service/cluster.go:580	shrink cluster:clusterA no need publish config
+2022-09-14 16:07:39.049	WARN	pool/executor.go:68	Task SUCCESS:50493469415712942, SHRINK, {"cluster_name":"clusterA","count":2,"ips":"","task_exec_host":"192.168.40.174","task_submit_host":"192.168.40.174","user_id":1,"before_count":2}
