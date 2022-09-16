@@ -273,7 +273,6 @@ func (b BaiduCloud) GetVPC(req cloud.GetVpcRequest) (cloud.GetVpcResponse, error
 	if err != nil {
 		return cloud.GetVpcResponse{}, err
 	}
-
 	return cloud.GetVpcResponse{
 		Vpc: cloud.VPC{
 			VpcId:     response.VPC.VPCId,
