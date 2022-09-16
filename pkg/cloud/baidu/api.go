@@ -258,7 +258,6 @@ func (b BaiduCloud) CreateVPC(req cloud.CreateVpcRequest) (cloud.CreateVpcRespon
 
 	response, err := b.vpcClient.CreateVPC(request)
 	if err != nil {
-		fmt.Println(err)
 		return cloud.CreateVpcResponse{}, err
 	}
 
@@ -366,7 +365,7 @@ func (b BaiduCloud) AddIngressSecurityGroupRule(req cloud.AddSecurityGroupRuleRe
 			DestGroupId:     "",
 			SecurityGroupId: req.SecurityGroupId,
 			Remark:          "",
-			Direction:       "ingress", // bi tian
+			Direction:       "ingress", // required
 		},
 	}
 	return b.bccClient.AuthorizeSecurityGroupRule(req.SecurityGroupId, request)
@@ -385,7 +384,7 @@ func (b BaiduCloud) AddEgressSecurityGroupRule(req cloud.AddSecurityGroupRuleReq
 			DestGroupId:     "",
 			SecurityGroupId: req.SecurityGroupId,
 			Remark:          "",
-			Direction:       "egress", // bi tian
+			Direction:       "egress", // required
 		},
 	}
 

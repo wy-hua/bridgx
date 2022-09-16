@@ -2,10 +2,11 @@ package baidu
 
 import (
 	"fmt"
-	"github.com/galaxy-future/BridgX/pkg/cloud"
 	"log"
 	"os"
 	"testing"
+
+	"github.com/galaxy-future/BridgX/pkg/cloud"
 )
 
 var (
@@ -69,7 +70,7 @@ func TestBatchCreate(t *testing.T) {
 		Disks:        &disk,
 		Charge:       &charge,
 		Password:     "asdasd",
-		Tags:         []cloud.Tag{{"myTest", "1"}},
+		Tags:         []cloud.Tag{{Key: "myTest", Value: "1"}},
 		DryRun:       false,
 	}
 	var err error
@@ -81,7 +82,7 @@ func TestBatchCreate(t *testing.T) {
 
 }
 func TestGetInstancesByTags(t *testing.T) {
-	resp, err := b.GetInstancesByTags("BJ", []cloud.Tag{{"myTest", "1"}})
+	resp, err := b.GetInstancesByTags("BJ", []cloud.Tag{{Key: "myTest", Value: "1"}})
 	if err != nil {
 		t.Error(err)
 	}

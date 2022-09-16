@@ -5,13 +5,14 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/galaxy-future/BridgX/cmd/api/request"
-	"github.com/galaxy-future/BridgX/pkg/cloud"
 	"net/http"
 	"net/http/httptest"
 	"strconv"
 	"testing"
 	"time"
+
+	"github.com/galaxy-future/BridgX/cmd/api/request"
+	"github.com/galaxy-future/BridgX/pkg/cloud"
 
 	"github.com/galaxy-future/BridgX/internal/constants"
 	"github.com/galaxy-future/BridgX/internal/model"

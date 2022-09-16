@@ -4,11 +4,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/galaxy-future/BridgX/pkg/cloud/baidu"
 	"runtime/debug"
 	"strconv"
 	"sync"
 	"time"
+
+	"github.com/galaxy-future/BridgX/pkg/cloud/baidu"
 
 	"github.com/Rican7/retry"
 	"github.com/Rican7/retry/backoff"

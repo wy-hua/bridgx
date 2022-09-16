@@ -6,7 +6,7 @@ const (
 	AlibabaCloud = "AlibabaCloud"
 	HuaweiCloud  = "HuaweiCloud"
 	TencentCloud = "TencentCloud"
-	BaiduCloud = "BaiduCloud"
+	BaiduCloud   = "BaiduCloud"
 )
 
 const (

@@ -5,14 +5,15 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/galaxy-future/BridgX/cmd/api/request"
-	"github.com/galaxy-future/BridgX/pkg/cloud"
-	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
 	"testing"
 	"time"
+
+	"github.com/galaxy-future/BridgX/cmd/api/request"
+	"github.com/galaxy-future/BridgX/pkg/cloud"
+	"github.com/stretchr/testify/assert"
 
 	"github.com/galaxy-future/BridgX/internal/model"
 	"github.com/galaxy-future/BridgX/internal/service"

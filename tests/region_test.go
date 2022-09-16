@@ -2,13 +2,14 @@ package tests
 
 import (
 	"fmt"
-	"github.com/galaxy-future/BridgX/pkg/cloud"
-	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
 	"strconv"
 	"testing"
 	"time"
+
+	"github.com/galaxy-future/BridgX/pkg/cloud"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestListRegions(t *testing.T) {

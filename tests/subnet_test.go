@@ -4,14 +4,15 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/galaxy-future/BridgX/cmd/api/request"
-	"github.com/galaxy-future/BridgX/pkg/cloud"
-	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
 	"strconv"
 	"testing"
 	"time"
+
+	"github.com/galaxy-future/BridgX/cmd/api/request"
+	"github.com/galaxy-future/BridgX/pkg/cloud"
+	"github.com/stretchr/testify/assert"
 )
 
 const (
