@@ -4,13 +4,14 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/galaxy-future/BridgX/pkg/cloud/aws"
-	"github.com/galaxy-future/BridgX/pkg/cloud/baidu"
-	"github.com/spf13/cast"
 	"runtime/debug"
 	"strconv"
 	"sync"
 	"time"
+
+	"github.com/galaxy-future/BridgX/pkg/cloud/aws"
+	"github.com/galaxy-future/BridgX/pkg/cloud/baidu"
+	"github.com/spf13/cast"
 
 	"github.com/Rican7/retry"
 	"github.com/Rican7/retry/backoff"

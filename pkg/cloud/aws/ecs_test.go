@@ -2,8 +2,9 @@ package aws
 
 import (
 	"fmt"
-	"github.com/galaxy-future/BridgX/pkg/cloud"
 	"testing"
+
+	"github.com/galaxy-future/BridgX/pkg/cloud"
 )
 
 func TestBatchCreate(t *testing.T) {
