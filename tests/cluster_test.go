@@ -203,24 +203,8 @@ func TestImportKeyPair(t *testing.T) {
 			Provider:    cloud.AwsCloud,
 			RegionId:    "cn-north-1",
 			KeyPairName: "import_key_pair",
-			PrivateKey: `MIICWwIBAAKBgQDIxdPF2D6kV8S8nAT81awf7Ou2yQyZxrsRN+dzHrVF4vrahqV1
-G43LQuOtoftmk+jNKnRKqLdfZzVehUPEyLMusug7Q+tVtHrii9s3QieNWda+onbJ
-MND4bnwdviSABgbBMWnYA8uY0WgFA0kuBrLr/vQtSjuh0n5W3LZiGU/zbQIDAQAB
-AoGAEsz7pMY4L3mMkcDmcqqroJ22APrYtDm44MbkZJJWlUHJDdeX/NxkrckIuwS1
-Hwjwvu2f0DH2YfevNrex/eZxaN6TE4HMY5A195aX0fiXolimBSkqi9XCjC7HQ+so
-3qTsQ4ztcOYWz+egB3skB8Lbc5LTKA230aDQDUC/g+j0gT0CQQDuKrD/T9y2GwlJ
-oIS621Ykdnljhjkvoezt/z4QFwx5QpaHSUdkyIJOssS0xdJh/azdQR7xvfWemVjR
-rDQAEqujAkEA185Y95DHWX9vSAKxgpm5IuxQJGZ4gRBDIpIJFZiTj5aVnTxtw+sub
-ujt7qK2I/cz2yabsGoJJ2yPaWBh146SrVrwJAOaTPjhvQOas1hkJ5nZg0s0KRgcI4
-eXThmYDrjo1lkXvSXxAXXYdCMrYF8hLnJpx1WF/Ik438gtRusODS/SmHrQJABRnG
-douAergNXElcArc5bf7h4gpd/Mbyn0WOW2lQy39GUtNWN0dKtfsj8Bex7jXC+38r
-g3Di6AAP8Bcb6lft1wJAL9Uxltujufr/YDhR5UY5D0Wk9QnPaXSQs9Xn6nK1mrbM
-+R3y7M4zmclByeR/xGtaL1COKAN5fin4SxhpbHpXFw==
-`,
-			PublicKey: `MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDIxdPF2D6kV8S8nAT81awf7Ou2
-yQyZxrsRN+dzHrVF4vrahqV1G43LQuOtoft5165nRKqLdfZzVehUPEyLMusug7
-Q+tVtHrii9s3QieNWda+onbJMND4bnwdviSABgbBMWnYA8uY0WgFA0kuBrLr/vQt
-Sjuh0n5W3LZiGU/zbQIDAQAB`,
+			PrivateKey: `__test_private_key_content__`,
+			PublicKey: `__test_public_key_content__`,
 		},
 	}
 	for i, tt := range tests {
