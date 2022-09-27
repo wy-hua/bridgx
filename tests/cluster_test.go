@@ -203,8 +203,8 @@ func TestImportKeyPair(t *testing.T) {
 			Provider:    cloud.AwsCloud,
 			RegionId:    "cn-north-1",
 			KeyPairName: "import_key_pair",
-			PrivateKey: `__test_private_key_content__`,
-			PublicKey: `__test_public_key_content__`,
+			PrivateKey:  `__test_private_key_content__`,
+			PublicKey:   `__test_public_key_content__`,
 		},
 	}
 	for i, tt := range tests {

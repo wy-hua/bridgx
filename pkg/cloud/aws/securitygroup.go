@@ -41,13 +41,6 @@ func (p *AwsCloud) AddIngressSecurityGroupRule(req cloud.AddSecurityGroupRuleReq
 					},
 				},
 				ToPort: aws.Int64(int64(req.PortTo)),
-				//UserIdGroupPairs: []*ec2.UserIdGroupPair{
-				//	{
-				//		GroupId: aws.String(req.SecurityGroupId),
-				//		VpcId:   aws.String(req.VpcId),
-				//		//Description: aws.String("HTTP access from other instances"),
-				//	},
-				//},
 			},
 		},
 	}
@@ -73,13 +66,6 @@ func (p *AwsCloud) AddEgressSecurityGroupRule(req cloud.AddSecurityGroupRuleRequ
 					},
 				},
 				ToPort: aws.Int64(int64(req.PortTo)),
-				//UserIdGroupPairs: []*ec2.UserIdGroupPair{
-				//	{
-				//		GroupId: aws.String(req.SecurityGroupId),
-				//		VpcId:   aws.String(req.VpcId),
-				//		//Description: aws.String("HTTP access from other instances"),
-				//	},
-				//},
 			},
 		},
 	}
