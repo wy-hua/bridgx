@@ -477,3 +477,133 @@ created by github.com/galaxy-future/BridgX/internal/service.Expand
 2022-09-14 16:07:39.043	INFO	alibaba/api.go:155	[BatchDelete] requestId: 6D5221D5-02AE-53D5-A292-A2AF4C0493DB
 2022-09-14 16:07:39.046	INFO	service/cluster.go:580	shrink cluster:clusterA no need publish config
 2022-09-14 16:07:39.049	WARN	pool/executor.go:68	Task SUCCESS:50493469415712942, SHRINK, {"cluster_name":"clusterA","count":2,"ips":"","task_exec_host":"192.168.40.174","task_submit_host":"192.168.40.174","user_id":1,"before_count":2}
+2022-09-27 10:25:29.682	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-27 10:25:29.686	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-27 10:32:25.471	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-27 10:32:25.488	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-27 10:33:30.283	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-27 10:33:30.284	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-27 10:35:10.539	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-27 10:35:10.544	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-27 10:35:25.267	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-27 10:35:25.270	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-27 10:53:32.443	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-27 10:53:32.444	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-27 10:53:32.445	INFO	handler/cluster.go:196	name is:test_cluster 
+2022-09-27 10:53:32.455	ERROR	model/base.go:189	GetByClusterName from read dbrecord not found
+2022-09-27 10:55:24.045	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-27 10:55:24.051	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-27 10:55:24.051	INFO	handler/cluster.go:196	name is:aws_cluster_testr 
+2022-09-27 10:55:24.053	ERROR	model/base.go:189	GetByClusterName from read dbrecord not found
+2022-09-27 10:58:03.485	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-27 10:58:03.489	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-27 10:58:03.492	INFO	handler/cluster.go:196	name is:aws_cluster_test 
+2022-09-27 11:00:21.567	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-27 11:00:21.569	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-27 11:00:21.577	INFO	service/task.go:43	cluster:aws_cluster_test expand task info:{"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":4}
+2022-09-27 11:00:26.006	INFO	pool/executor.go:20	Executing Task:52346963374385326, EXPAND [aws_cluster_test], task info:{"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":4}
+2022-09-27 11:00:26.794	ERROR	aws/ecs.go:94	BatchCreate AwsCloud failed. err:[Blocked: This account is currently blocked and not recognized as a valid account. Please contact support@amazonaws.com.cn if you have questions.
+	status code: 400, request id: a14f2530-2fd1-4117-a26d-b01b2d712d45] req:[{AwsCloud t2.micro ami-0a5e581c2158fe57d 0xc00009ac60 cnn1-az1 cn-north-1 0xc00067bbc0 0xc0198389c0  [{TaskId 52346963374385326} {ClusterName aws_cluster_test}] false key-06e93c1ff9818d34c test_key_pair}]
+2022-09-27 11:00:26.794	ERROR	service/cloud.go:175	[cloud.Expand] BatchCreate error. error: Blocked: This account is currently blocked and not recognized as a valid account. Please contact support@amazonaws.com.cn if you have questions.
+	status code: 400, request id: a14f2530-2fd1-4117-a26d-b01b2d712d45
+2022-09-27 11:00:26.794	ERROR	service/cloud.go:47	[ExpandCLuster] Expand retry error, times: 0, error: Blocked: This account is currently blocked and not recognized as a valid account. Please contact support@amazonaws.com.cn if you have questions.
+	status code: 400, request id: a14f2530-2fd1-4117-a26d-b01b2d712d45
+2022-09-27 11:00:27.440	ERROR	aws/ecs.go:94	BatchCreate AwsCloud failed. err:[Blocked: This account is currently blocked and not recognized as a valid account. Please contact support@amazonaws.com.cn if you have questions.
+	status code: 400, request id: c2a98589-c6ac-4c1f-8ce4-7a4c7621c708] req:[{AwsCloud t2.micro ami-0a5e581c2158fe57d 0xc019c3aba0 cnn1-az1 cn-north-1 0xc00067bbc0 0xc019c40fc0  [{TaskId 52346963374385326} {ClusterName aws_cluster_test}] false key-06e93c1ff9818d34c test_key_pair}]
+2022-09-27 11:00:27.440	ERROR	service/cloud.go:175	[cloud.Expand] BatchCreate error. error: Blocked: This account is currently blocked and not recognized as a valid account. Please contact support@amazonaws.com.cn if you have questions.
+	status code: 400, request id: c2a98589-c6ac-4c1f-8ce4-7a4c7621c708
+2022-09-27 11:00:27.440	ERROR	service/cloud.go:47	[ExpandCLuster] Expand retry error, times: 1, error: Blocked: This account is currently blocked and not recognized as a valid account. Please contact support@amazonaws.com.cn if you have questions.
+	status code: 400, request id: c2a98589-c6ac-4c1f-8ce4-7a4c7621c708
+2022-09-27 11:00:28.144	ERROR	aws/ecs.go:94	BatchCreate AwsCloud failed. err:[Blocked: This account is currently blocked and not recognized as a valid account. Please contact support@amazonaws.com.cn if you have questions.
+	status code: 400, request id: bc86b594-b547-4b53-ab4b-fc55c02031ef] req:[{AwsCloud t2.micro ami-0a5e581c2158fe57d 0xc019c3bb60 cnn1-az1 cn-north-1 0xc00067bbc0 0xc019c7c2d0  [{TaskId 52346963374385326} {ClusterName aws_cluster_test}] false key-06e93c1ff9818d34c test_key_pair}]
+2022-09-27 11:00:28.144	ERROR	service/cloud.go:175	[cloud.Expand] BatchCreate error. error: Blocked: This account is currently blocked and not recognized as a valid account. Please contact support@amazonaws.com.cn if you have questions.
+	status code: 400, request id: bc86b594-b547-4b53-ab4b-fc55c02031ef
+2022-09-27 11:00:28.144	ERROR	service/cloud.go:47	[ExpandCLuster] Expand retry error, times: 2, error: Blocked: This account is currently blocked and not recognized as a valid account. Please contact support@amazonaws.com.cn if you have questions.
+	status code: 400, request id: bc86b594-b547-4b53-ab4b-fc55c02031ef
+2022-09-27 11:00:28.231	INFO	service/cloud.go:69	[RepairCluster] GetInstanceByTag length 0, available num 0, all num 0
+2022-09-27 11:00:28.232	WARN	pool/executor.go:68	Task FAILED:52346963374385326, EXPAND, {"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"192.168.40.174","task_submit_host":"192.168.40.174","user_id":1,"before_count":4}
+2022-09-27 11:07:23.461	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-27 11:07:23.463	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-27 11:08:04.605	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-27 11:08:04.607	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-27 11:08:04.619	INFO	service/task.go:43	cluster:aws_cluster_test expand task info:{"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":4}
+2022-09-27 11:08:09.007	INFO	pool/executor.go:20	Executing Task:52347740226594990, EXPAND [aws_cluster_test], task info:{"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":4}
+2022-09-27 11:08:09.684	ERROR	aws/ecs.go:94	BatchCreate AwsCloud failed. err:[Blocked: This account is currently blocked and not recognized as a valid account. Please contact support@amazonaws.com.cn if you have questions.
+	status code: 400, request id: cb883ea0-7234-470e-8b88-c9b1ffe6c44b] req:[{AwsCloud t2.micro ami-0a5e581c2158fe57d 0xc0005902a0 cnn1-az1 cn-north-1 0xc0005a4900 0xc0197d5cb0  [{TaskId 52347740226594990} {ClusterName aws_cluster_test}] false key-06e93c1ff9818d34c test_key_pair}]
+2022-09-27 11:08:09.684	ERROR	service/cloud.go:175	[cloud.Expand] BatchCreate error. error: Blocked: This account is currently blocked and not recognized as a valid account. Please contact support@amazonaws.com.cn if you have questions.
+	status code: 400, request id: cb883ea0-7234-470e-8b88-c9b1ffe6c44b
+2022-09-27 11:08:09.684	ERROR	service/cloud.go:47	[ExpandCLuster] Expand retry error, times: 0, error: Blocked: This account is currently blocked and not recognized as a valid account. Please contact support@amazonaws.com.cn if you have questions.
+	status code: 400, request id: cb883ea0-7234-470e-8b88-c9b1ffe6c44b
+2022-09-27 11:08:10.322	ERROR	aws/ecs.go:94	BatchCreate AwsCloud failed. err:[Blocked: This account is currently blocked and not recognized as a valid account. Please contact support@amazonaws.com.cn if you have questions.
+	status code: 400, request id: ba893f91-289f-4359-9d75-113c3c41475c] req:[{AwsCloud t2.micro ami-0a5e581c2158fe57d 0xc000591200 cnn1-az1 cn-north-1 0xc0005a4900 0xc0197f8810  [{TaskId 52347740226594990} {ClusterName aws_cluster_test}] false key-06e93c1ff9818d34c test_key_pair}]
+2022-09-27 11:08:10.322	ERROR	service/cloud.go:175	[cloud.Expand] BatchCreate error. error: Blocked: This account is currently blocked and not recognized as a valid account. Please contact support@amazonaws.com.cn if you have questions.
+	status code: 400, request id: ba893f91-289f-4359-9d75-113c3c41475c
+2022-09-27 11:08:10.322	ERROR	service/cloud.go:47	[ExpandCLuster] Expand retry error, times: 1, error: Blocked: This account is currently blocked and not recognized as a valid account. Please contact support@amazonaws.com.cn if you have questions.
+	status code: 400, request id: ba893f91-289f-4359-9d75-113c3c41475c
+2022-09-27 11:08:10.943	ERROR	aws/ecs.go:94	BatchCreate AwsCloud failed. err:[Blocked: This account is currently blocked and not recognized as a valid account. Please contact support@amazonaws.com.cn if you have questions.
+	status code: 400, request id: 35c20aaf-91d5-45c8-b0fb-fc5f85f74674] req:[{AwsCloud t2.micro ami-0a5e581c2158fe57d 0xc000591da0 cnn1-az1 cn-north-1 0xc0005a4900 0xc0197f8ed0  [{TaskId 52347740226594990} {ClusterName aws_cluster_test}] false key-06e93c1ff9818d34c test_key_pair}]
+2022-09-27 11:08:10.943	ERROR	service/cloud.go:175	[cloud.Expand] BatchCreate error. error: Blocked: This account is currently blocked and not recognized as a valid account. Please contact support@amazonaws.com.cn if you have questions.
+	status code: 400, request id: 35c20aaf-91d5-45c8-b0fb-fc5f85f74674
+2022-09-27 11:08:10.943	ERROR	service/cloud.go:47	[ExpandCLuster] Expand retry error, times: 2, error: Blocked: This account is currently blocked and not recognized as a valid account. Please contact support@amazonaws.com.cn if you have questions.
+	status code: 400, request id: 35c20aaf-91d5-45c8-b0fb-fc5f85f74674
+2022-09-27 11:08:11.025	INFO	service/cloud.go:69	[RepairCluster] GetInstanceByTag length 0, available num 0, all num 0
+2022-09-27 11:08:11.027	WARN	pool/executor.go:68	Task FAILED:52347740226594990, EXPAND, {"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"192.168.40.174","task_submit_host":"192.168.40.174","user_id":1,"before_count":4}
+2022-09-27 14:03:00.828	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-27 14:03:00.829	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-27 14:03:00.836	INFO	service/task.go:90	cluster:aws_cluster_test shrink task info:{"cluster_name":"aws_cluster_test","count":2,"ips":"","task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":4}
+2022-09-27 14:03:05.006	INFO	pool/executor.go:84	Executing Task:52365349961607342, SHRINK [aws_cluster_test], task info:{"cluster_name":"aws_cluster_test","count":2,"ips":"","task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":4}
+2022-09-27 14:03:05.009	INFO	pool/executor.go:106	shrink cluster:aws_cluster_test with retry times:1
+2022-09-27 14:03:05.009	INFO	service/cluster.go:343	Shrink aws_cluster_test, with count:2
+2022-09-27 14:03:05.113	ERROR	aws/ecs.go:205	BatchDelete AwsCloud failed.err:[InvalidInstanceID.NotFound: The instance IDs 'i-04e02bdfad6abd194, i-0c37ea46d0d3c18c1' do not exist
+	status code: 400, request id: 7c4d7d9b-b6fe-4d2d-a838-ba438ee4240f] req:[[i-04e02bdfad6abd194 i-0c37ea46d0d3c18c1]]
+2022-09-27 14:03:05.114	ERROR	service/cluster.go:355	[ShrinkCluster] Shrink instance error. cluster name: aws_cluster_test, error: InvalidInstanceID.NotFound: The instance IDs 'i-04e02bdfad6abd194, i-0c37ea46d0d3c18c1' do not exist
+	status code: 400, request id: 7c4d7d9b-b6fe-4d2d-a838-ba438ee4240f
+2022-09-27 14:03:07.114	INFO	pool/executor.go:106	shrink cluster:aws_cluster_test with retry times:2
+2022-09-27 14:03:07.114	INFO	service/cluster.go:343	Shrink aws_cluster_test, with count:2
+2022-09-27 14:03:07.159	ERROR	aws/ecs.go:205	BatchDelete AwsCloud failed.err:[InvalidInstanceID.NotFound: The instance IDs 'i-04e02bdfad6abd194, i-0c37ea46d0d3c18c1' do not exist
+	status code: 400, request id: 4488e416-2899-43ef-8f10-ef9ebe3bd3f1] req:[[i-04e02bdfad6abd194 i-0c37ea46d0d3c18c1]]
+2022-09-27 14:03:07.159	ERROR	service/cluster.go:355	[ShrinkCluster] Shrink instance error. cluster name: aws_cluster_test, error: InvalidInstanceID.NotFound: The instance IDs 'i-04e02bdfad6abd194, i-0c37ea46d0d3c18c1' do not exist
+	status code: 400, request id: 4488e416-2899-43ef-8f10-ef9ebe3bd3f1
+2022-09-27 14:03:11.160	INFO	pool/executor.go:106	shrink cluster:aws_cluster_test with retry times:3
+2022-09-27 14:03:11.160	INFO	service/cluster.go:343	Shrink aws_cluster_test, with count:2
+2022-09-27 14:03:11.222	ERROR	aws/ecs.go:205	BatchDelete AwsCloud failed.err:[InvalidInstanceID.NotFound: The instance IDs 'i-04e02bdfad6abd194, i-0c37ea46d0d3c18c1' do not exist
+	status code: 400, request id: d7cd42f1-7f81-4b4e-8983-b667c038e267] req:[[i-04e02bdfad6abd194 i-0c37ea46d0d3c18c1]]
+2022-09-27 14:03:11.222	ERROR	service/cluster.go:355	[ShrinkCluster] Shrink instance error. cluster name: aws_cluster_test, error: InvalidInstanceID.NotFound: The instance IDs 'i-04e02bdfad6abd194, i-0c37ea46d0d3c18c1' do not exist
+	status code: 400, request id: d7cd42f1-7f81-4b4e-8983-b667c038e267
+2022-09-27 14:03:11.224	WARN	pool/executor.go:68	Task FAILED:52365349961607342, SHRINK, {"cluster_name":"aws_cluster_test","count":2,"ips":"","task_exec_host":"192.168.40.174","task_submit_host":"192.168.40.174","user_id":1,"before_count":4}
+2022-09-27 14:03:38.854	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-27 14:03:38.855	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-27 14:03:38.861	INFO	service/task.go:43	cluster:aws_cluster_test expand task info:{"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":4}
+2022-09-27 14:03:43.006	INFO	pool/executor.go:20	Executing Task:52365413765359790, EXPAND [aws_cluster_test], task info:{"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"","task_submit_host":"192.168.40.174","user_id":1,"before_count":4}
+2022-09-27 14:03:43.676	ERROR	aws/ecs.go:94	BatchCreate AwsCloud failed. err:[Blocked: This account is currently blocked and not recognized as a valid account. Please contact support@amazonaws.com.cn if you have questions.
+	status code: 400, request id: 30b4f260-1094-4a2a-91f2-48d1b1e0e8b4] req:[{AwsCloud t2.micro ami-0a5e581c2158fe57d 0xc000467c20 cnn1-az1 cn-north-1 0xc00f661ac0 0xc0198d92f0  [{TaskId 52365413765359790} {ClusterName aws_cluster_test}] false key-06e93c1ff9818d34c test_key_pair}]
+2022-09-27 14:03:43.676	ERROR	service/cloud.go:175	[cloud.Expand] BatchCreate error. error: Blocked: This account is currently blocked and not recognized as a valid account. Please contact support@amazonaws.com.cn if you have questions.
+	status code: 400, request id: 30b4f260-1094-4a2a-91f2-48d1b1e0e8b4
+2022-09-27 14:03:43.676	ERROR	service/cloud.go:47	[ExpandCLuster] Expand retry error, times: 0, error: Blocked: This account is currently blocked and not recognized as a valid account. Please contact support@amazonaws.com.cn if you have questions.
+	status code: 400, request id: 30b4f260-1094-4a2a-91f2-48d1b1e0e8b4
+2022-09-27 14:03:44.322	ERROR	aws/ecs.go:94	BatchCreate AwsCloud failed. err:[Blocked: This account is currently blocked and not recognized as a valid account. Please contact support@amazonaws.com.cn if you have questions.
+	status code: 400, request id: 231c47b6-059b-45b3-9a4d-d838b33c7b03] req:[{AwsCloud t2.micro ami-0a5e581c2158fe57d 0xc019bfa4e0 cnn1-az1 cn-north-1 0xc00f661ac0 0xc019c06240  [{TaskId 52365413765359790} {ClusterName aws_cluster_test}] false key-06e93c1ff9818d34c test_key_pair}]
+2022-09-27 14:03:44.322	ERROR	service/cloud.go:175	[cloud.Expand] BatchCreate error. error: Blocked: This account is currently blocked and not recognized as a valid account. Please contact support@amazonaws.com.cn if you have questions.
+	status code: 400, request id: 231c47b6-059b-45b3-9a4d-d838b33c7b03
+2022-09-27 14:03:44.322	ERROR	service/cloud.go:47	[ExpandCLuster] Expand retry error, times: 1, error: Blocked: This account is currently blocked and not recognized as a valid account. Please contact support@amazonaws.com.cn if you have questions.
+	status code: 400, request id: 231c47b6-059b-45b3-9a4d-d838b33c7b03
+2022-09-27 14:03:44.979	ERROR	aws/ecs.go:94	BatchCreate AwsCloud failed. err:[Blocked: This account is currently blocked and not recognized as a valid account. Please contact support@amazonaws.com.cn if you have questions.
+	status code: 400, request id: 6d249d85-9934-47a8-beb7-49fca9978ab2] req:[{AwsCloud t2.micro ami-0a5e581c2158fe57d 0xc0006f9da0 cnn1-az1 cn-north-1 0xc00f661ac0 0xc019c960c0  [{TaskId 52365413765359790} {ClusterName aws_cluster_test}] false key-06e93c1ff9818d34c test_key_pair}]
+2022-09-27 14:03:44.979	ERROR	service/cloud.go:175	[cloud.Expand] BatchCreate error. error: Blocked: This account is currently blocked and not recognized as a valid account. Please contact support@amazonaws.com.cn if you have questions.
+	status code: 400, request id: 6d249d85-9934-47a8-beb7-49fca9978ab2
+2022-09-27 14:03:44.979	ERROR	service/cloud.go:47	[ExpandCLuster] Expand retry error, times: 2, error: Blocked: This account is currently blocked and not recognized as a valid account. Please contact support@amazonaws.com.cn if you have questions.
+	status code: 400, request id: 6d249d85-9934-47a8-beb7-49fca9978ab2
+2022-09-27 14:03:45.074	INFO	service/cloud.go:69	[RepairCluster] GetInstanceByTag length 0, available num 0, all num 0
+2022-09-27 14:03:45.075	WARN	pool/executor.go:68	Task FAILED:52365413765359790, EXPAND, {"cluster_name":"aws_cluster_test","count":2,"task_exec_host":"192.168.40.174","task_submit_host":"192.168.40.174","user_id":1,"before_count":4}
+2022-09-27 14:04:50.771	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-27 14:04:50.773	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-27 14:05:23.507	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-27 14:05:23.518	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-27 14:05:23.723	ERROR	aws/vpc.go:120	CreateSwitch AwsCloud failed. err:[InvalidSubnet.Conflict: The CIDR '10.0.0.0/24' conflicts with another subnet
+	status code: 400, request id: 1157937b-3d96-4758-9e80-6cb07a2b0c1e] req:[{cn-north-1 cnn1-az1 10.0.0.0/24 test_Switch vpc-0d8c6a0bd621bf4c4 }]
+2022-09-27 14:05:23.723	ERROR	service/network.go:808	CreateSwitch failed, InvalidSubnet.Conflict: The CIDR '10.0.0.0/24' conflicts with another subnet
+	status code: 400, request id: 1157937b-3d96-4758-9e80-6cb07a2b0c1e
+2022-09-27 14:05:49.371	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-27 14:05:49.372	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.
+2022-09-27 14:06:28.798	INFO	cache/local_cache.go:40	[big_cache_init], bigCache config, bigCacheMaxLength=100000, bigCacheJanitor=2, bigCacheExpireTime=60, bigCacheHardMaxCacheSize=1024
+2022-09-27 14:06:28.803	INFO	calibrator/init.go:32	bridgx-kubernetes calibrator start success.

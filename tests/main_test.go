@@ -25,7 +25,7 @@ var r *gin.Engine
 
 const (
 	_v1Api = "/api/v1/"
-	_Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJuYW1lIjoicm9vdCIsInVzZXJfdHlwZSI6IkFETUlOIiwib3JnX2lkIjoxLCJleHAiOjE2NjMxNTMyNzIsIm5iZiI6MTY2MzEyNDQ2Mn0.1wJ4tiV09S_eUCVxog_uK2Xaivo6tUR_PJP9w4lZ5bA" // JWT token
+	_Token = "" // JWT token
 )
 
 func TestMain(m *testing.M) {
@@ -86,15 +86,15 @@ func Run() {
 func AKGenerator(provider string) (ak string) {
 	switch provider {
 	case cloud.AlibabaCloud:
-		ak = "xxx"
+		ak = ""
 	case cloud.HuaweiCloud:
-		ak = "xxx"
+		ak = ""
 	case cloud.TencentCloud:
-		ak = "xxx"
+		ak = ""
 	case cloud.BaiduCloud:
-		ak = "xxx"
+		ak = ""
 	case cloud.AwsCloud:
-		ak = "xxx"
+		ak = ""
 	}
 	return
 }

@@ -8,7 +8,7 @@ import (
 )
 
 func TestBatchCreate(t *testing.T) {
-	aws, _ := New("AKIA4WZHXEQAAOVR4R7W", "0FImiHvVDjXMS7uzH2oz5/DanidumrBaaImbhBog", "cn-north-1")
+	aws, _ := New("", "", "cn-north-1")
 	m := cloud.Params{
 		Provider:     cloud.AwsCloud,
 		InstanceType: "t2.micro",

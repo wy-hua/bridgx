@@ -238,7 +238,7 @@ Sjuh0n5W3LZiGU/zbQIDAQAB`,
 	}
 }
 func TestGetClusterByName(t *testing.T) {
-	tests := []string{"test_cluster"}
+	tests := []string{"aws_cluster_test"}
 	for i, tt := range tests {
 		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
 			w := httptest.NewRecorder()
