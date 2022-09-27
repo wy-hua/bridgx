@@ -124,17 +124,6 @@ func (p *AwsCloud) CreateSwitch(req cloud.CreateSwitchRequest) (cloud.CreateSwit
 		logs.Logger.Warnf("CreateSwitch AwsCloud failed. req:[%v] output:[%v]", err, req)
 		return cloud.CreateSwitchResponse{}, err
 	}
-	//inputModify := &ec2.ModifySubnetAttributeInput{
-	//	MapPublicIpOnLaunch: &ec2.AttributeBooleanValue{
-	//		Value: aws.Bool(true),
-	//	},
-	//	SubnetId: output.Subnet.SubnetId,
-	//}
-	//_, err = p.ec2Client.ModifySubnetAttribute(inputModify)
-	//if err != nil {
-	//	logs.Logger.Errorf("ModifySubnetAttribute AwsCloud failed. err:[%v] req:[%v]", err, req)
-	//	return cloud.CreateSwitchResponse{}, err
-	//}
 	return cloud.CreateSwitchResponse{SwitchId: aws.StringValue(output.Subnet.SubnetId)}, nil
 }
 
