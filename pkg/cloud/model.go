@@ -347,6 +347,4 @@ type DescribeKeyPairsResponse struct {
 type KeyPair struct {
 	KeyPairId   string
 	KeyPairName string
-	PrivateKey  string
-	PublicKey   string
 }
