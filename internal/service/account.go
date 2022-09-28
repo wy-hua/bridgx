@@ -123,7 +123,7 @@ func CheckAccountValid(ak, sk, provider string) error {
 		cli, err = tencent.New(ak, sk, DefaultRegionTencent)
 	case cloud.BaiduCloud:
 		cli, err = baidu.New(ak, sk, DefaultRegionBaidu)
-	case cloud.AwsCloud:
+	case cloud.AWSCloud:
 		cli, err = aws.New(ak, sk, DefaultRegionAws)
 	default:
 		return errors.New("invalid provider")

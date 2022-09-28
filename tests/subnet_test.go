@@ -45,7 +45,7 @@ func TestCreateSubnetAPI(t *testing.T) {
 			CidrBlock:  "10.0.0.0/24",
 			GatewayIp:  "",
 			ZoneId:     "cnn1-az1",
-			AK:         AKGenerator(cloud.AwsCloud),
+			AK:         AKGenerator(cloud.AWSCloud),
 		},
 	}
 	for _, tt := range tests {

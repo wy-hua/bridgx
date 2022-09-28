@@ -19,7 +19,7 @@ func TestListRegions(t *testing.T) {
 			provider: cloud.BaiduCloud,
 		},
 		{
-			provider: cloud.AwsCloud,
+			provider: cloud.AWSCloud,
 		},
 	}
 	for i, tt := range tests {
@@ -46,7 +46,7 @@ func TestListZones(t *testing.T) {
 			regionId: "bj",
 		},
 		{
-			provider: cloud.AwsCloud,
+			provider: cloud.AWSCloud,
 			regionId: "cn-north-1",
 		},
 	}

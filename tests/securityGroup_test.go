@@ -36,7 +36,7 @@ func TestSecurityGroupCreate(t *testing.T) {
 			SecurityGroupType: "",
 		},
 		{
-			AK:                AKGenerator(cloud.AwsCloud),
+			AK:                AKGenerator(cloud.AWSCloud),
 			VpcId:             "vpc-0d8c6a0bd621bf4c4",
 			RegionId:          "cn-north-1",
 			SecurityGroupName: "test_SecurityGroup",
@@ -72,7 +72,7 @@ func TestDescribeSecurityGroup(t *testing.T) {
 		{
 			vpcId:             "vpc-0d8c6a0bd621bf4c4",
 			securityGroupName: "test_SecurityGroup",
-			accountKey:        AKGenerator(cloud.AwsCloud),
+			accountKey:        AKGenerator(cloud.AWSCloud),
 		},
 	}
 	for _, tt := range tests {
@@ -125,7 +125,7 @@ func TestAddSecurityGroupRuleAPI(t *testing.T) {
 			},
 		},
 		{
-			AK:              AKGenerator(cloud.AwsCloud),
+			AK:              AKGenerator(cloud.AWSCloud),
 			VpcId:           "vpc-0d8c6a0bd621bf4c4",
 			RegionId:        "cn-north-1",
 			SecurityGroupId: "sg-07cdd57dd38d31672",

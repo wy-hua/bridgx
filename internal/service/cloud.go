@@ -271,7 +271,7 @@ func getProvider(provider, ak, regionId string) (cloud.Provider, error) {
 		client, err = tencent.New(ak, sk, regionId)
 	case cloud.BaiduCloud:
 		client, err = baidu.New(ak, sk, regionId)
-	case cloud.AwsCloud:
+	case cloud.AWSCloud:
 		client, err = aws.New(ak, sk, regionId)
 	default:
 		return nil, errors.New("invalid provider")

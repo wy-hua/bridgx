@@ -60,7 +60,7 @@ Create cluster template according to the user's needs.<br>
     <td>string</td>
     <td>Yes</td>
     <td>Cloud vendor</td>
-    <td>AlibabaCloud</td>
+    <td>AlibabaCloud | HuaweiCloud | TencentCloud | BaiduCloud | AWSCloud</td>
   </tr>
   <tr>
     <td>region_id</td>

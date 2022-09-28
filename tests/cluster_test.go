@@ -90,10 +90,10 @@ func TestCreate(t *testing.T) {
 			ClusterType:  "",
 			InstanceType: "t2.micro",
 			Image:        "ami-0a5e581c2158fe57d",
-			Provider:     cloud.AwsCloud,
+			Provider:     cloud.AWSCloud,
 			Username:     "",
 			Password:     "Ivgg87892789!",
-			AccountKey:   AKGenerator(cloud.AwsCloud),
+			AccountKey:   AKGenerator(cloud.AWSCloud),
 			ImageConfig: &types.ImageConfig{
 				Id:       "ami-0a5e581c2158fe57d",
 				Name:     "AWS Deep Learning AMI GPU CUDA 11 (Ubuntu 20.04) 20220317",
@@ -157,8 +157,8 @@ func TestCreate(t *testing.T) {
 func TestCreateKeyPair(t *testing.T) {
 	tests := []request.CreateKeyPairRequest{
 		{
-			AK:          AKGenerator(cloud.AwsCloud),
-			Provider:    cloud.AwsCloud,
+			AK:          AKGenerator(cloud.AWSCloud),
+			Provider:    cloud.AWSCloud,
 			RegionId:    "cn-north-1",
 			KeyPairName: "test_key_pair",
 		},
@@ -199,8 +199,8 @@ func TestGetClusterAuth(t *testing.T) {
 func TestImportKeyPair(t *testing.T) {
 	tests := []request.ImportKeyPairRequest{
 		{
-			AK:          AKGenerator(cloud.AwsCloud),
-			Provider:    cloud.AwsCloud,
+			AK:          AKGenerator(cloud.AWSCloud),
+			Provider:    cloud.AWSCloud,
 			RegionId:    "cn-north-1",
 			KeyPairName: "import_key_pair",
 			PrivateKey:  `__test_private_key_content__`,

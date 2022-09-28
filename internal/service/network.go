@@ -1299,7 +1299,7 @@ func getDefaultRegion(provider string) string {
 		regionId = DefaultRegionTencent
 	case cloud.BaiduCloud:
 		regionId = DefaultRegionBaidu
-	case cloud.AwsCloud:
+	case cloud.AWSCloud:
 		regionId = DefaultRegionAws
 	}
 	return regionId

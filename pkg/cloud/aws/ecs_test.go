@@ -10,7 +10,7 @@ import (
 func TestBatchCreate(t *testing.T) {
 	aws, _ := New("", "", "cn-north-1")
 	m := cloud.Params{
-		Provider:     cloud.AwsCloud,
+		Provider:     cloud.AWSCloud,
 		InstanceType: "t2.micro",
 		ImageId:      "ami-0a5e581c2158fe57d",
 		Network: &cloud.Network{

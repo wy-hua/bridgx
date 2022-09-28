@@ -49,8 +49,8 @@ func TestCreateCloudAccount(t *testing.T) {
 		},
 		{
 			AccountName:   "test_user",
-			Provider:      cloud.AwsCloud,
-			AccountKey:    AKGenerator(cloud.AwsCloud),
+			Provider:      cloud.AWSCloud,
+			AccountKey:    AKGenerator(cloud.AWSCloud),
 			AccountSecret: "",
 		},
 	}
@@ -79,7 +79,7 @@ func TestList(t *testing.T) {
 			accountName: "test_account",
 		},
 		{
-			provider:    cloud.AwsCloud,
+			provider:    cloud.AWSCloud,
 			accountName: "test_user",
 		},
 	}

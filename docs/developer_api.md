@@ -65,7 +65,7 @@
     <td>string</td>
     <td>是</td>
     <td>云厂商</td>
-    <td>AlibabaCloud</td>
+    <td>AlibabaCloud | HuaweiCloud | TencentCloud | BaiduCloud | AWSCloud</td>
   </tr>
   <tr>
     <td>region_id</td>

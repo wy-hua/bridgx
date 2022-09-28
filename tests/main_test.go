@@ -93,7 +93,7 @@ func AKGenerator(provider string) (ak string) {
 		ak = ""
 	case cloud.BaiduCloud:
 		ak = ""
-	case cloud.AwsCloud:
+	case cloud.AWSCloud:
 		ak = ""
 	}
 	return

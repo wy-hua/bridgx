@@ -35,11 +35,11 @@ func TestCreateVPCl(t *testing.T) {
 			AK:        AKGenerator(cloud.AlibabaCloud),
 		},
 		{
-			Provider:  cloud.AwsCloud,
+			Provider:  cloud.AWSCloud,
 			RegionId:  "cn-north-1",
 			VpcName:   "test_vpc",
 			CidrBlock: "10.0.0.0/16",
-			AK:        AKGenerator(cloud.AwsCloud),
+			AK:        AKGenerator(cloud.AWSCloud),
 		},
 	}
 
@@ -82,10 +82,10 @@ func TestDescribeVPC(t *testing.T) {
 		},
 		{
 			name:        "aws",
-			provider:    cloud.AwsCloud,
+			provider:    cloud.AWSCloud,
 			region_id:   "cn-north-1",
 			vpc_name:    "test_vpc",
-			account_key: AKGenerator(cloud.AwsCloud),
+			account_key: AKGenerator(cloud.AWSCloud),
 		},
 	}
 	for _, tt := range tests {

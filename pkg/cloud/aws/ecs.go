@@ -13,7 +13,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/ec2"
 )
 
-func (p *AwsCloud) BatchCreate(m cloud.Params, num int) ([]string, error) {
+func (p *AWSCloud) BatchCreate(m cloud.Params, num int) ([]string, error) {
 	var tags = make([]*ec2.Tag, 0, len(m.Tags))
 	for _, tag := range m.Tags {
 		tags = append(tags, &ec2.Tag{
@@ -91,7 +91,7 @@ func (p *AwsCloud) BatchCreate(m cloud.Params, num int) ([]string, error) {
 		if aerr, ok := err.(awserr.Error); ok && strings.EqualFold(aerr.Code(), _errCodeDryRunOperation) {
 			return []string{}, nil
 		}
-		logs.Logger.Errorf("BatchCreate AwsCloud failed. err:[%v] req:[%v]", err, m)
+		logs.Logger.Errorf("BatchCreate AWSCloud failed. err:[%v] req:[%v]", err, m)
 		return []string{}, err
 	}
 	var instanceIds = make([]string, 0, len(result.Instances))
@@ -102,7 +102,7 @@ func (p *AwsCloud) BatchCreate(m cloud.Params, num int) ([]string, error) {
 }
 
 // GetInstances output missing field: ExpireAt、Network.InternetChargeType、Network.InternetMaxBandwidthOut、Network.InternetIpType
-func (p *AwsCloud) GetInstances(ids []string) (instances []cloud.Instance, err error) {
+func (p *AWSCloud) GetInstances(ids []string) (instances []cloud.Instance, err error) {
 	idNum := len(ids)
 	if idNum < 1 {
 		return []cloud.Instance{}, nil
@@ -115,7 +115,7 @@ func (p *AwsCloud) GetInstances(ids []string) (instances []cloud.Instance, err e
 		}
 		result, err := p.ec2Client.DescribeInstances(input)
 		if err != nil {
-			logs.Logger.Errorf("GetInstances AwsCloud failed.err:[%v] req:[%v]", err, ids)
+			logs.Logger.Errorf("GetInstances AWSCloud failed.err:[%v] req:[%v]", err, ids)
 			return []cloud.Instance{}, err
 		}
 		for _, reservation := range result.Reservations {
@@ -129,7 +129,7 @@ func (p *AwsCloud) GetInstances(ids []string) (instances []cloud.Instance, err e
 }
 
 // GetInstancesByTags output missing field: ExpireAt、Network.InternetChargeType、Network.InternetMaxBandwidthOut、Network.InternetIpType
-func (p *AwsCloud) GetInstancesByTags(regionId string, tags []cloud.Tag) (instances []cloud.Instance, err error) {
+func (p *AWSCloud) GetInstancesByTags(regionId string, tags []cloud.Tag) (instances []cloud.Instance, err error) {
 	pageSize := _pageSize * 10
 	var awsInstances = make([]*ec2.Instance, 0, pageSize)
 	var filters = make([]*ec2.Filter, 0, len(tags))
@@ -164,7 +164,7 @@ func buildInstance(instance *ec2.Instance) cloud.Instance {
 	return cloud.Instance{
 		Id:       aws.StringValue(instance.InstanceId),
 		CostWay:  cloud.InstanceChargeTypePostPaid,
-		Provider: cloud.AwsCloud,
+		Provider: cloud.AWSCloud,
 		IpInner:  aws.StringValue(instance.PrivateIpAddress),
 		IpOuter:  aws.StringValue(instance.PublicIpAddress),
 		Network: &cloud.Network{
@@ -181,7 +181,7 @@ func buildInstance(instance *ec2.Instance) cloud.Instance {
 	}
 }
 
-func (p *AwsCloud) GetInstancesByCluster(regionId, clusterName string) (instances []cloud.Instance, err error) {
+func (p *AWSCloud) GetInstancesByCluster(regionId, clusterName string) (instances []cloud.Instance, err error) {
 	return p.GetInstancesByTags(regionId, []cloud.Tag{{
 		Key:   cloud.ClusterName,
 		Value: clusterName,
@@ -189,7 +189,7 @@ func (p *AwsCloud) GetInstancesByCluster(regionId, clusterName string) (instance
 }
 
 // BatchDelete maybe fail partially
-func (p *AwsCloud) BatchDelete(ids []string, regionId string) error {
+func (p *AWSCloud) BatchDelete(ids []string, regionId string) error {
 	idNum := len(ids)
 	if idNum < 1 {
 		return _errInstanceIdsEmpty
@@ -202,14 +202,14 @@ func (p *AwsCloud) BatchDelete(ids []string, regionId string) error {
 		}
 		_, err := p.ec2Client.TerminateInstances(input)
 		if err != nil {
-			logs.Logger.Errorf("BatchDelete AwsCloud failed.err:[%v] req:[%v]", err, ids)
+			logs.Logger.Errorf("BatchDelete AWSCloud failed.err:[%v] req:[%v]", err, ids)
 			return err
 		}
 	}
 	return nil
 }
 
-func (p *AwsCloud) StartInstances(ids []string) error {
+func (p *AWSCloud) StartInstances(ids []string) error {
 	idNum := len(ids)
 	if idNum < 1 {
 		return _errInstanceIdsEmpty
@@ -222,14 +222,14 @@ func (p *AwsCloud) StartInstances(ids []string) error {
 		}
 		_, err := p.ec2Client.StartInstances(input)
 		if err != nil {
-			logs.Logger.Errorf("StartInstances AwsCloud failed.err:[%v] req:[%v]", err, ids)
+			logs.Logger.Errorf("StartInstances AWSCloud failed.err:[%v] req:[%v]", err, ids)
 			return err
 		}
 	}
 	return nil
 }
 
-func (p *AwsCloud) StopInstances(ids []string) error {
+func (p *AWSCloud) StopInstances(ids []string) error {
 	idNum := len(ids)
 	if idNum < 1 {
 		return _errInstanceIdsEmpty
@@ -242,14 +242,14 @@ func (p *AwsCloud) StopInstances(ids []string) error {
 		}
 		_, err := p.ec2Client.StopInstances(input)
 		if err != nil {
-			logs.Logger.Errorf("StopInstances AwsCloud failed.err:[%v] req:[%v]", err, ids)
+			logs.Logger.Errorf("StopInstances AWSCloud failed.err:[%v] req:[%v]", err, ids)
 			return err
 		}
 	}
 	return nil
 }
 
-func (p *AwsCloud) GetZones(req cloud.GetZonesRequest) (cloud.GetZonesResponse, error) {
+func (p *AWSCloud) GetZones(req cloud.GetZonesRequest) (cloud.GetZonesResponse, error) {
 	input := &ec2.DescribeAvailabilityZonesInput{
 		Filters: []*ec2.Filter{{
 			Name:   aws.String(_filterNameRegionName),
@@ -258,7 +258,7 @@ func (p *AwsCloud) GetZones(req cloud.GetZonesRequest) (cloud.GetZonesResponse, 
 	}
 	result, err := p.ec2Client.DescribeAvailabilityZones(input)
 	if err != nil {
-		logs.Logger.Errorf("GetZones AwsCloud failed.err:[%v] req:[%v]", err, req)
+		logs.Logger.Errorf("GetZones AWSCloud failed.err:[%v] req:[%v]", err, req)
 		return cloud.GetZonesResponse{}, nil
 	}
 	var zones = make([]cloud.Zone, 0, len(result.AvailabilityZones))
@@ -272,7 +272,7 @@ func (p *AwsCloud) GetZones(req cloud.GetZonesRequest) (cloud.GetZonesResponse, 
 }
 
 //DescribeAvailableResource
-func (p *AwsCloud) DescribeAvailableResource(req cloud.DescribeAvailableResourceRequest) (cloud.DescribeAvailableResourceResponse, error) {
+func (p *AWSCloud) DescribeAvailableResource(req cloud.DescribeAvailableResourceRequest) (cloud.DescribeAvailableResourceResponse, error) {
 	pageSize := _pageSize * 10
 	var awsInstanceTypes = make([]*ec2.InstanceTypeOffering, 0, pageSize)
 	var filters = make([]*ec2.Filter, 0, 1)
@@ -309,7 +309,7 @@ func (p *AwsCloud) DescribeAvailableResource(req cloud.DescribeAvailableResource
 		return output.NextToken != nil
 	})
 	if err != nil {
-		logs.Logger.Errorf("DescribeAvailableResource AwsCloud failed.err: [%v] req[%v]", err, req)
+		logs.Logger.Errorf("DescribeAvailableResource AWSCloud failed.err: [%v] req[%v]", err, req)
 		return cloud.DescribeAvailableResourceResponse{}, err
 	}
 	for _, instanceType := range awsInstanceTypes {
@@ -349,7 +349,7 @@ func (p *AwsCloud) DescribeAvailableResource(req cloud.DescribeAvailableResource
 }
 
 //DescribeInstanceTypes
-func (p *AwsCloud) DescribeInstanceTypes(req cloud.DescribeInstanceTypesRequest) (cloud.DescribeInstanceTypesResponse, error) {
+func (p *AWSCloud) DescribeInstanceTypes(req cloud.DescribeInstanceTypesRequest) (cloud.DescribeInstanceTypesResponse, error) {
 	var instanceTypeInfos = make([]cloud.InstanceType, 0, _pageSize)
 	var awsInstanceTypeInfos = make([]*ec2.InstanceTypeInfo, 0, _pageSize)
 	batchIds := utils.StringSliceSplit(req.TypeName, _pageSize)
@@ -359,7 +359,7 @@ func (p *AwsCloud) DescribeInstanceTypes(req cloud.DescribeInstanceTypesRequest)
 		}
 		result, err := p.ec2Client.DescribeInstanceTypes(input)
 		if err != nil {
-			logs.Logger.Errorf("DescribeInstanceTypes AwsCloud failed.err:[%v] req:[%v]", err, req)
+			logs.Logger.Errorf("DescribeInstanceTypes AWSCloud failed.err:[%v] req:[%v]", err, req)
 			return cloud.DescribeInstanceTypesResponse{}, err
 		}
 		awsInstanceTypeInfos = append(awsInstanceTypeInfos, result.InstanceTypes...)
@@ -375,13 +375,13 @@ func (p *AwsCloud) DescribeInstanceTypes(req cloud.DescribeInstanceTypesRequest)
 	return cloud.DescribeInstanceTypesResponse{Infos: instanceTypeInfos}, nil
 }
 
-func (p *AwsCloud) describeInstanceType(instanceType string) (*ec2.InstanceTypeInfo, error) {
+func (p *AWSCloud) describeInstanceType(instanceType string) (*ec2.InstanceTypeInfo, error) {
 	input := &ec2.DescribeInstanceTypesInput{
 		InstanceTypes: aws.StringSlice([]string{instanceType}),
 	}
 	result, err := p.ec2Client.DescribeInstanceTypes(input)
 	if err != nil {
-		logs.Logger.Errorf("describeInstanceType AwsCloud failed.err:[%v] req:[%v]", err, instanceType)
+		logs.Logger.Errorf("describeInstanceType AWSCloud failed.err:[%v] req:[%v]", err, instanceType)
 		return nil, err
 	}
 	return result.InstanceTypes[0], nil

@@ -12,7 +12,7 @@ import (
 )
 
 // CreateSecurityGroup output missing field: RequestId
-func (p *AwsCloud) CreateSecurityGroup(req cloud.CreateSecurityGroupRequest) (cloud.CreateSecurityGroupResponse, error) {
+func (p *AWSCloud) CreateSecurityGroup(req cloud.CreateSecurityGroupRequest) (cloud.CreateSecurityGroupResponse, error) {
 	input := &ec2.CreateSecurityGroupInput{
 		Description: aws.String(req.SecurityGroupName),
 		GroupName:   aws.String(req.SecurityGroupName),
@@ -21,14 +21,14 @@ func (p *AwsCloud) CreateSecurityGroup(req cloud.CreateSecurityGroupRequest) (cl
 
 	output, err := p.ec2Client.CreateSecurityGroup(input)
 	if err != nil {
-		logs.Logger.Errorf("CreateSecurityGroup AwsCloud failed.err:[%v] req:[%v]", err, req)
+		logs.Logger.Errorf("CreateSecurityGroup AWSCloud failed.err:[%v] req:[%v]", err, req)
 		return cloud.CreateSecurityGroupResponse{}, err
 	}
 	return cloud.CreateSecurityGroupResponse{SecurityGroupId: aws.StringValue(output.GroupId)}, nil
 }
 
 // AddIngressSecurityGroupRule req:PrefixListId isn't use
-func (p *AwsCloud) AddIngressSecurityGroupRule(req cloud.AddSecurityGroupRuleRequest) error {
+func (p *AWSCloud) AddIngressSecurityGroupRule(req cloud.AddSecurityGroupRuleRequest) error {
 	input := &ec2.AuthorizeSecurityGroupIngressInput{
 		GroupId: aws.String(req.SecurityGroupId),
 		IpPermissions: []*ec2.IpPermission{
@@ -46,14 +46,14 @@ func (p *AwsCloud) AddIngressSecurityGroupRule(req cloud.AddSecurityGroupRuleReq
 	}
 	_, err := p.ec2Client.AuthorizeSecurityGroupIngress(input)
 	if err != nil {
-		logs.Logger.Errorf("AddIngressSecurityGroupRule AwsCloud failed.err:[%v] req:[%v]", err, req)
+		logs.Logger.Errorf("AddIngressSecurityGroupRule AWSCloud failed.err:[%v] req:[%v]", err, req)
 		return err
 	}
 	return nil
 }
 
 // AddEgressSecurityGroupRule req:PrefixListId isn't use
-func (p *AwsCloud) AddEgressSecurityGroupRule(req cloud.AddSecurityGroupRuleRequest) error {
+func (p *AWSCloud) AddEgressSecurityGroupRule(req cloud.AddSecurityGroupRuleRequest) error {
 	input := &ec2.AuthorizeSecurityGroupEgressInput{
 		GroupId: aws.String(req.SecurityGroupId),
 		IpPermissions: []*ec2.IpPermission{
@@ -71,14 +71,14 @@ func (p *AwsCloud) AddEgressSecurityGroupRule(req cloud.AddSecurityGroupRuleRequ
 	}
 	_, err := p.ec2Client.AuthorizeSecurityGroupEgress(input)
 	if err != nil {
-		logs.Logger.Errorf("AddEgressSecurityGroupRule AwsCloud failed. err:[%v] req:[%v]", err, req)
+		logs.Logger.Errorf("AddEgressSecurityGroupRule AWSCloud failed. err:[%v] req:[%v]", err, req)
 		return err
 	}
 	return nil
 }
 
 // DescribeSecurityGroups output missing field: CreateAt
-func (p *AwsCloud) DescribeSecurityGroups(req cloud.DescribeSecurityGroupsRequest) (cloud.DescribeSecurityGroupsResponse, error) {
+func (p *AWSCloud) DescribeSecurityGroups(req cloud.DescribeSecurityGroupsRequest) (cloud.DescribeSecurityGroupsResponse, error) {
 	pageSize := _pageSize * 10
 	var awsSecurityGroups = make([]*ec2.SecurityGroup, 0, pageSize)
 	input := &ec2.DescribeSecurityGroupsInput{
@@ -92,11 +92,11 @@ func (p *AwsCloud) DescribeSecurityGroups(req cloud.DescribeSecurityGroupsReques
 		return output.NextToken != nil
 	})
 	if err != nil {
-		logs.Logger.Errorf("DescribeSecurityGroups AwsCloud failed.err:[%v] req:[%v]", err, req)
+		logs.Logger.Errorf("DescribeSecurityGroups AWSCloud failed.err:[%v] req:[%v]", err, req)
 		return cloud.DescribeSecurityGroupsResponse{}, err
 	}
 	if len(awsSecurityGroups) == 0 {
-		logs.Logger.Warnf("DescribeSecurityGroups AwsCloud failed. req:[%v] len(awsSubnets) is zero", req)
+		logs.Logger.Warnf("DescribeSecurityGroups AWSCloud failed. req:[%v] len(awsSubnets) is zero", req)
 		return cloud.DescribeSecurityGroupsResponse{}, nil
 	}
 	var securityGroups = make([]cloud.SecurityGroup, 0, len(awsSecurityGroups))
@@ -106,17 +106,17 @@ func (p *AwsCloud) DescribeSecurityGroups(req cloud.DescribeSecurityGroupsReques
 	return cloud.DescribeSecurityGroupsResponse{Groups: securityGroups}, nil
 }
 
-func (p *AwsCloud) describeSecurityGroups(regionId, groupId string) (cloud.SecurityGroup, error) {
+func (p *AWSCloud) describeSecurityGroups(regionId, groupId string) (cloud.SecurityGroup, error) {
 	input := &ec2.DescribeSecurityGroupsInput{
 		GroupIds: []*string{aws.String(groupId)},
 	}
 	output, err := p.ec2Client.DescribeSecurityGroups(input)
 	if err != nil {
-		logs.Logger.Errorf("DescribeSecurityGroups AwsCloud failed. err:[%v] groupId:[%v]", err, groupId)
+		logs.Logger.Errorf("DescribeSecurityGroups AWSCloud failed. err:[%v] groupId:[%v]", err, groupId)
 		return cloud.SecurityGroup{}, err
 	}
 	if output == nil || len(output.SecurityGroups) == 0 {
-		logs.Logger.Warnf("DescribeSecurityGroups AwsCloud failed. groupId:[%v] output:[%v]", groupId, output)
+		logs.Logger.Warnf("DescribeSecurityGroups AWSCloud failed. groupId:[%v] output:[%v]", groupId, output)
 		return cloud.SecurityGroup{}, nil
 	}
 	awsGroup := output.SecurityGroups[0]
@@ -136,7 +136,7 @@ func buildSecurityGroup(regionId string, awsGroup *ec2.SecurityGroup) cloud.Secu
 }
 
 // DescribeGroupRules output missing field: CreateAt
-func (p *AwsCloud) DescribeGroupRules(req cloud.DescribeGroupRulesRequest) (cloud.DescribeGroupRulesResponse, error) {
+func (p *AWSCloud) DescribeGroupRules(req cloud.DescribeGroupRulesRequest) (cloud.DescribeGroupRulesResponse, error) {
 	pageSize := _pageSize * 10
 	var awsSecurityGroupRules = make([]*ec2.SecurityGroupRule, 0, pageSize)
 	input := &ec2.DescribeSecurityGroupRulesInput{
@@ -153,11 +153,11 @@ func (p *AwsCloud) DescribeGroupRules(req cloud.DescribeGroupRulesRequest) (clou
 		return output.NextToken != nil
 	})
 	if err != nil {
-		logs.Logger.Errorf("DescribeGroupRules AwsCloud failed.err:[%v] req:[%v]", err, req)
+		logs.Logger.Errorf("DescribeGroupRules AWSCloud failed.err:[%v] req:[%v]", err, req)
 		return cloud.DescribeGroupRulesResponse{}, err
 	}
 	if len(awsSecurityGroupRules) == 0 {
-		logs.Logger.Errorf("DescribeGroupRules AwsCloud failed. req:[%v] len(awsSecurityGroupRules) is zero", req)
+		logs.Logger.Errorf("DescribeGroupRules AWSCloud failed. req:[%v] len(awsSecurityGroupRules) is zero", req)
 		return cloud.DescribeGroupRulesResponse{}, nil
 	}
 	var rules = make([]cloud.SecurityGroupRule, 0, len(awsSecurityGroupRules))
