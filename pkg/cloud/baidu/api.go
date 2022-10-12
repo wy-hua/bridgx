@@ -718,11 +718,65 @@ func (b BaiduCloud) ListbyId(instanceIds []string) (instances []cloud.Instance, 
 	return instances, nil
 }
 func (b BaiduCloud) CreateKeyPair(req cloud.CreateKeyPairRequest) (cloud.CreateKeyPairResponse, error) {
-	return cloud.CreateKeyPairResponse{}, nil
+	input := &api.CreateKeypairArgs{
+		Name: req.KeyPairName,
+	}
+	output, err := b.bccClient.CreateKeypair(input)
+	if err != nil {
+		logs.Logger.Errorf("CreateKeyPair BaiduCloud failed.err:[%v] req:[%v]", err, req)
+		return cloud.CreateKeyPairResponse{}, err
+	}
+	return cloud.CreateKeyPairResponse{
+		KeyPairId:   output.Keypair.KeypairId,
+		KeyPairName: output.Keypair.Name,
+		PrivateKey:  output.Keypair.PrivateKey,
+		PublicKey:   output.Keypair.PublicKey,
+	}, nil
+
 }
 func (b BaiduCloud) ImportKeyPair(req cloud.ImportKeyPairRequest) (cloud.ImportKeyPairResponse, error) {
-	return cloud.ImportKeyPairResponse{}, nil
+	input := &api.ImportKeypairArgs{
+		Name:      req.KeyPairName,
+		PublicKey: req.PublicKey,
+	}
+	output, err := b.bccClient.ImportKeypair(input)
+	if err != nil {
+		logs.Logger.Errorf("ImportKeyPair BaiduCloud failed.err:[%v] req:[%v]", err, req)
+		return cloud.ImportKeyPairResponse{}, err
+	}
+	return cloud.ImportKeyPairResponse{
+		KeyPairId:   output.Keypair.KeypairId,
+		KeyPairName: output.Keypair.Name,
+	}, nil
 }
 func (b BaiduCloud) DescribeKeyPairs(req cloud.DescribeKeyPairsRequest) (cloud.DescribeKeyPairsResponse, error) {
-	return cloud.DescribeKeyPairsResponse{}, nil
+	input := &api.ListKeypairArgs{
+		Marker:  req.OlderMarker,
+		MaxKeys: req.PageSize,
+	}
+	output, err := b.bccClient.ListKeypairs(input)
+	if err != nil {
+		logs.Logger.Errorf("DescribeKeyPairs BaiduCloud failed.err:[%v] req:[%v]", err, req)
+		return cloud.DescribeKeyPairsResponse{}, err
+	}
+	totalCount := len(output.Keypairs)
+	if totalCount == 0 {
+		return cloud.DescribeKeyPairsResponse{}, nil
+	}
+	keyPairs := make([]cloud.KeyPair, 0, totalCount)
+	for _, pair := range output.Keypairs {
+		keyPairs = append(keyPairs, cloud.KeyPair{KeyPairId: pair.KeypairId, KeyPairName: pair.Name})
+	}
+	if output.IsTruncated {
+		return cloud.DescribeKeyPairsResponse{
+			TotalCount: totalCount,
+			KeyPairs:   keyPairs,
+			NewMarker:  output.NextMarker,
+		}, nil
+	} else {
+		return cloud.DescribeKeyPairsResponse{
+			TotalCount: totalCount,
+			KeyPairs:   keyPairs,
+		}, nil
+	}
 }
